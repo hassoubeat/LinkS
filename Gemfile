@@ -50,3 +50,15 @@ end
 
 # Windows does not include zoneinfo files, so bundle the tzinfo-data gem
 gem 'tzinfo-data', platforms: [:mingw, :mswin, :x64_mingw, :jruby]
+
+# 各種メッセージを日本語化対応するのに必要なGem
+gem 'rails-i18n'
+
+# Rails上でHamlを扱うGem
+gem 'haml-rails'
+
+# jsをRubyから実行するGem
+gem 'therubyracer', platforms: :ruby
+
+# ERB HAML間のファイル変換を行うコマンドを扱えるようになるGem
+gem 'erb2haml'

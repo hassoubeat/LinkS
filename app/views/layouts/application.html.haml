@@ -1,0 +1,52 @@
+!!!
+%html{lang: "ja"}
+  %head
+    %meta{name:"viewport", content:"width=device-width,initial-scale=1.0"}
+    %meta{:content => "text/html; charset=UTF-8", "http-equiv" => "Content-Type"}/
+    %title LinkS
+    = csrf_meta_tags
+    = csp_meta_tag
+
+    -# Bootstrap CSS
+    %link{rel: "stylesheet", href: "https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css", integrity:"sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T", crossorigin:"anonymous"}
+    -# FontAwesome CSS
+    %link{rel: "stylesheet", href: "https://use.fontawesome.com/releases/v5.7.2/css/all.css", integrity:"sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr", crossorigin:"anonymous"}
+    -# CSS
+    = stylesheet_link_tag 'application', media: 'all'
+
+    -# Comfortaa Google Font
+    %link{rel: "stylesheet", href: "https://fonts.googleapis.com/css?family=Comfortaa"}
+    -# Londrina+Shadow Google Font
+    %link{rel: "stylesheet", href: "https://fonts.googleapis.com/css?family=Londrina+Shadow"}
+
+    -# JS
+    = javascript_include_tag 'application'
+
+  %body{"data-spy" => "scroll", "data-target" => "#navbarNav"}
+    %nav.navbar.navbar-expand-lg.navbar-default.navbar-fixed-top
+      %a.navbar-brand{:href => "#"} LinkS
+      %button.navbar-toggler{"aria-controls" => "navbarNav", "aria-expanded" => "false", "aria-label" => "ナビゲーションの切替", "data-target" => "#navbarNav", "data-toggle" => "collapse", :type => "button"}
+        %i.fas.fa-list-ul
+      #navbarNav.collapse.navbar-collapse
+        %ul.navbar-nav.mr-auto
+        %ul.navbar-nav
+          - if @current_user
+            %li.nav-item
+              %a.nav-link{:href => "#about"} <i class="fas fa-user"></i> USER
+          - else
+            %li.nav-item
+              %a.nav-link{:href => "#portfolio"} <i class="fas fa-sign-in-alt"></i> LOGIN
+    / Header
+    %header
+      .container
+        .intro-text
+          .intro-heading
+    %main
+      = yield
+
+    %footer.bg-light-gray
+      .container
+        .row
+          .col-lg-12.text-center
+            %span.copyright Copyright © LinkS 2019
+

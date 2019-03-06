@@ -9,8 +9,10 @@
 * システム環境(動作確認環境)<br>
 OS AmazonLinux<br>
 ミドルウェア<br>
-・Rails実行環境 Nginx(1.15.6) + PhusionPassenger<br>
+・実行環境 Nginx(1.15.6) + PhusionPassenger<br>
 ・データベース   MySQL(5.7.23)
+フレームワーク<br>
+・RubyOnRails(5.2.2)
 
 * 設定<br>
 1.環境変数の設定<br>

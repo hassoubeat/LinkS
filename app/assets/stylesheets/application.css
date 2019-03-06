@@ -10,6 +10,37 @@
  * files in this directory. Styles in this file should be added after the last require_* statement.
  * It is generally better to create a new file per style scope.
  *
- *= require_tree .
+ *= require animate.css
  *= require_self
  */
+
+ .navbar {
+  background-color:#6794BD;
+ }
+
+ .navbar-brand {
+  font-family: 'Londrina Shadow', cursive;
+  font-size: 1.5em;
+  color: pink;
+ }
+
+ .nav-link {
+  font-family: 'Comfortaa', cursive;
+  text-transform: uppercase;
+  font-weight: 400;
+  letter-spacing: 1px;
+  color: white;
+}
+
+.bg-light-gray {
+  background-color: #f7f7f7;
+}
+
+footer {
+  padding: 20px 0;
+}
+
+.copyright {
+  font-family: 'Comfortaa', cursive;
+  color: #6794BD;
+}
