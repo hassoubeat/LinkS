@@ -3,11 +3,11 @@ class ApplicationController < ActionController::Base
 
   helper_method :login_user?
 
-  # before_action :login_check
+  before_action :login_check
   before_action :init_action
   around_action :around_logger
 
-  # skip_before_action :login_check, only: [:index,:login_form]
+  skip_before_action :login_check, only: [:index,:login_form]
 
   # トップ画面の表示
   def index

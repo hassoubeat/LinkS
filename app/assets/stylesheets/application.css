@@ -36,6 +36,11 @@
   background-color: #f7f7f7;
 }
 
+.radius{
+  border-radius: 10px;
+  padding: 20px;
+}
+
 footer {
   padding: 20px 0;
 }
@@ -43,4 +48,14 @@ footer {
 .copyright {
   font-family: 'Comfortaa', cursive;
   color: #6794BD;
+}
+
+.img-responsive{
+  display: inline;
+  max-width: 100%;
+  height: auto;
+}
+
+.center {
+  text-align: center;
 }

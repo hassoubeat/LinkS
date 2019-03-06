@@ -1,0 +1,41 @@
+- if @user.errors.any?
+  %div.col-lg-12
+    %div.card-panel.error
+      - @user.errors.full_messages.each do |message|
+        %li
+          = message
+
+%div.col-lg-12.bg-light-gray.radius
+  = form_tag("/users", method: :post, id: "singup-form") do
+    %div.row
+      %div.col-lg-12.wow.fadeInUp{"data-wow-delay" => "0.15s", "data-wow-duration" => "1.5s", :style => "visibility: visible; animation-duration: 1.5s; animation-delay: 0.15s; animation-name: fadeInUp;"}
+        %div.input-group.input-group-lg.mb-3
+          %div.input-group-prepend
+            %span{class:"input-group-text", id:"inputGroup-sizing-lg"}
+              %i.fas.fa-envelope
+          #{text_field_tag 'user[email]', @user['email'], class:"form-control", placeholder:"メールアドレス" }
+      %div.col-lg-12.wow.fadeInUp{"data-wow-delay" => "0.3s", "data-wow-duration" => "1.5s", :style => "visibility: visible; animation-duration: 1.5s; animation-delay: 0.3s; animation-name: fadeInUp;"}
+        %div.input-group.input-group-lg.mb-3
+          %div.input-group-prepend
+            %span{class:"input-group-text", id:"inputGroup-sizing-lg"}
+              %i.fas.fa-key
+          #{password_field_tag 'user[password]', @user['password'], class:"form-control", placeholder:"パスワード" }
+      %div.col-lg-12.wow.fadeInUp{"data-wow-delay" => "0.45s", "data-wow-duration" => "1.5s", :style => "visibility: visible; animation-duration: 1.5s; animation-delay: 0.45s; animation-name: fadeInUp;"}
+        %div.input-group.input-group-lg.mb-3
+          %div.input-group-prepend
+            %span{class:"input-group-text", id:"inputGroup-sizing-lg"}
+              %i.fas.fa-key
+          #{password_field_tag 'user[password_confirmation]', @user['password_confirmation'], class:"form-control", placeholder:"パスワード(再入力)" }
+      %div.col-lg-12.wow.fadeInUp{"data-wow-delay" => "0.6s", "data-wow-duration" => "1.5s", :style => "visibility: visible; animation-duration: 1.5s; animation-delay: 0.6s; animation-name: fadeInUp;"}
+        %div.input-group.input-group-lg.mb-3
+          %div.input-group-prepend
+            %span{class:"input-group-text", id:"inputGroup-sizing-lg"}
+              %i.fas.fa-user
+          #{password_field_tag 'user[name]', @user['name'], class:"form-control", placeholder:"システム内での名前" }
+    %div.row
+      %div.col-lg-12.text-center
+        %div.btn-group.d-flex.wow.fadeInUp{"aria-label" => "...", "data-wow-delay" => "0.75s", "data-wow-duration" => "1.5s", :role => "group", :style => "visibility: visible; animation-duration: 1.5s; animation-delay: 0.75s; animation-name: fadeInUp;"}
+          -# %a.btn.btn-info.w-100{:href => "mailto:hassoubeat.work@gmail.com"}
+          #{submit_tag "登録", :name => nil , :id => "create_btn", :class => "btn btn-info w-100"}
+          %a.btn.btn-primary.w-100{:href => "/"}
+            戻る
