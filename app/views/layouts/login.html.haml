@@ -32,7 +32,7 @@
         %div.row
           %div.col-lg-12.center
             %a{href: "/"}
-              %img{src:"https://s3-ap-northeast-1.amazonaws.com/hassoubeat.com/(*)hackrs_logo.png", class:"top-img img-responsive"}
+              #{image_tag("LinkS_logo.png", :class => "top-img img-responsive")}
         %div.row
           -if flash[:info]
             %div.col-lg-12
@@ -43,6 +43,11 @@
               %div.card-panel.error
                 %span= flash[:error]
           = yield
+      %footer.bg-light-gray
+        .container
+          .row
+            .col-lg-12.text-center
+              %span.copyright Copyright © LinkS 2019
 
     -# jQuery first
     <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>

@@ -47,15 +47,6 @@
   padding: 20px;
 }
 
-footer {
-  padding: 20px 0;
-}
-
-.copyright {
-  font-family: 'Comfortaa', cursive;
-  color: #6794BD;
-}
-
 .img-responsive{
   display: inline;
   max-width: 100%;
@@ -64,4 +55,15 @@ footer {
 
 .center {
   text-align: center;
+}
+
+footer {
+  padding-top: 20px;
+  padding-bottom: 20px;
+  margin-top: 20px;
+}
+
+.copyright {
+  font-family: 'Comfortaa', cursive;
+  color: #6794BD;
 }
