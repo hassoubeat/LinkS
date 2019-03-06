@@ -32,10 +32,12 @@
         %ul.navbar-nav
           - if @current_user
             %li.nav-item
-              %a.nav-link{:href => "#about"} <i class="fas fa-user"></i> USER
+              %a.nav-link{:href => "#"}
+                %i{class:"fas fa-user"} USER
           - else
             %li.nav-item
-              %a.nav-link{:href => "#portfolio"} <i class="fas fa-sign-in-alt"></i> LOGIN
+              %a.nav-link{:href => "#"}
+                %i{class:"fas fa-sign-in-alt"} LOGIN
     / Header
     %header
       .container
