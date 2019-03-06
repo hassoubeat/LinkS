@@ -19,50 +19,49 @@
     -# Londrina+Shadow Google Font
     %link{rel: "stylesheet", href: "https://fonts.googleapis.com/css?family=Londrina+Shadow"}
 
-    -# JS
-    = javascript_include_tag 'application'
-
   %body{"data-spy" => "scroll", "data-target" => "#navbarNav"}
-    %nav.navbar.navbar-expand-lg.navbar-default.navbar-fixed-top
-      %a.navbar-brand{:href => "#"} LinkS
-      %button.navbar-toggler{"aria-controls" => "navbarNav", "aria-expanded" => "false", "aria-label" => "ナビゲーションの切替", "data-target" => "#navbarNav", "data-toggle" => "collapse", :type => "button"}
-        %i.fas.fa-list-ul
-      #navbarNav.collapse.navbar-collapse
-        %ul.navbar-nav.mr-auto
-        %ul.navbar-nav
-          - if @current_user
-            %li.nav-item
-              %a.nav-link{:href => "#"}
-                %i{class:"fas fa-user"} USER
-          - else
-            %li.nav-item
-              %a.nav-link{:href => "auth/login_form"}
-                LOGIN
-            %li.nav-item
-              %a.nav-link{:href => "users/new"}
-                SIGN UP
-    / Header
-    %header
-      .container
-        .intro-text
-          .intro-heading
-    %main
-      = yield
+    %div.animsition
+      %nav.navbar.navbar-expand-lg.navbar-default.navbar-fixed-top
+        %a.navbar-brand{:href => "#"} LinkS
+        %button.navbar-toggler{"aria-controls" => "navbarNav", "aria-expanded" => "false", "aria-label" => "ナビゲーションの切替", "data-target" => "#navbarNav", "data-toggle" => "collapse", :type => "button"}
+          %i.fas.fa-list-ul
+        #navbarNav.collapse.navbar-collapse
+          %ul.navbar-nav.mr-auto
+          %ul.navbar-nav
+            - if @current_user
+              %li.nav-item
+                %a.nav-link{:href => "#"}
+                  %i{class:"fas fa-user"} USER
+            - else
+              %li.nav-item
+                %a.nav-link{:href => "auth/login_form"}
+                  LOGIN
+              %li.nav-item
+                %a.nav-link{:href => "users/new"}
+                  SIGN UP
+      / Header
+      %header
+        .container
+          .intro-text
+            .intro-heading
+      %main
+        = yield
 
-    %footer.bg-light-gray
-      .container
-        .row
-          .col-lg-12.text-center
-            %span.copyright Copyright © LinkS 2019
+      %footer.bg-light-gray
+        .container
+          .row
+            .col-lg-12.text-center
+              %span.copyright Copyright © LinkS 2019
 
     -# jQuery first
-    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+    = javascript_include_tag 'https://ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js'
     -# Bootstrap JS
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+    -# App JS
+    = javascript_include_tag 'application'
+
     :javascript
-      $(function() {
-        new WOW({
-            mobile: false
-          }).init();
+      $(document).ready(function() {
+        $('.animsition').animsition();
       });
 
