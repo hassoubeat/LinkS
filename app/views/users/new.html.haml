@@ -30,7 +30,7 @@
           %div.input-group-prepend
             %span{class:"input-group-text", id:"inputGroup-sizing-lg"}
               %i.fas.fa-user
-          #{password_field_tag 'user[name]', @user['name'], class:"form-control", placeholder:"システム内での名前" }
+          #{text_field_tag 'user[name]', @user['name'], class:"form-control", placeholder:"システム内での名前" }
     %div.row
       %div.col-lg-12.text-center
         %div.btn-group.d-flex

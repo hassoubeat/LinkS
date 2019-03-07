@@ -52,7 +52,8 @@ class UsersController < ApplicationController
     # 認証メールの送付
     EmailCheckMailer.send_user_email_check(user_hash, rand_param).deliver
 
-    redirect_to @user, flash: {info: '入力頂いたメールアドレスに認証用のメールを送付致しました。1時間以内に認証を行って本登録を完了させてください。'}
+    flash[:info] = "入力頂いたメールアドレスに認証用のメールを送付致しました。1時間以内に認証を行って本登録を完了させてください。"
+    redirect_to controller: 'application', action: 'index'
   end
 
   # PATCH/PUT /users/1
@@ -76,6 +77,37 @@ class UsersController < ApplicationController
     respond_to do |format|
       format.html { redirect_to users_url, notice: 'User was successfully destroyed.' }
       format.json { head :no_content }
+    end
+  end
+
+  # メールアドレス認証(認証が取れればデータベースにアカウントを登録)
+  def user_check
+    authcode = REDIS_USER_UNAUTH_PREFIX + params[:authcode]
+    redis = Redis.new
+    user = redis.hgetall authcode
+    if user
+      # ユーザ情報をmodelにセットする
+      @user = User.new(
+        email: user['email'],
+        password_digest: user['password_digest'],
+        name: user['name'],
+        is_valid: user['is_valid']
+      )
+    else
+      # redisからユーザ情報が取得できなかった場合は、再度登録を促す
+      flash.now[:error] = "ユーザ認証期限を過ぎています。再度ユーザ登録から行ってください。"
+      render :login_form and return
+    end
+
+    respond_to do |format|
+      if @user.save
+        format.html { redirect_to @user, flash: {info: 'ユーザ登録が完了しました。'}}
+        format.json { render :show, status: :created, location: @user }
+      else
+        # TODO システムエラー
+        format.html { render :login_form}
+        format.json { render json: @user.errors, status: :unprocessable_entity }
+      end
     end
   end
 

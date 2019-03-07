@@ -1,0 +1,6 @@
+#{@user["name"]} 様
+
+まだユーザ登録は完了していません。
+以下のURLに24時間以内にアクセスして、認証を完了させてください。
+
+#{root_url(only_path: false) + "user_check?authcode=" + @authcode}

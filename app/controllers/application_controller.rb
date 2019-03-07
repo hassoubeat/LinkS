@@ -1,4 +1,9 @@
 class ApplicationController < ActionController::Base
+
+  # 定数
+  REDIS_USER_UNAUTH_PREFIX = "user_unauth_"
+  REDIS_USER_UNAUTH_EXPIRE = "3600" #1時間
+
   protect_from_forgery with: :exception
 
   helper_method :login_user?
