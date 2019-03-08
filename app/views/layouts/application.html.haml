@@ -11,43 +11,60 @@
     %link{rel: "stylesheet", href: "https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css", integrity:"sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T", crossorigin:"anonymous"}
     -# FontAwesome CSS
     %link{rel: "stylesheet", href: "https://use.fontawesome.com/releases/v5.7.2/css/all.css", integrity:"sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr", crossorigin:"anonymous"}
-    -# CSS
+    -# Morphext CSS
+    = stylesheet_link_tag 'morphext', media: 'all'
+    -# App CSS
     = stylesheet_link_tag 'application', media: 'all'
+    -# Index CSS
+    = stylesheet_link_tag 'index', media: 'all'
 
-    -# Comfortaa Google Font
+
+    -# Google Font(Comfortaa )
     %link{rel: "stylesheet", href: "https://fonts.googleapis.com/css?family=Comfortaa"}
-    -# Londrina+Shadow Google Font
+    -# Google Font(Londrina+Shadow)
     %link{rel: "stylesheet", href: "https://fonts.googleapis.com/css?family=Londrina+Shadow"}
+    -# Google Font(MPlus 1p)
+    %link{rel: "stylesheet", href: "https://fonts.googleapis.com/css?family=M+PLUS+Rounded+1c"}
 
   %body{"data-spy" => "scroll", "data-target" => "#navbarNav"}
     %div.animsition
-      %nav.navbar.navbar-expand-lg.navbar-default.navbar-fixed-top
-        %a.navbar-brand{:href => "#"} LinkS
-        %button.navbar-toggler{"aria-controls" => "navbarNav", "aria-expanded" => "false", "aria-label" => "ナビゲーションの切替", "data-target" => "#navbarNav", "data-toggle" => "collapse", :type => "button"}
-          %i.fas.fa-list-ul
-        #navbarNav.collapse.navbar-collapse
-          %ul.navbar-nav.mr-auto
-          %ul.navbar-nav
-            - if @current_user
-              %li.nav-item
-                %a.nav-link{:href => "#"}
-                  %i{class:"fas fa-user"} USER
-            - else
-              %li.nav-item
-                %a.nav-link{:href => "auth/login_form"}
-                  LOGIN
-              %li.nav-item
-                %a.nav-link{:href => "users/new"}
-                  SIGN UP
+      -# %nav.navbar.navbar-expand-lg.navbar-default.navbar-fixed-top
+      -#   %a.navbar-brand{:href => "#"} LinkS
+      -#   %button.navbar-toggler{"aria-controls" => "navbarNav", "aria-expanded" => "false", "aria-label" => "ナビゲーションの切替", "data-target" => "#navbarNav", "data-toggle" => "collapse", :type => "button"}
+      -#     %i.fas.fa-list-ul
+      -#   #navbarNav.collapse.navbar-collapse
+      -#     %ul.navbar-nav.mr-auto
+      -#     %ul.navbar-nav
+      -#       - if @current_user
+      -#         %li.nav-item
+      -#           %a.nav-link{:href => "#"}
+      -#             %i{class:"fas fa-user"} USER
+      -#       - else
+      -#         %li.nav-item
+      -#           %a.nav-link{:href => "auth/login_form"}
+      -#             LOGIN
+      -#         %li.nav-item
+      -#           %a.nav-link{:href => "users/new"}
+      -#             SIGN UP
       / Header
       %header
         .container
           .intro-text
             .intro-heading
+      %div.container
+        %div.row
+          -if flash[:info]
+            %div.col-lg-12
+              %div.info-message
+                %span= flash[:info]
+          -if flash[:error]
+            %div.col.s12.m10.offset-m1
+              %div.card-panel.error
+                %span= flash[:error]
       %main
         = yield
 
-      %footer.bg-light-gray
+      %footer
         .container
           .row
             .col-lg-12.text-center
@@ -57,11 +74,20 @@
     = javascript_include_tag 'https://ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js'
     -# Bootstrap JS
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+    -# Morphext JS
+    = javascript_include_tag 'morphext.min'
     -# App JS
     = javascript_include_tag 'application'
 
     :javascript
       $(document).ready(function() {
         $('.animsition').animsition();
+        $(".morphext-text-change").Morphext({
+          animation: "fadeIn",
+          separator: ",",
+          speed: 5000,
+          complete: function () {
+          }
+        });
       });
 

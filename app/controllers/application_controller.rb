@@ -16,6 +16,8 @@ class ApplicationController < ActionController::Base
 
   # トップ画面の表示
   def index
+    # TODO ログイン済みの場合は、ユーザページへリダイレクト
+    @user = User.new
     render template: 'index'
   end
 

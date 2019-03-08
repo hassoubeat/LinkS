@@ -15,6 +15,10 @@
  *= require_self
  */
 
+ body {
+  font-family: "M PLUS Rounded 1c";
+ }
+
  .navbar {
   background-color:#6794BD;
  }
@@ -35,6 +39,14 @@
 
 .bg-light-gray {
   background-color: #f7f7f7;
+}
+
+.info-message {
+  color: #797F82;
+  background-color: #B8DCEF;
+  margin: 10px;
+  padding: 20px;
+  border-radius: 5px;
 }
 
 .error {
@@ -67,4 +79,16 @@ footer {
 .copyright {
   font-family: 'Comfortaa', cursive;
   color: #6794BD;
+}
+
+.btn-blue {
+  color: #FFF;
+  background-color: #58ACFA;
+  border-color: #58ACFA;
+}
+
+.btn-pink {
+  color: #FFF;
+  background-color: pink;
+  border-color: pink;
 }

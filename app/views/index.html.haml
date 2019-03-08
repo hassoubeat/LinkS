@@ -1,1 +1,39 @@
-TODO 一枚でシステムがわかるコンテンツを挿入
+%div.row.top-view-area
+  %div.col-lg-6.d-none.d-lg-block
+    %div.container
+      %div.row
+        %div.top-view-memo.col-md-12
+          %span.top-view-memo-links
+            LinkS
+          %p
+          %span.top-view-links-intro.morphext-text-change
+            クラウドでブックマークを簡単管理,便利なブックマーク集を簡単共有,役に立ったら"いいね！"
+  %div.col-lg-6.col-md-12.top-view-area-login-form
+    %div.container
+      %div.row
+        %div.col-lg-1
+        %div.col-lg-10.col-md-12.login-form
+          %div.row
+            %div.col-lg-12.d-block.d-lg-none
+              %span.login-form-title
+                LinkS
+              %span.links-intro.morphext-text-change
+                クラウドブックマーク,簡単に共有！,便利ブクマは"いいね！"
+            %div.col-lg-12
+              %div.input-group.input-group.mb-3
+                %div.input-group-prepend
+                  %span{class:"input-group-text", id:"inputGroup-sizing-lg"}
+                    %i.fas.fa-envelope
+                #{text_field_tag 'email', @email, class:"form-control", placeholder:"メールアドレス" }
+            %div.col-lg-12
+              %div.input-group.input-group.mb-3
+                %div.input-group-prepend
+                  %span{class:"input-group-text", id:"inputGroup-sizing-lg"}
+                    %i.fas.fa-key
+                #{password_field_tag 'password', @password, class:"form-control", placeholder:"パスワード"}
+            %div.col-lg-12.text-center
+              %div.btn-group.d-flex
+                #{submit_tag "ログイン", :name => nil , :id => "create_btn", :class => "btn btn-blue w-100"}
+                %a.btn.btn-pink.w-100{:href => "users/new"}
+                  サインイン
+        %div.col-lg-1
