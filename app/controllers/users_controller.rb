@@ -16,7 +16,7 @@ class UsersController < ApplicationController
   # GET /users/new
   def new
     @user = User.new
-    render layout: "login"
+    render layout: "application"
   end
 
   # GET /users/1/edit
@@ -31,7 +31,7 @@ class UsersController < ApplicationController
 
     # バリデーションチェック
     if @user.invalid?
-      render :new, layout: "login" and return
+      render :new, layout: "application" and return
     end
 
     # Redisに保存するためにハッシュデータの作成

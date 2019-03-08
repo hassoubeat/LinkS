@@ -1,39 +1,47 @@
-- if @user.errors.any?
-  %div.col-lg-12.error.radius
-    - @user.errors.full_messages.each do |message|
-      %li
-        = message
-
-%div.col-lg-12.bg-light-gray.radius
-  = form_tag("/users", method: :post, id: "singup-form") do
-    %div.row
-      %div.col-lg-12
-        %div.input-group.input-group.mb-3
-          %div.input-group-prepend
-            %span{class:"input-group-text", id:"inputGroup-sizing-lg"}
-              %i.fas.fa-envelope
-          #{text_field_tag 'user[email]', @user['email'], class:"form-control", placeholder:"メールアドレス" }
-      %div.col-lg-12
-        %div.input-group.input-group.mb-3
-          %div.input-group-prepend
-            %span{class:"input-group-text", id:"inputGroup-sizing-lg"}
-              %i.fas.fa-key
-          #{password_field_tag 'user[password]', @user['password'], class:"form-control", placeholder:"パスワード" }
-      %div.col-lg-12
-        %div.input-group.input-group.mb-3
-          %div.input-group-prepend
-            %span{class:"input-group-text", id:"inputGroup-sizing-lg"}
-              %i.fas.fa-key
-          #{password_field_tag 'user[password_confirmation]', @user['password_confirmation'], class:"form-control", placeholder:"パスワード(再入力)" }
-      %div.col-lg-12
-        %div.input-group.input-group.mb-3
-          %div.input-group-prepend
-            %span{class:"input-group-text", id:"inputGroup-sizing-lg"}
-              %i.fas.fa-user
-          #{text_field_tag 'user[name]', @user['name'], class:"form-control", placeholder:"システム内での名前" }
-    %div.row
-      %div.col-lg-12.text-center
-        %div.btn-group.d-flex
-          #{submit_tag "登録", :name => nil , :id => "create_btn", :class => "btn btn-primary w-100"}
-          %a.btn.btn-secondary.w-100{:href => "/"}
-            戻る
+%div.col-lg-6.col-md-12
+  %div.container.auto-middle
+    = form_tag("/users", method: :post, id: "singup-form") do
+      %div.row
+        %div.col-lg-1
+        %div.col-lg-10.col-md-12.signup-form
+          %div.row
+            - if @user.errors.any?
+              %div.col-lg-12.input-form-error
+                - @user.errors.full_messages.each do |message|
+                  %li
+                    = message
+            %div.col-lg-12.d-block.d-lg-none
+              %span.login-form-title
+                LinkS
+              %span.links-intro.morphext-text-change
+                クラウドブックマーク,簡単に共有！,便利ブクマは"いいね！"
+            %div.col-lg-12
+              %div.input-group.input-group.mb-3
+                %div.input-group-prepend
+                  %span{class:"input-group-text", id:"inputGroup-sizing-lg"}
+                    %i.fas.fa-envelope
+                #{text_field_tag 'user[email]', @user['email'], class:"form-control", placeholder:"メールアドレス" }
+            %div.col-lg-12
+              %div.input-group.input-group.mb-3
+                %div.input-group-prepend
+                  %span{class:"input-group-text", id:"inputGroup-sizing-lg"}
+                    %i.fas.fa-key
+                #{password_field_tag 'user[password]', @user['password'], class:"form-control", placeholder:"パスワード" }
+            %div.col-lg-12
+              %div.input-group.input-group.mb-3
+                %div.input-group-prepend
+                  %span{class:"input-group-text", id:"inputGroup-sizing-lg"}
+                    %i.fas.fa-key
+                #{password_field_tag 'user[password_confirmation]', @user['password_confirmation'], class:"form-control", placeholder:"パスワード(再入力)" }
+            %div.col-lg-12
+              %div.input-group.input-group.mb-3
+                %div.input-group-prepend
+                  %span{class:"input-group-text", id:"inputGroup-sizing-lg"}
+                    %i.fas.fa-user
+                #{text_field_tag 'user[name]', @user['name'], class:"form-control", placeholder:"システム内での名前" }
+            %div.col-lg-12.text-center
+              %div.btn-group.d-flex
+                #{submit_tag "サインアップ", :name => nil , :id => "create_btn", :class => "btn btn-blue w-100"}
+                %a.btn.btn-secondary.w-100{:href => "/"}
+                  戻る
+        %div.col-lg-1
