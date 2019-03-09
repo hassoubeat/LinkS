@@ -54,7 +54,7 @@ class ApplicationController < ActionController::Base
   # ログインチェックフィルター
   def login_check
     unless session[:user_id]
-      redirect_to(:index)
+      redirect_to controller: 'application', action: 'index'
     end
   end
 

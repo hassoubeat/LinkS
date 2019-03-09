@@ -1,6 +1,6 @@
 class UsersController < ApplicationController
   before_action :set_user, only: [:show, :edit, :update, :destroy]
-  skip_before_action :login_check, only: [:new, :create]
+  skip_before_action :login_check, only: [:new, :create, :user_check, :login]
 
   # GET /users
   # GET /users.json
@@ -80,12 +80,17 @@ class UsersController < ApplicationController
     end
   end
 
-  # メールアドレス認証(認証が取れればデータベースにアカウントを登録)
+  # メールアドレス本認証(認証が取れればデータベースにアカウントを登録)
   def user_check
     authcode = REDIS_USER_UNAUTH_PREFIX + params[:authcode]
     redis = Redis.new
     user = redis.hgetall authcode
-    if user
+    logger.debug user.inspect
+    if user.empty?
+      # redisからユーザ情報が取得できなかった場合は、再度登録を促す
+      flash.now[:error] = "ユーザ認証期限を過ぎています。お手数ですがユーザ登録から再度行ってください。"
+      render template: "index" and return
+    else
       # ユーザ情報をmodelにセットする
       @user = User.new(
         email: user['email'],
@@ -93,21 +98,36 @@ class UsersController < ApplicationController
         name: user['name'],
         is_valid: user['is_valid']
       )
-    else
-      # redisからユーザ情報が取得できなかった場合は、再度登録を促す
-      flash.now[:error] = "ユーザ認証期限を過ぎています。再度ユーザ登録から行ってください。"
-      render :login_form and return
     end
 
     respond_to do |format|
       if @user.save
-        format.html { redirect_to @user, flash: {info: 'ユーザ登録が完了しました。'}}
-        format.json { render :show, status: :created, location: @user }
+        flash[:info] = "ユーザ登録が完了しました。"
+        format.html { redirect_to controller: 'application', action: 'index'}
+        # format.json { render :show, status: :created, location: @user }
       else
         # TODO システムエラー
-        format.html { render :login_form}
-        format.json { render json: @user.errors, status: :unprocessable_entity }
+        format.html { render template: "index" and return}
+        # format.json { render json: @user.errors, status: :unprocessable_entity }
       end
+    end
+  end
+
+  # ログイン処理
+  def login
+    @user = User.find_by(email: params[:email])
+    # ハッシュ化したパスワードで認証
+    if @user && @user.authenticate(params[:password]);
+      session[:user_id] = @user.id
+      flash[:info] = "ログインしました"
+      redirect_to controller: 'application', action: 'index'
+    else
+      flash.now[:error] = "メールアドレスまたはパスワードが間違っています"
+      @user = User.new
+      @email = params[:email]
+      @password = params[:password]
+
+      render template: "index"
     end
   end
 

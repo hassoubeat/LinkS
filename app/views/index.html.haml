@@ -3,32 +3,28 @@
     %div.row
       %div.col-lg-1
       %div.col-lg-10.col-md-12.login-form
-        %div.row
-          - if @user.errors.any?
-            %div.col-lg-12.input-form-error
-              - @user.errors.full_messages.each do |message|
-                %li
-                  = message
-          %div.col-lg-12.d-block.d-lg-none
-            %span.login-form-title
-              LinkS
-            %span.links-intro.morphext-text-change
-              クラウドブックマーク,簡単に共有！,便利ブクマは"いいね！"
-          %div.col-lg-12
-            %div.input-group.input-group.mb-3
-              %div.input-group-prepend
-                %span{class:"input-group-text", id:"inputGroup-sizing-lg"}
-                  %i.fas.fa-envelope
-              #{text_field_tag 'email', @email, class:"form-control", placeholder:"メールアドレス" }
-          %div.col-lg-12
-            %div.input-group.input-group.mb-3
-              %div.input-group-prepend
-                %span{class:"input-group-text", id:"inputGroup-sizing-lg"}
-                  %i.fas.fa-key
-              #{password_field_tag 'password', @password, class:"form-control", placeholder:"パスワード"}
-          %div.col-lg-12.text-center
-            %div.btn-group.d-flex
-              #{submit_tag "ログイン", :name => nil , :id => "create_btn", :class => "btn btn-blue w-100"}
-              %a.btn.btn-pink.w-100{:href => "users/new"}
-                サインイン
+        = form_tag("/login", method: :post, id: "login-form") do
+          %div.row
+            %div.col-lg-12.d-block.d-lg-none
+              %span.login-form-title
+                LinkS
+              %span.links-intro.morphext-text-change
+                クラウドブックマーク,簡単に共有！,便利ブクマは"いいね！"
+            %div.col-lg-12
+              %div.input-group.input-group.mb-3
+                %div.input-group-prepend
+                  %span{class:"input-group-text", id:"inputGroup-sizing-lg"}
+                    %i.fas.fa-envelope
+                #{text_field_tag 'email', @email, class:"form-control", placeholder:"メールアドレス" }
+            %div.col-lg-12
+              %div.input-group.input-group.mb-3
+                %div.input-group-prepend
+                  %span{class:"input-group-text", id:"inputGroup-sizing-lg"}
+                    %i.fas.fa-key
+                #{password_field_tag 'password', @password, class:"form-control", placeholder:"パスワード"}
+            %div.col-lg-12.text-center
+              %div.btn-group.d-flex
+                #{submit_tag "ログイン", :name => nil , :id => "create_btn", :class => "btn btn-blue w-100"}
+                %a.btn.btn-pink.w-100{:href => "users/new"}
+                  サインイン
       %div.col-lg-1
