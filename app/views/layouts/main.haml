@@ -1,0 +1,113 @@
+!!!
+%html{lang: "ja"}
+  %head
+    %meta{name:"viewport", content:"width=device-width,initial-scale=1.0"}
+    %meta{:content => "text/html; charset=UTF-8", "http-equiv" => "Content-Type"}/
+    %title LinkS
+    = csrf_meta_tags
+    = csp_meta_tag
+
+    -# Bootstrap CSS
+    %link{rel: "stylesheet", href: "https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css", integrity:"sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T", crossorigin:"anonymous"}
+    -# AdminLTE CSS (Bootstrap拡張FW)
+    = stylesheet_link_tag 'AdminLTE', media: 'all'
+    -# FontAwesome CSS
+    %link{rel: "stylesheet", href: "https://use.fontawesome.com/releases/v5.7.2/css/all.css", integrity:"sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr", crossorigin:"anonymous"}
+    -# App CSS
+    = stylesheet_link_tag 'application', media: 'all'
+    -# Genre CSS
+    = stylesheet_link_tag 'genre', media: 'all'
+
+
+    -# Google Font(Comfortaa )
+    %link{rel: "stylesheet", href: "https://fonts.googleapis.com/css?family=Comfortaa"}
+    -# Google Font(Londrina+Shadow)
+    %link{rel: "stylesheet", href: "https://fonts.googleapis.com/css?family=Londrina+Shadow"}
+    -# Google Font(MPlus 1p)
+    %link{rel: "stylesheet", href: "https://fonts.googleapis.com/css?family=M+PLUS+Rounded+1c"}
+
+  %body.hold-transition{"data-spy" => "scroll", "data-target" => "#navbarNav"}
+    %div.animsition
+      %nav.navbar.navbar-expand-md.navbar-default.navbar-fixed-top
+        %a.navbar-brand{:href => "#"} LinkS
+        %button.navbar-toggler{"aria-controls" => "navbarNav", "aria-expanded" => "false", "aria-label" => "ナビゲーションの切替", "data-target" => "#navbarNav", "data-toggle" => "collapse", :type => "button"}
+          %i.nav-tab.fas.fa-list-ul
+        #navbarNav.collapse.navbar-collapse
+          %ul.navbar-nav.mr-auto
+          %ul.navbar-nav
+            - if @current_user
+              %li.nav-item
+                %a.nav-link{:href => "users/logout"}
+                  ログアウト
+            - else
+              %li.nav-item
+                %a.nav-link{:href => "index"}
+                  ログイン
+      = yield
+      %div.sidebar-toggle-botton
+        %a{"href" => "#", "class" => "sidebar-toggle", "data-toggle" => "push-menu", "role" => "button"}
+          %i.nav-tab.fas.fa-list-ul.pink
+          %span.sr-only Toggle navigation
+      %div.detail-area-toggle-botton
+        %a{"href" => "#", "class" => "detail-area-toggle", "role" => "button"}
+          %i.detail-toggle-icon.nav-tab.fas.fa-caret-up.pink
+          %span.sr-only Toggle navigation
+      -# %footer
+      -#   .container
+      -#     .row
+      -#       .col-lg-12.text-center
+      -#         %span.copyright Copyright © LinkS 2019
+
+    -# jQuery
+    = javascript_include_tag 'https://ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js'
+    -# jQuery UI
+    = javascript_include_tag 'http://code.jquery.com/ui/1.11.3/jquery-ui.js'
+    -# jQuery UI TouchPunch(スマホ環境でもD&Dを実現)
+    = javascript_include_tag 'jquery.ui.touch-punch.min'
+    -# Bootstrap JS
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+    -# AdminLTE JS
+    = javascript_include_tag 'adminlte'
+    -# App JS
+    = javascript_include_tag 'application'
+
+    :javascript
+      $(document).ready(function() {
+        // 画面表示時にアニメーション付きで遷移させる
+        $('.animsition').animsition();
+        // フォルダーのソート確定処理
+        $(".sortable").sortable({
+          items: '.sortable-item',
+        });
+        $(".sortable").disableSelection();
+        $("#submit").click(function() {
+            var result = $(".sortable").sortable("toArray");
+            $("#result").val(result);
+            $("form").submit();
+        });
+      });
+
+      // 詳細テキスト表示エリアを切り替えるイベント
+      $('.detail-area-toggle-botton').click(function(){
+        $(".detail-area").toggleClass('active');
+        // キャレットの向きを変更する
+        if($(".detail-toggle-icon").hasClass('fa-caret-up')){
+          $(".detail-toggle-icon").removeClass('fa-caret-up');
+          $(".detail-toggle-icon").addClass('fa-caret-down');
+        } else {
+          $(".detail-toggle-icon").removeClass('fa-caret-down');
+          $(".detail-toggle-icon").addClass('fa-caret-up');
+        }
+      });
+
+      // サイドバーのフォルダー名マウスホバー時に詳細エリアに情報を表示する
+      $('.sidebar-folder').hover(function(){
+          var folder_name = $(this).find('.sidebar-folder-name').text();
+          var folder_note = $(this).find('.sidebar-folder-note').text();
+          $(".detail-area-title").text(folder_name);
+          $(".detail-area-note").text(folder_note);
+        },
+        function() {
+        }
+      );
+

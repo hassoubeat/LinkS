@@ -1,6 +1,6 @@
 class UsersController < ApplicationController
   before_action :set_user, only: [:show, :edit, :update, :destroy]
-  skip_before_action :login_check, only: [:new, :create, :user_check, :login]
+  skip_before_action :login_check, only: [:new, :create, :show, :user_check, :login]
 
   # GET /users
   # GET /users.json
@@ -11,6 +11,7 @@ class UsersController < ApplicationController
   # GET /users/1
   # GET /users/1.json
   def show
+    render layout: "main"
   end
 
   # GET /users/new

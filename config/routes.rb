@@ -7,6 +7,8 @@ Rails.application.routes.draw do
   post '/users', to: 'users#create'
   # ユーザ登録本認証処理
   get '/user_check', to: 'users#user_check'
+  # ユーザ詳細ページ
+  get '/users/:id', to: 'users#show'
   # ログイン
   post '/login', to: 'users#login'
   # ルート

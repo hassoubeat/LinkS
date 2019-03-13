@@ -20,13 +20,14 @@
  }
 
  .navbar {
-  background-color:#6794BD;
+  background-color:pink;
+  z-index: 100;
  }
 
  .navbar-brand {
   font-family: 'Londrina Shadow', cursive;
   font-size: 1.5em;
-  color: pink;
+  color: white;
  }
 
  .nav-link {
@@ -34,6 +35,10 @@
   text-transform: uppercase;
   font-weight: 400;
   letter-spacing: 1px;
+  color: white;
+}
+
+.nav-tab {
   color: white;
 }
 
@@ -86,3 +91,149 @@ footer {
   background-color: pink;
   border-color: pink;
 }
+
+.sidebar-default-skin{
+  background-color: gray;
+  color: white;
+}
+
+.sidebar-default-skin * a{
+  color: white;
+}
+
+.sidebar-form {
+  border-radius: 3px;
+  border: 1px solid #374850;
+  margin: 10px 10px;
+}
+
+.sidebar-form input[type="text"] {
+  color: #666;
+  border-top-left-radius: 2px;
+  border-top-right-radius: 0;
+  border-bottom-right-radius: 0;
+  border-bottom-left-radius: 2px;
+  box-shadow: none;
+  background-color: #374850;
+  border: 1px solid transparent;
+  height: 35px;
+  box-sizing: border-box;
+}
+
+@media (min-width: 768px) {
+  .sidebar-collapse .main-header .navbar {
+      margin-left: 0px;
+  }
+}
+
+.sidebar-folder-icon {
+  padding: 0px !important;;
+  display: inline !important;
+}
+
+.sidebar-folder-create {
+  position: absolute;
+  right: 47px;
+  top: 50%;
+  margin-top: -17px;
+  padding: 5px;
+}
+
+.sidebar-folder-edit {
+  position: absolute;
+  right: 10px;
+  top: 50%;
+  margin-top: -18px;
+  padding: 5px;
+}
+
+.text-ellipsis {
+  overflow: hidden;
+	text-overflow: ellipsis;
+	white-space: nowrap;
+}
+
+.sidebar-toggle {
+  float: left;
+  background-color: transparent;
+  background-image: none;
+  padding: 15px 15px;
+  font-family: fontAwesome;
+}
+
+.sidebar-toggle:before {
+  content: none;
+}
+
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  border: 0;
+}
+
+.sidebar-toggle-botton {
+  position:fixed;
+  bottom:0%;
+  left:0%;
+  z-index:999;
+}
+
+.detail-area-toggle-botton {
+  position:fixed;
+  bottom:0%;
+  right:0%;
+  padding:15px;
+  z-index:998;
+}
+
+.pink {
+  color:pink;
+}
+
+.link-box {
+
+}
+
+
+.detail-area {
+  background-color: #E0ECF8;
+	width:100%;
+  height: 0px;
+	position: absolute;
+  bottom: 0px;
+  box-sizing: border-box;
+  transition:all 0.3s ease-out;
+}
+
+.detail-area > .detail-area-title {
+  padding: 10px;
+  font-size: 1em;
+  display: none;
+}
+
+.detail-area > .detail-area-note {
+  padding: 0px 10px;
+  font-size: 0.8em;
+  width: 100%;
+  height: 120px;
+  overflow: auto;
+  display: none;
+}
+
+.detail-area.active {
+  height: 200px;
+}
+
+.detail-area.active > .detail-area-title{
+  display: block;
+}
+
+.detail-area.active > .detail-area-note{
+  display: block;
+}
+
