@@ -95,36 +95,40 @@
                     <div class="link-box col-12">
                         <div class="row">
                             <div class="link-name col-lg-5 col-6">
-                                <div class="text-ellipsis">
-                                    Google
-                                </div>
+                                <a href="#">
+                                    <div class="text-ellipsis">
+                                        <img src="http://www.google.com/s2/favicons?domain=www.google.com"> Google
+                                    </div>
+                                </a>
                             </div>
                             <div class="hide link-note">
                                 Google検索
                             </div>
                             <div class="link-url col-lg-4 d-none d-lg-inline">
-                                <div class="text-ellipsis">
-                                    https://www.google.co.jp/
-                                </div>
+                                <a href="#">
+                                    <div id="link-url-for-copy" class="text-ellipsis">
+                                        https://www.google.co.jp/
+                                    </div>
+                                </a>
                             </div>
                             <div class="link-actions col-lg-3 col-6">
                                 <div class="link-actions">
                                     <a href="#" class="link-info">
                                         <i class="fas fa-info-circle link-action"></i>
                                     </a>
-                                    <a href="#">
+                                    <a href="#" data-toggle="modal" data-target="#link-edit-modal">
                                         <i class="fas fa-edit link-action"></i>
                                     </a>
                                     <a href="#">
                                         <i class="fas fa-trash-alt link-action"></i>
                                     </a>
-                                    <a href="#">
+                                    <a href="https://social-plugins.line.me/lineit/share?comment=test?url=https://www.google.co.jp/" target="_blank">
                                         <i class="fab fa-line link-action"></i>
                                     </a>
-                                    <a href="#">
+                                    <a href="https://twitter.com/intent/tweet?text=Google%0a%0aGoogle検索%0ahttps://www.google.co.jp/%0a%0aLinkSからの共有" target="_blank">
                                         <i class="fab fa-twitter link-action"></i>
                                     </a>
-                                    <a href="#">
+                                    <a href="#" class="url-copy" data-clipboard-target="#link-url-for-copy">
                                         <i class="fas fa-copy link-action"></i>
                                     </a>
                                 </div>
@@ -146,6 +150,106 @@
         <div class="detail-area-note">
             テスト用のエリアテスト用のエリアテスト用のエリアテスト用のエリアテスト用のエリアテスト用のエリアテスト用のエリアテスト用のエリアテスト用のエリアテスト用のエリアテスト用のエリアテスト用のエリアテスト用のエリアテスト用のエリアテスト用のエリアテスト用のエリアテスト用のエリアテスト用のエリアテスト用のエリアテスト用のエリアテスト用のエリアテスト用のエリアテスト用のエリアテスト用のエリアテスト用のエリアテスト用のエリアテスト用のエリアテスト用のエリアテスト用のエリアテスト用のエリアテスト用のエリアテスト用のエリアテスト用のエリアテスト用のエリアテスト用のエリアテスト用のエリアテスト用のエリアテスト用のエリアテスト用のエリアテスト用のエリアテスト用のエリアテスト用のエリアテスト用のエリアテスト用のエリアテスト用のエリアテスト用のエリアテスト用のエリアテスト用のエリアテスト用のエリアテスト用のエリアテスト用のエリアテスト用のエリアテスト用のエリアテスト用のエリアテスト用のエリアテスト用のエリアテスト用のエリアテスト用のエリアテスト用のエリアテスト用のエリアテスト用のエリアテスト用のエリアテスト用のエリアテスト用のエリアテスト用のエリアテスト用のエリアテスト用のエリアテスト用のエリアテスト用のエリアテスト用のエリアテスト用のエリアテスト用のエリアテスト用のエリアテスト用のエリアテスト用のエリアテスト用のエリアテスト用のエリアテスト用のエリアテスト用のエリアテスト用のエリアテスト用のエリアテスト用のエリアテスト用のエリアテスト用のエリア
             テスト用のエリア
+        </div>
+    </div>
+    <!-- フォルダー登録モーダル -->
+    <div class="modal fade" id="folder-create-modal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+        <div class="modal-dialog modal-xl" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">フォルダー</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+                </div>
+                <div class="modal-body text-muted">
+                    <div class="row">
+                        <div class="col-12">
+                            <div class="row">
+                                <div class="col-12">
+                                    <div class="input-group input-group mb-3">
+                                        <div class="input-group-prepend">
+                                            <span class="input-group-text" id="inputGroup-sizing-lg">
+                                                <i class="fa fa-folder"></i>
+                                            </span>
+                                        </div>
+                                        <input type="text" name="folder[name]" id="input-folder-name-form" class="form-control" placeholder="フォルダー名称">
+                                    </div>
+                                </div>
+                                <div class="col-12">
+                                    <div class="input-group input-group mb-3">
+                                        <div class="input-group-prepend">
+                                            <span class="input-group-text" id="inputGroup-sizing-lg">
+                                                <i class="fas fa-sticky-note"></i>
+                                            </span>
+                                        </div>
+                                        <textarea name="folder[note]" id="input-folder-note-form" class="form-control" placeholder="メモ"></textarea>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <a class="btn btn-primary" href="#" target="_blank">登録</a>
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">閉じる</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- リンク変更モーダル -->
+    <div class="modal fade" id="link-edit-modal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+        <div class="modal-dialog modal-xl" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">ブックマーク</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+                </div>
+                <div class="modal-body text-muted">
+                    <div class="row">
+                        <div class="col-12">
+                            <div class="row">
+                                <div class="col-12">
+                                    <div class="input-group input-group mb-3">
+                                        <div class="input-group-prepend">
+                                            <span class="input-group-text" id="inputGroup-sizing-lg">
+                                                <i class="fas fa-link"></i>
+                                            </span>
+                                        </div>
+                                        <input type="text" name="link[url]" id="input-link-url-form" class="form-control" placeholder="サイトのURL">
+                                    </div>
+                                </div>
+                                <div class="col-12">
+                                    <div class="input-group input-group mb-3">
+                                        <div class="input-group-prepend">
+                                            <span class="input-group-text" id="inputGroup-sizing-lg">
+                                                <i class="fas fa-bookmark"></i>
+                                            </span>
+                                        </div>
+                                        <input type="text" name="link[name]" id="input-link-name-form" class="form-control" placeholder="ブックマーク名称">
+                                    </div>
+                                </div>
+                                <div class="col-12">
+                                    <div class="input-group input-group mb-3">
+                                        <div class="input-group-prepend">
+                                            <span class="input-group-text" id="inputGroup-sizing-lg">
+                                                <i class="fas fa-sticky-note"></i>
+                                            </span>
+                                        </div>
+                                        <textarea name="link[note]" id="input-link-note-form" class="form-control" placeholder="メモ"></textarea>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <a class="btn btn-primary" href="#" target="_blank">変更</a>
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">閉じる</button>
+                    </div>
+                </div>
+            </div>
         </div>
     </div>
 </div>

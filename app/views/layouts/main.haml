@@ -60,10 +60,12 @@
 
     -# jQuery
     = javascript_include_tag 'https://ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js'
-    -# jQuery UI
+    -# jQuery UI (jQuery Plugin)
     = javascript_include_tag 'http://code.jquery.com/ui/1.11.3/jquery-ui.js'
-    -# jQuery UI TouchPunch(スマホ環境でもD&Dを実現)
+    -# jQuery Plugin UI TouchPunch (jQuery Plugin) スマホ環境でもD&Dを実現する
     = javascript_include_tag 'jquery.ui.touch-punch.min'
+    -# Clipboard.js (jQuery Plugin)
+    = javascript_include_tag 'clipboard.min'
     -# Bootstrap JS
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
     -# AdminLTE JS
@@ -73,7 +75,7 @@
 
     :javascript
       $(document).ready(function() {
-        // サイドバーの高さを
+        // サイドバーの高さを定義
         $(".main-sidebar").height($(document).height() - 62);
         // 画面表示時にアニメーション付きで遷移させる
         $('.animsition').animsition({
@@ -86,8 +88,6 @@
           if (width < 768) {
             $('.sidebar-toggle')[0].click();
           }
-          console.log($(window).height());
-          console.log($('body').height());
         });;
         // フォルダーのソート確定処理
         $(".sortable").sortable({
@@ -99,6 +99,11 @@
             $("#result").val(result);
             $("form").submit();
         });
+        // URLコピーの初期化処理
+        // var clipboard = new Clipboard('.url-copy');
+        // clipboard.on('success', function(e) {
+        //  alert("success");
+        // });
       });
 
 
@@ -158,6 +163,36 @@
           if(!$(".detail-area").hasClass('active')){
             toggleDetailArea();
           }
+      });
+
+      // コピーアイコンクリック時にURLをコピーする処理
+      $('.link-info').click(function(){
+        $(this).attr("url-copy");
+      });
+
+      // ブックマーク登録時にURL入力欄からカーソルが外れたときにタイトルを自動でスクレイピングして名前入力欄にセットする
+      // $('#input-link-url-form').blur(function(){
+      // var bookmark_url = $(this).val();
+      //  var pattern = new RegExp('^(https?:\\/\\/)?((([a-z\\d]([a-z\\d-]*[a-z\\d])*)\\.)+[a-z]{2,}|((\\d{1,3}\\.){3}\\d{1,3}))(\\:\\d+)?(\\/[-a-z\\d%_.~+]*)*(\\?[;&a-z\\d%_.~+=-]*)?(\\#[-a-z\\d_]*)?$','i');
+      //  if (pattern.test(bookmark_url)) {
+      //    $.ajax({
+      //      url: bookmark_url,
+      //      type: 'GET',
+      //     success: function(res) {
+      //        title = $(res.responseText).find('title').text();
+      //        $('#input-link-name-form').val(title);
+      //      }
+      //    });
+      //  }
+      //});
+
+      // フォルダー作成時にスマホ画面だった場合は、サイドバーを閉じる
+      $('.sidebar-folder-create').click(function(){
+        var width = $(window).width();
+        if (width < 768) {
+          $('.sidebar-toggle')[0].click();
+        }
+        $('#folder-create-modal').modal();
       });
 
       function toggleDetailArea(){

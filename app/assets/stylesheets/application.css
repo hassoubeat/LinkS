@@ -239,7 +239,7 @@ footer {
 .link-box {
   padding-top: 5px;
   padding-bottom: 5px;
-  padding-left: 25px !important;
+  padding-right: 5px;
   background: #F2F2F2;
   border-left: solid 25px gray;
   border-bottom: solid 1px #D8D8D8;
@@ -266,13 +266,20 @@ footer {
   color: gray;
 }
 
+.link-actions > span {
+  color: gray;
+  cursor: pointer;
+}
+
 .link-action {
+  padding-left: 3px;
   padding-right: 3px;
 }
 
 @media (min-width: 768px) {
   .link-action {
-    padding-right: 6px;
+    padding-left: 3px;
+    padding-right: 3px;
   }
 }
 
@@ -326,3 +333,6 @@ footer {
   display: block;
 }
 
+.testlink {
+  display: block;
+}
