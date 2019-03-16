@@ -412,7 +412,6 @@ a:focus {
   position: absolute;
   top: 0;
   left: 0;
-  padding-top: 62px;
   min-height: 100vh;
   width: 280px;
   z-index: 50;
@@ -420,11 +419,6 @@ a:focus {
   -moz-transition: -moz-transform 0.3s ease-in-out, width 0.3s ease-in-out;
   -o-transition: -o-transform 0.3s ease-in-out, width 0.3s ease-in-out;
   transition: transform 0.3s ease-in-out, width 0.3s ease-in-out;
-}
-@media (max-width: 767px) {
-  .main-sidebar {
-    padding-top: 62px;
-  }
 }
 @media (max-width: 767px) {
   .main-sidebar {
