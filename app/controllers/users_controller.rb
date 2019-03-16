@@ -1,6 +1,6 @@
 class UsersController < ApplicationController
   before_action :set_user, only: [:show, :edit, :update, :destroy]
-  skip_before_action :login_check, only: [:new, :create, :show, :user_check, :login]
+  skip_before_action :login_check, only: [:new, :create, :user_check, :login]
 
   # GET /users
   # GET /users.json
@@ -8,9 +8,18 @@ class UsersController < ApplicationController
     @users = User.all
   end
 
-  # GET /users/1
-  # GET /users/1.json
+  # GET /users/:id
   def show
+    # セッションのuser_idと比較して違ったら権限なしで自分のトップページへ
+    id = params[:id].to_i
+    if login_user?(id)
+      # TODO フォルダーを取得
+
+      # TODO お知らせを取得
+    else
+      # 自分のTOPページへ
+      redirect_to "/users/#{session[:user_id]}" and return
+    end
     render layout: "main"
   end
 
@@ -121,7 +130,7 @@ class UsersController < ApplicationController
     if @user && @user.authenticate(params[:password]);
       session[:user_id] = @user.id
       flash[:info] = "ログインしました"
-      redirect_to controller: 'application', action: 'index'
+      redirect_to "/users/#{@user.id}"
     else
       flash.now[:error] = "メールアドレスまたはパスワードが間違っています"
       @user = User.new
@@ -130,6 +139,13 @@ class UsersController < ApplicationController
 
       render template: "index"
     end
+  end
+
+  # ログアウト処理
+  def logout
+    session[:user_id] = nil
+    flash[:info] = "ログアウトしました"
+    redirect_to controller: 'application', action: 'index'
   end
 
   private

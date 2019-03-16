@@ -13,6 +13,8 @@
     = stylesheet_link_tag 'AdminLTE', media: 'all'
     -# FontAwesome CSS
     %link{rel: "stylesheet", href: "https://use.fontawesome.com/releases/v5.7.2/css/all.css", integrity:"sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr", crossorigin:"anonymous"}
+    -# jQuery toast CSS (jQuery Plugin CSS)
+    = stylesheet_link_tag 'jquery.toast.min', media: 'all'
     -# App CSS
     = stylesheet_link_tag 'application', media: 'all'
     -# Genre CSS
@@ -28,6 +30,12 @@
 
   %body.hold-transition{"data-spy" => "scroll", "data-target" => "#navbarNav"}
     %div.animsition
+      - if flash[:info]
+        %div.info-message.hide
+          = flash[:info]
+      - if flash[:error]
+        %div.error-message.hide
+          = flash[:error]
       %nav.navbar.navbar-expand-md.navbar-default.navbar-fixed-top
         %a.navbar-brand{:href => "#"} LinkS
         %button.navbar-toggler{"aria-controls" => "navbarNav", "aria-expanded" => "false", "aria-label" => "ナビゲーションの切替", "data-target" => "#navbarNav", "data-toggle" => "collapse", :type => "button"}
@@ -37,7 +45,7 @@
           %ul.navbar-nav
             - if @current_user
               %li.nav-item
-                %a.nav-link{:href => "users/logout"}
+                %a.nav-link{:href => "/logout"}
                   ログアウト
             - else
               %li.nav-item
@@ -66,6 +74,8 @@
     = javascript_include_tag 'jquery.ui.touch-punch.min'
     -# Clipboard.js (jQuery Plugin)
     = javascript_include_tag 'clipboard.min'
+    -# jQuery.toast.js (jQuery Plugin)
+    = javascript_include_tag 'jquery.toast.min'
     -# Bootstrap JS
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
     -# AdminLTE JS
@@ -104,6 +114,22 @@
         // clipboard.on('success', function(e) {
         //  alert("success");
         // });
+
+        // インフォメーションメッセージの表示
+        var info_message = $(".info-message").text();
+        if (info_message) {
+          $.toast({
+            text : info_message,
+            showHideTransition : 'slide',
+            bgColor : "#B8DCEF",
+            textColor : "#797F82",
+            hideAfter: 5000,
+            position: 'top-right',
+            stack : 5,
+            textAlign : 'left',
+            position : 'bottom-right'
+          });
+        }
       });
 
 

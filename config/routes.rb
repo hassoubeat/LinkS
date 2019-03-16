@@ -11,6 +11,8 @@ Rails.application.routes.draw do
   get '/users/:id', to: 'users#show'
   # ログイン
   post '/login', to: 'users#login'
+  # ログイン
+  get '/logout', to: 'users#logout'
   # ルート
   root :controller => 'application', :action => 'index'
 end
