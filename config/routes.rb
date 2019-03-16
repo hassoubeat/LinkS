@@ -9,6 +9,8 @@ Rails.application.routes.draw do
   get '/user_check', to: 'users#user_check'
   # ユーザ詳細ページ
   get '/users/:id', to: 'users#show'
+  # フォルダー登録ページ
+  post '/users/:user_id/folders', to: 'folders#create'
   # ログイン
   post '/login', to: 'users#login'
   # ログイン

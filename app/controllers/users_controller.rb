@@ -11,13 +11,13 @@ class UsersController < ApplicationController
   # GET /users/:id
   def show
     # セッションのuser_idと比較して違ったら権限なしで自分のトップページへ
-    id = params[:id].to_i
-    if login_user?(id)
-      # TODO フォルダーを取得
-
+    if login_user?(@user.id)
+      # フォルダ一覧を取得
+      @folders = Folder.where(user_id: @user.id).is_valid
       # TODO お知らせを取得
     else
       # 自分のTOPページへ
+      @folders = Folder.where(user_id: session[:user_id]).is_valid
       redirect_to "/users/#{session[:user_id]}" and return
     end
     render layout: "main"
