@@ -350,6 +350,6 @@ footer {
   display: block;
 }
 
-.testlink {
-  display: block;
+.info-pop {
+  color: gray;
 }

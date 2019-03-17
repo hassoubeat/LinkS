@@ -1,6 +1,7 @@
 class FoldersController < ApplicationController
-  before_action :set_folder, only: [:show, :edit, :update, :destroy]
   skip_before_action :login_check, only: [:new, :create, :user_check, :login]
+  before_action :set_folder, only: [:show, :edit, :update, :destroy]
+  before_action :login_user_check, only: [:create]
 
   # GET /users
   # GET /users.json
@@ -22,11 +23,14 @@ class FoldersController < ApplicationController
 
   # POST /users/:user_id/folders
   def create
-    # TODO 本人確認して違った場合は、自身のトップへ
     @folder = Folder.new(folder_params)
-    @folder.is_valid = true;
-    @folder.is_open = true;
+    @folder.is_valid = true
     @folder.user_id = session[:user_id]
+
+    # フォルダー名が入力されていない時は、デフォルト名で登録する
+    if @folder.name == ""
+      @folder.name = FOLDER_DEFAULT_NAME
+    end
 
     # TODO バリデーションチェック
     # if @user.invalid?
@@ -50,6 +54,6 @@ class FoldersController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def folder_params
-      params.require(:folder).permit(:name, :comment)
+      params.require(:folder).permit(:name, :comment, :is_open)
     end
 end

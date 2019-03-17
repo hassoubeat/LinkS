@@ -1,6 +1,7 @@
 class UsersController < ApplicationController
-  before_action :set_user, only: [:show, :edit, :update, :destroy]
   skip_before_action :login_check, only: [:new, :create, :user_check, :login]
+  before_action :set_user, only: [:show, :edit, :update, :destroy]
+  before_action :login_user_check, only: [:show]
 
   # GET /users
   # GET /users.json
@@ -8,18 +9,9 @@ class UsersController < ApplicationController
     @users = User.all
   end
 
-  # GET /users/:id
+  # GET /users/:user_id
   def show
-    # セッションのuser_idと比較して違ったら権限なしで自分のトップページへ
-    if login_user?(@user.id)
-      # フォルダ一覧を取得
-      @folders = Folder.where(user_id: @user.id).is_valid
-      # TODO お知らせを取得
-    else
-      # 自分のTOPページへ
-      @folders = Folder.where(user_id: session[:user_id]).is_valid
-      redirect_to "/users/#{session[:user_id]}" and return
-    end
+    @folders = Folder.where(user_id: @user.id).is_valid
     render layout: "main"
   end
 
@@ -151,7 +143,7 @@ class UsersController < ApplicationController
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_user
-      @user = User.find(params[:id])
+      @user = User.find(params[:user_id])
     end
 
     # Never trust parameters from the scary internet, only allow the white list through.

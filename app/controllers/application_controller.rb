@@ -3,6 +3,7 @@ class ApplicationController < ActionController::Base
   # 定数
   REDIS_USER_UNAUTH_PREFIX = "user_unauth_"
   REDIS_USER_UNAUTH_EXPIRE = "3600" #1時間
+  FOLDER_DEFAULT_NAME = "No Name"
 
   protect_from_forgery with: :exception
 
@@ -59,6 +60,15 @@ class ApplicationController < ActionController::Base
   end
 
   # ログイン本人チェック
+  def login_user_check
+    if !login_user?(params[:user_id].to_i)
+      # 自分のTOPページへ
+      @folders = Folder.where(user_id: session[:user_id]).is_valid
+      redirect_to "/users/#{session[:user_id]}" and return
+    end
+  end
+
+  # ログインチェック
   def login_user?(user_id)
     if (session[:user_id] == user_id)
       return true

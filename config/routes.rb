@@ -8,7 +8,7 @@ Rails.application.routes.draw do
   # ユーザ登録本認証処理
   get '/user_check', to: 'users#user_check'
   # ユーザ詳細ページ
-  get '/users/:id', to: 'users#show'
+  get '/users/:user_id', to: 'users#show'
   # フォルダー登録ページ
   post '/users/:user_id/folders', to: 'folders#create'
   # ログイン
