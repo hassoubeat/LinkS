@@ -11,6 +11,7 @@ class ApplicationController < ActionController::Base
 
   before_action :login_check
   before_action :init_action
+  before_action :set_params
   around_action :around_logger
 
   skip_before_action :login_check, only: [:index,:login_form]
@@ -74,6 +75,21 @@ class ApplicationController < ActionController::Base
       return true
     else
       return false
+    end
+  end
+
+  # 各種パラメータのセット
+  def set_params
+    if params[:user_id]
+      @user = User.find(params[:user_id])
+    end
+
+    if params[:folder_id]
+      @folder = Folder.find(params[:folder_id])
+    end
+
+    if @user
+      @folders = Folder.where(user_id: @user.id).is_valid
     end
   end
 end

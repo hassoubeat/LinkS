@@ -1,6 +1,5 @@
 class FoldersController < ApplicationController
   skip_before_action :login_check, only: [:new, :create, :user_check, :login]
-  before_action :set_folder, only: [:show, :edit, :update, :destroy]
   before_action :login_user_check, only: [:create]
 
   # GET /users
@@ -11,6 +10,8 @@ class FoldersController < ApplicationController
 
   # GET /users/:user_id/folders/:folder_id
   def show
+    # TODO 紐付いているリンクを取得
+    render layout: "main"
   end
 
   # GET /users/:user_id/folders/new
@@ -46,13 +47,19 @@ class FoldersController < ApplicationController
     redirect_to "/users/#{session[:user_id]}" and return
   end
 
-  private
-    # Use callbacks to share common setup or constraints between actions.
-    def set_folder
-      @folder = Folder.find(params[:id])
+  # DELETE /users/:user_id/folders/:folder_id
+  def destroy
+    @folder.is_valid = false;
+    if @folder.save
+      flash[:info] = "フォルダーを削除しました"
+    else
+      # TODO システムエラー
+      flash[:info] = "フォルダーの削除に失敗しました"
     end
+    redirect_to "/users/#{session[:user_id]}" and return
+  end
 
-    # Never trust parameters from the scary internet, only allow the white list through.
+  private
     def folder_params
       params.require(:folder).permit(:name, :comment, :is_open)
     end

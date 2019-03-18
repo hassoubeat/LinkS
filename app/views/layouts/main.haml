@@ -70,7 +70,7 @@
                     %span.sidebar-folder-sort
                       %i.fas.fa-sort
               - @folders.each do |folder|
-                %li.treeview.sortable-item.sidebar-folder
+                %li.sidebar-folder
                   %a.text-ellipsis.sidemenu{:href => "/users/#{folder.user_id}/folders/#{folder.id}"}
                     - if folder.is_open == true
                       %i.fas.fa-share-alt &nbsp;

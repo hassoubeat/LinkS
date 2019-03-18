@@ -7,9 +7,9 @@
         .col-6
           .text-ellipsis
             %span.content-header-folder-name
-              Googleオンラインサービス関連のリンク
+              = @folder.name
             %span.hide.content-header-folder-note
-              GoogleDrive、Gmailなどのリンク集
+              = @folder.comment
         .col-6
           .content-header-actions
             %a.content-header-folder-info{:href => "#"}
@@ -18,7 +18,7 @@
               %i.fas.fa-plus-square.content-header-action
             %a{:href => "#"}
               %i.fas.fa-edit.content-header-action
-            %a{:href => "#"}
+            %a{:href => "#", "data-method" => "delete", "data-toggle" => "modal", "data-target" => "#folder-delete-modal"}
               %i.fas.fa-trash-alt.content-header-action
             %a{:href => "#"}
               %i.fab.fa-line.content-header-action
@@ -57,3 +57,24 @@
                   %i.fab.fa-twitter.link-action
                 %a.url-copy{"data-clipboard-target" => "#link-url-for-copy", :href => "#"}
                   %i.fas.fa-copy.link-action
+
+/ フォルダー削除モーダル
+#folder-delete-modal.modal.fade{"aria-labelledby" => "myModalLabel", :role => "dialog", :tabindex => "-1"}
+  .modal-dialog.modal-xl{:role => "document"}
+    .modal-content
+      .modal-header
+        %h5#exampleModalLabel.modal-title フォルダー削除
+        %button.close{"aria-label" => "Close", "data-dismiss" => "modal", :type => "button"}
+          %span{"aria-hidden" => "true"} ×
+      .modal-body.text-muted
+        .row
+          .col-12
+            %div{"style" => "margin-bottom:10px;"}
+              フォルダーを削除します。
+              %br
+              %span.warning
+                %i.fas.fa-exclamation-triangle フォルダーに紐づくブックマークも同時に削除されます。
+        .modal-footer
+          = form_tag("/users/#{@user.id}/folders/#{@folder.id}", method: :delete, id: "folder-delete-form") do
+            %a.btn.btn-danger{:href => "#", "onclick" => "this.parentNode.submit()"} 削除
+            %button.btn.btn-secondary{"data-dismiss" => "modal", :type => "button"} 閉じる

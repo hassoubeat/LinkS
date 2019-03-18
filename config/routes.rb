@@ -11,9 +11,13 @@ Rails.application.routes.draw do
   get '/users/:user_id', to: 'users#show'
   # フォルダー登録ページ
   post '/users/:user_id/folders', to: 'folders#create'
+  # フォルダー詳細ページ
+  get '/users/:user_id/folders/:folder_id', to: 'folders#show'
+  # フォルダー削除処理
+  delete '/users/:user_id/folders/:folder_id', to: 'folders#destroy'
   # ログイン
   post '/login', to: 'users#login'
-  # ログイン
+  # ログアウト
   get '/logout', to: 'users#logout'
   # ルート
   root :controller => 'application', :action => 'index'
