@@ -10,6 +10,7 @@ class UsersController < ApplicationController
 
   # GET /users/:user_id
   def show
+    @intial_display_sidebar = true;
     render layout: "main"
   end
 

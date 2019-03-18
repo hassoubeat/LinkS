@@ -13,6 +13,8 @@ Rails.application.routes.draw do
   post '/users/:user_id/folders', to: 'folders#create'
   # フォルダー詳細ページ
   get '/users/:user_id/folders/:folder_id', to: 'folders#show'
+  # フォルダー変更処理
+  patch '/users/:user_id/folders/:folder_id', to: 'folders#update'
   # フォルダー削除処理
   delete '/users/:user_id/folders/:folder_id', to: 'folders#destroy'
   # ログイン

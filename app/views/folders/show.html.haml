@@ -16,9 +16,9 @@
               %i.fas.fa-info-circle.content-header-action
             %a{:href => "#"}
               %i.fas.fa-plus-square.content-header-action
-            %a{:href => "#"}
+            %a{:href => "#", "data-toggle" => "modal", "data-target" => "#folder-edit-modal"}
               %i.fas.fa-edit.content-header-action
-            %a{:href => "#", "data-method" => "delete", "data-toggle" => "modal", "data-target" => "#folder-delete-modal"}
+            %a{:href => "#", "data-toggle" => "modal", "data-target" => "#folder-delete-modal"}
               %i.fas.fa-trash-alt.content-header-action
             %a{:href => "#"}
               %i.fab.fa-line.content-header-action
@@ -57,7 +57,54 @@
                   %i.fab.fa-twitter.link-action
                 %a.url-copy{"data-clipboard-target" => "#link-url-for-copy", :href => "#"}
                   %i.fas.fa-copy.link-action
-
+/ フォルダー変更モーダル
+#folder-edit-modal.modal.fade{"aria-labelledby" => "myModalLabel", :role => "dialog", :tabindex => "-1"}
+  .modal-dialog.modal-xl{:role => "document"}
+    .modal-content
+      = form_tag("/users/#{@user.id}/folders/#{@folder.id}", method: :patch, id: "folder-edit-form") do
+        .modal-header
+          %h5#exampleModalLabel.modal-title フォルダー変更
+          %button.close{"aria-label" => "Close", "data-dismiss" => "modal", :type => "button"}
+            %span{"aria-hidden" => "true"} ×
+        .modal-body.text-muted
+          .row
+            .col-12
+              .row
+                .col-12
+                  .input-group.input-group.mb-3
+                    .input-group-prepend
+                      %span#inputGroup-sizing-lg.input-group-text
+                        %i.fa.fa-folder
+                    #{text_field_tag 'folder[name]', @folder['name'], class:"form-control", placeholder:"フォルダー名称", maxlength:'20' }
+                .col-12
+                  .input-group.input-group.mb-3
+                    .input-group-prepend
+                      %span#inputGroup-sizing-lg.input-group-text
+                        %i.fas.fa-sticky-note
+                    #{text_area_tag 'folder[comment]', @folder["comment"], class:"form-control", placeholder:"メモ", maxlength:'400' }
+                .col-12
+                  .input-group.input-group.mb-3
+                    %a.info-pop{"tabindex"=> "0", "data-toggle" => "popover", "data-trigger" => "focus", "title" => "公開設定", "data-content" => "作成するフォルダーを他のユーザにも公開する場合は「公開」、そうでない場合は「非公開」を選択してください"}
+                      %i.fas.fa-info-circle &nbsp;公開設定
+                .col-12
+                  .btn-group.btn-group-toggle{"data-toggle" => "buttons", "style" => "width:100%; margin-bottom:10px;"}
+                    -if @folder.is_open == true
+                      %label.btn.btn-outline-secondary{"style" => "width:50%; border-color: #6c757d;"}
+                        #{radio_button_tag 'folder[is_open]', false} 非公開
+                    -else
+                      %label.btn.btn-outline-secondary.active{"style" => "width:50%; border-color: #6c757d;"}
+                        #{radio_button_tag 'folder[is_open]', false, "checked" => true} 非公開
+                    -if @folder.is_open == true
+                      %label.btn.btn-outline-success.active{"style" => "width:50%; border-color: #28a745;"}
+                        #{radio_button_tag 'folder[is_open]', true, "checked" => true}
+                        %i.fas.fa-share-alt &nbsp;公開
+                    -else
+                      %label.btn.btn-outline-success{"style" => "width:50%; border-color: #28a745;"}
+                        #{radio_button_tag 'folder[is_open]', true}
+                        %i.fas.fa-share-alt &nbsp;公開
+          .modal-footer
+            #{submit_tag "更新", :name => nil , :id => "folder_edit_btn", :class => "btn btn-primary"}
+            %button.btn.btn-secondary{"data-dismiss" => "modal", :type => "button"} 閉じる
 / フォルダー削除モーダル
 #folder-delete-modal.modal.fade{"aria-labelledby" => "myModalLabel", :role => "dialog", :tabindex => "-1"}
   .modal-dialog.modal-xl{:role => "document"}

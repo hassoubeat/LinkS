@@ -178,6 +178,16 @@ footer {
   padding: 5px;
 }
 
+.sidebar-folder > a:hover {
+  color: gray;
+  background-color: #F2F2F2;
+}
+
+.sidebar-folder.selected {
+  color: gray;
+  background-color: pink;
+}
+
 .text-ellipsis {
   overflow: hidden;
 	text-overflow: ellipsis;

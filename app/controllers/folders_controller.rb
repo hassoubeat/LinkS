@@ -1,5 +1,5 @@
 class FoldersController < ApplicationController
-  skip_before_action :login_check, only: [:new, :create, :user_check, :login]
+  skip_before_action :login_check, only: [:create, :user_check, :login]
   before_action :login_user_check, only: [:create]
 
   # GET /users
@@ -12,14 +12,6 @@ class FoldersController < ApplicationController
   def show
     # TODO 紐付いているリンクを取得
     render layout: "main"
-  end
-
-  # GET /users/:user_id/folders/new
-  def new
-  end
-
-  # GET /users/:user_id/folders/edit
-  def edit
   end
 
   # POST /users/:user_id/folders
@@ -45,6 +37,22 @@ class FoldersController < ApplicationController
       flash[:info] = "フォルダーの登録に失敗しました"
     end
     redirect_to "/users/#{session[:user_id]}" and return
+  end
+
+  # PATCH /users/:user_id/folders/:folder_id
+  def update
+    # TODO バリデーションチェック
+    # if @user.invalid?
+    #   render :new, layout: "application" and return
+    # end
+
+    if @folder.update(folder_params)
+      flash[:info] = "フォルダーを変更しました"
+    else
+      # TODO システムエラー
+      flash[:info] = "フォルダーの変更に失敗しました"
+    end
+    redirect_to "/users/#{session[:user_id]}/folders/#{@folder.id}}" and return
   end
 
   # DELETE /users/:user_id/folders/:folder_id

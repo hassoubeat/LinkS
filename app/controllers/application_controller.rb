@@ -18,8 +18,10 @@ class ApplicationController < ActionController::Base
 
   # トップ画面の表示
   def index
-    # TODO ログイン済みの場合は、ユーザページへリダイレクト
-    @user = User.new
+    # ログイン済みの場合は、ユーザページへリダイレクト
+    if session[:user_id]
+      redirect_to "/users/#{session[:user_id]}" and return
+    end
     render template: 'index'
   end
 
@@ -80,14 +82,23 @@ class ApplicationController < ActionController::Base
 
   # 各種パラメータのセット
   def set_params
+    # 画面遷移時にサイドバーを表示するフラグ(基本スマホのみに適用)
+    @intial_display_sidebar = false
+
+    @user = User.new()
+    @folder = Folder.new()
+
+    # パラメータでユーザIDを受けている時に、ユーザ情報を取得する
     if params[:user_id]
       @user = User.find(params[:user_id])
     end
 
+    # パラメータでフォルダーIDを受けている時に、フォルダー情報を取得する
     if params[:folder_id]
       @folder = Folder.find(params[:folder_id])
     end
 
+    # ユーザIDを取得できた際には、紐づくフォルダー一覧を取得する
     if @user
       @folders = Folder.where(user_id: @user.id).is_valid
     end

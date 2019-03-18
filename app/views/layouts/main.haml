@@ -37,7 +37,7 @@
         %div.error-message.hide
           = flash[:error]
       %nav.navbar.navbar-expand-md.navbar-default.navbar-fixed-top
-        %a.navbar-brand{:href => "#"} LinkS
+        %a.navbar-brand{:href => "/"} LinkS
         %button.navbar-toggler{"aria-controls" => "navbarNav", "aria-expanded" => "false", "aria-label" => "ナビゲーションの切替", "data-target" => "#navbarNav", "data-toggle" => "collapse", :type => "button"}
           %i.nav-tab.fas.fa-list-ul
         #navbarNav.collapse.navbar-collapse
@@ -70,7 +70,7 @@
                     %span.sidebar-folder-sort
                       %i.fas.fa-sort
               - @folders.each do |folder|
-                %li.sidebar-folder
+                %li{class: "sidebar-folder #{'selected' if folder.id == @folder.id}"}
                   %a.text-ellipsis.sidemenu{:href => "/users/#{folder.user_id}/folders/#{folder.id}"}
                     - if folder.is_open == true
                       %i.fas.fa-share-alt &nbsp;
@@ -175,7 +175,8 @@
         %span{"class" => "detail-area-toggle", "role" => "button"}
           %i.detail-toggle-icon.nav-tab.fas.fa-caret-up.pink
           %span.sr-only Toggle navigation
-
+      %div.hide.hide-params
+        %span{id: "intial_display_sidebar", class: "#{'active' if @intial_display_sidebar}"}
     -# jQuery
     = javascript_include_tag 'https://ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js'
     -# jQuery UI (jQuery Plugin)
@@ -205,10 +206,13 @@
           outDuration: 500,
         }).one('animsition.inEnd',function(){
           // 画面表示アニメーション実行後処理(コールバック)
-          // 現在の画面サイズがスマホサイズだった場合、サイドバーを表示する
-          var width = $(window).width();
-          if (width < 768) {
-            $('.sidebar-toggle')[0].click();
+          // サイドバーの初期表示有無(スマホ限定)
+          if ($("#intial_display_sidebar").hasClass("active")) {
+            var width = $(window).width();
+            if (width < 768) {
+              // 現在の画面サイズがスマホサイズかつ、サイドバー初期表示が有効な場合サイドバーを表示する
+              $('.sidebar-toggle')[0].click();
+            }
           }
         });;
         // フォルダーのソート確定処理
