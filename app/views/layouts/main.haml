@@ -67,8 +67,8 @@
                     %span.sidebar-folder-create
                       %i.far.fa-plus-square
                   %a{:href => "#"}
-                    %span.sidebar-folder-edit
-                      %i.fas.fa-edit
+                    %span.sidebar-folder-sort
+                      %i.fas.fa-sort
               - @folders.each do |folder|
                 %li.treeview.sortable-item.sidebar-folder
                   %a.text-ellipsis.sidemenu{:href => "/users/#{folder.user_id}/folders/#{folder.id}"}

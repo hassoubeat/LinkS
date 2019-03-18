@@ -1,59 +1,63 @@
 / メインコンテンツ
 .row
-  / コンテンツヘッダー
   .col-12
-    .content-header
+    .links-infomation-title-area
+      %h4 Infomation
+      %span
+        ようこそLinkS(リンクス)へ！
+        LinkSであなたが集めたブックマークを誰かと共有しましょう！
+  .col-12.col-md-6
+    .links-infomation-nice-ranking-area
+      %h4 今週のいいねランキング
       .row
-        .col-6
-          .text-ellipsis
-            %span.content-header-folder-name
-              Googleオンラインサービス関連のリンク
-            %span.hide.content-header-folder-note
-              GoogleDrive、Gmailなどのリンク集
-        .col-6
-          .content-header-actions
-            %a.content-header-folder-info{:href => "#"}
-              %i.fas.fa-info-circle.content-header-action
-            %a{:href => "#"}
-              %i.fas.fa-plus-square.content-header-action
-            %a{:href => "#"}
-              %i.fas.fa-edit.content-header-action
-            %a{:href => "#"}
-              %i.fas.fa-trash-alt.content-header-action
-            %a{:href => "#"}
-              %i.fab.fa-line.content-header-action
-            %a{:href => "#"}
-              %i.fab.fa-twitter.content-header-action
-            %a{:href => "#"}
-              %i.fas.fa-copy.content-header-action
-  / リンク
+        .col-12
+          .nice-ranking-1.text-ellipsis
+            %a{href:"#", style:"color:white;"}
+              %i.fas.fa-thumbs-up 112 テスト
+          .nice-ranking-2.text-ellipsis
+            %a{href:"#", style:"color:white;"}
+              %i.fas.fa-thumbs-up 112 テスト
+          .nice-ranking-3.text-ellipsis
+            %a{href:"#", style:"color:white;"}
+              %i.fas.fa-thumbs-up 112 テスト
+          .nice-ranking-other.text-ellipsis
+            %a{href:"#", style:"color:white;"}
+              %i.fas.fa-thumbs-up 112 テスト
+          .nice-ranking-other.text-ellipsis
+            %a{href:"#", style:"color:white;"}
+              %i.fas.fa-thumbs-up 112 テスト
+  .col-12.col-md-6
+    .links-infomation-view-ranking-area
+      %h4 今週の閲覧数ランキング
+      .row
+        .col-12
+          .nice-ranking-1.text-ellipsis
+            %a{href:"#", style:"color:white;"}
+              114514view テスト
+          .nice-ranking-2.text-ellipsis
+            %a{href:"#", style:"color:white;"}
+              114514view テスト
+          .nice-ranking-3.text-ellipsis
+            %a{href:"#", style:"color:white;"}
+              114514view テスト
+          .nice-ranking-other.text-ellipsis
+            %a{href:"#", style:"color:white;"}
+              114514view テスト
+          .nice-ranking-other.text-ellipsis
+            %a{href:"#", style:"color:white;"}
+              114514view テスト
   .col-12
-    .link-box-area
+    .links-infomation-notice-area
+      %h4 News
       .row
-        .link-box.col-12
-          .row
-            .link-name.col-lg-5.col-6
-              %a{:href => "#"}
-                .text-ellipsis
-                  %img{:src => "http://www.google.com/s2/favicons?domain=www.google.com"}/
-                  Google
-            .hide.link-note
-              Google検索
-            .link-url.col-lg-4.d-none.d-lg-inline
-              %a{:href => "#"}
-                #link-url-for-copy.text-ellipsis
-                  https://www.google.co.jp/
-            .link-actions.col-lg-3.col-6
-              .link-actions
-                %a.link-info{:href => "#"}
-                  %i.fas.fa-info-circle.link-action
-                %a{"data-target" => "#link-edit-modal", "data-toggle" => "modal", :href => "#"}
-                  %i.fas.fa-edit.link-action
-                %a{:href => "#"}
-                  %i.fas.fa-trash-alt.link-action
-                %a{:href => "https://social-plugins.line.me/lineit/share?comment=test?url=https://www.google.co.jp/", :target => "_blank"}
-                  %i.fab.fa-line.link-action
-                %a{:href => "https://twitter.com/intent/tweet?text=Google%0a%0aGoogle検索%0ahttps://www.google.co.jp/%0a%0aLinkSからの共有", :target => "_blank"}
-                  %i.fab.fa-twitter.link-action
-                %a.url-copy{"data-clipboard-target" => "#link-url-for-copy", :href => "#"}
-                  %i.fas.fa-copy.link-action
+        .col-12
+          .news
+            %span.news-timestamp XXXX/YY/DD
+            %span.news-title テスト
+          .news
+            %span.news-timestamp XXXX/YY/DD
+            %span.news-title テスト
+          .news
+            %span.news-timestamp XXXX/YY/DD
+            %span.news-title テスト
+

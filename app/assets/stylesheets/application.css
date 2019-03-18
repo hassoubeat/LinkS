@@ -166,11 +166,11 @@ footer {
   padding: 5px;
 }
 
-.sidebar-folder-edit {
+.sidebar-folder-sort {
   position: absolute;
   right: 10px;
   top: 50%;
-  margin-top: 13px;
+  margin-top: 14px;
   padding: 5px;
 }
 
@@ -352,4 +352,60 @@ footer {
 
 .info-pop {
   color: gray;
+}
+
+.links-infomation-title-area , .links-infomation-nice-ranking-area, .links-infomation-view-ranking-area, .links-infomation-notice-area {
+  color: dimgray;
+  background-color: whitesmoke;
+  margin:10px;
+  padding:15px;
+  box-shadow: 1px 1px 0px gainsboro;
+  border-radius: 5px;
+}
+
+.links-infomation-nice-ranking-area {
+  color: dimgray;
+  background-color: ghostwhite;
+}
+
+.links-infomation-view-ranking-area {
+  color: dimgray;
+  background-color: #F2FBEF;
+}
+
+.links-infomation-notice-area {
+  color: dimgray;
+  background-color: #F2F2F2;
+}
+
+.nice-ranking-1,.nice-ranking-2,.nice-ranking-3,.nice-ranking-other {
+  color: white;
+  background-color: #EFAF00;
+  margin-top:10px;
+  padding:10px;
+  border-radius: 8px;
+}
+
+.nice-ranking-2 {
+  color: white;
+  background-color: #9EACB4;
+}
+
+.nice-ranking-3 {
+  color: white;
+  background-color: #C47022;
+}
+
+.nice-ranking-other {
+  color: white;
+  background-color: #F5A9A9;
+}
+
+.news {
+  border-top: solid 1px #D8D8D8;
+  padding:10px;
+}
+
+.news > .news-timestamp {
+  color: dimgray;
 }
