@@ -364,10 +364,6 @@ footer {
   display: block;
 }
 
-.info-pop {
-  color: gray;
-}
-
 .links-infomation-title-area , .links-infomation-nice-ranking-area, .links-infomation-view-ranking-area, .links-infomation-notice-area {
   color: dimgray;
   background-color: whitesmoke;

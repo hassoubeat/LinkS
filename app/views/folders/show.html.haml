@@ -14,18 +14,20 @@
           .content-header-actions
             %a.content-header-folder-info{:href => "#"}
               %i.fas.fa-info-circle.content-header-action
-            %a{:href => "#"}
-              %i.fas.fa-plus-square.content-header-action
-            %a{:href => "#", "data-toggle" => "modal", "data-target" => "#folder-edit-modal"}
-              %i.fas.fa-edit.content-header-action
-            %a{:href => "#", "data-toggle" => "modal", "data-target" => "#folder-delete-modal"}
-              %i.fas.fa-trash-alt.content-header-action
-            %a{:href => "#"}
-              %i.fab.fa-line.content-header-action
-            %a{:href => "#"}
-              %i.fab.fa-twitter.content-header-action
-            %a{:href => "#"}
-              %i.fas.fa-copy.content-header-action
+            - if login_user?(@user.id)
+              %a{:href => "#"}
+                %i.fas.fa-plus-square.content-header-action
+              %a{:href => "#", "data-toggle" => "modal", "data-target" => "#folder-edit-modal"}
+                %i.fas.fa-edit.content-header-action
+              %a{:href => "#", "data-toggle" => "modal", "data-target" => "#folder-delete-modal"}
+                %i.fas.fa-trash-alt.content-header-action
+            - if @folder.is_open == true
+              %a{:href => "http://line.me/R/msg/text/?#{@folder.name}%0a%0a#{@folder.comment}%0a#{root_url(only_path: false)}/users/#{@user.id}/folders/#{@folder.id}%0a%0aLinkSからの共有", :target => "_blank"}
+                %i.fab.fa-line.content-header-action
+              %a{:href => "https://twitter.com/intent/tweet?text=#{@folder.name}%0a%0a#{@folder.comment}%0a#{root_url(only_path: false)}/users/#{@user.id}/folders/#{@folder.id}%0a%0aLinkSからの共有", :target => "_blank"}
+                %i.fab.fa-twitter.content-header-action
+              %a{:href => "#"}
+                %i.fas.fa-copy.content-header-action
   / リンク
   .col-12
     .link-box-area

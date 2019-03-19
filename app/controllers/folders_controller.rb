@@ -10,6 +10,7 @@ class FoldersController < ApplicationController
 
   # GET /users/:user_id/folders/:folder_id
   def show
+    # TODO 本人以外がアクセスする時、公開されていない場合はTOPに
     # TODO 紐付いているリンクを取得
     render layout: "main"
   end
