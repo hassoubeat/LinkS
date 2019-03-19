@@ -268,18 +268,67 @@ footer {
   }
 }
 
-.link-box {
+[class^="link-box-skin"] {
   padding-top: 5px;
   padding-bottom: 5px;
   padding-right: 5px;
-  background: #F2F2F2;
-  border-left: solid 25px gray;
+  background: white;
+  border-left: solid 25px #E6E6E6;
   border-bottom: solid 1px #D8D8D8;
 }
 
-.link-box-orange-skin {
-  background: #fff8e8;
-  border-left: solid 25px #ffc06e;
+.link-box-skin-gray {
+  background: #F2F2F2;
+  border-left: solid 25px gray;
+}
+
+.link-box-skin-red {
+  background: #F6CECE;
+  border-left: solid 25px #F78181;
+}
+
+.link-box-skin-orange {
+  background: #F6E3CE;
+  border-left: solid 25px #FE9A2E;
+}
+
+.link-box-skin-yellow {
+  background: #F5F6CE;
+  border-left: solid 25px #FFFF00;
+}
+
+.link-box-skin-green {
+  background: #E0F8E0;
+  border-left: solid 25px #2EFE64;
+}
+
+.link-box-skin-blue {
+  background: #E0F2F7;
+  border-left: solid 25px #2E9AFE;
+}
+
+.link-box-skin-purple {
+  background: #E6E0F8;
+  border-left: solid 25px #8258FA;
+}
+
+.link-box-skin-pink {
+  background: #F8E0F7;
+  border-left: solid 25px #FA58F4;
+}
+
+.add-link-box {
+  color: gray;
+  padding-top: 5px;
+  padding-bottom: 5px;
+  padding-right: 5px;
+  background: #FAFAFA;
+  border-bottom: solid 1px #D8D8D8;
+  text-align:center;
+}
+
+.add-link-box:hover {
+  background: #EFF8FB;
 }
 
 .link-name {
@@ -313,6 +362,58 @@ footer {
     padding-left: 3px;
     padding-right: 3px;
   }
+}
+
+[class^="link-skin"] {
+  width:25px;
+  height:25px;
+  margin-left:10px;
+  background: white;
+  border-radius:5px;
+}
+
+[class^="link-skin"]:hover {
+  border: solid 3px #D8D8D8;
+}
+
+[class^="link-skin"].active {
+  border: solid 3px #5882FA;
+}
+
+.link-skin-default {
+  border: solid 3px black;
+}
+
+.link-skin-gray {
+  background: gray;
+}
+
+.link-skin-red {
+  background: #F78181;
+}
+
+.link-skin-orange {
+  background: #FE9A2E;
+}
+
+.link-skin-yellow {
+  background: #FFFF00;
+}
+
+.link-skin-green {
+  background: #2EFE64;
+}
+
+.link-skin-blue {
+  background: #2E9AFE;
+}
+
+.link-skin-purple {
+  background: #8258FA;
+}
+
+.link-skin-pink {
+  background: #FA58F4;
 }
 
 .detail-area {

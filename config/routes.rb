@@ -17,6 +17,8 @@ Rails.application.routes.draw do
   patch '/users/:user_id/folders/:folder_id', to: 'folders#update'
   # フォルダー削除処理
   delete '/users/:user_id/folders/:folder_id', to: 'folders#destroy'
+  # リンク登録処理
+  post '/users/:user_id/folders/:folder_id/links/', to: 'links#create'
   # ログイン
   post '/login', to: 'users#login'
   # ログアウト

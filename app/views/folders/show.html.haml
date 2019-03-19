@@ -15,8 +15,6 @@
             %a.content-header-folder-info{:href => "#"}
               %i.fas.fa-info-circle.content-header-action
             - if login_user?(@user.id)
-              %a{:href => "#"}
-                %i.fas.fa-plus-square.content-header-action
               %a{:href => "#", "data-toggle" => "modal", "data-target" => "#folder-edit-modal"}
                 %i.fas.fa-edit.content-header-action
               %a{:href => "#", "data-toggle" => "modal", "data-target" => "#folder-delete-modal"}
@@ -31,34 +29,43 @@
   / リンク
   .col-12
     .link-box-area
+      - @links.each do |link|
+        - domain = URI.parse(URI.encode(link.url)).host
+        .row
+          %div{"class" => "link-box-skin-#{link.skin_type} col-12"}
+            .row
+              .link-name.col-lg-5.col-6
+                %a{:href => "#{link.url}", :target => "_blank"}
+                  .text-ellipsis
+                    %img{:src => "http://www.google.com/s2/favicons?domain=#{domain}"}/
+                    = link.name
+              .hide.link-note
+                = link.comment
+              .link-url.col-lg-4.d-none.d-lg-inline
+                %a{:href => "#{link.url}", :target => "_blank"}
+                  #link-url-for-copy.text-ellipsis
+                    = link.url
+              .link-actions.col-lg-3.col-6
+                .link-actions
+                  %a.link-info{:href => "#"}
+                    %i.fas.fa-info-circle.link-action
+                  %a{"data-target" => "#link-edit-modal", "data-toggle" => "modal", :href => "#"}
+                    %i.fas.fa-edit.link-action
+                  %a{:href => "#"}
+                    %i.fas.fa-trash-alt.link-action
+                  -# %a{:href => "https://social-plugins.line.me/lineit/share?url=#{link.url}", :target => "_blank"}
+                  -#   %i.fab.fa-line.link-action
+                  -# %a{:href => "https://twitter.com/intent/tweet?text=#{link.name}%0a%0a#{link.comment}%0a#{link.url}%0a%0aLinkSからの共有", :target => "_blank"}
+                  -#   %i.fab.fa-twitter.link-action
+                  -# %a.url-copy{"data-clipboard-target" => "#link-url-for-copy", :href => "#"}
+                  -#   %i.fas.fa-copy.link-action
       .row
-        .link-box.col-12
-          .row
-            .link-name.col-lg-5.col-6
-              %a{:href => "#"}
-                .text-ellipsis
-                  %img{:src => "http://www.google.com/s2/favicons?domain=www.google.com"}/
-                  Google
-            .hide.link-note
-              Google検索
-            .link-url.col-lg-4.d-none.d-lg-inline
-              %a{:href => "#"}
-                #link-url-for-copy.text-ellipsis
-                  https://www.google.co.jp/
-            .link-actions.col-lg-3.col-6
-              .link-actions
-                %a.link-info{:href => "#"}
-                  %i.fas.fa-info-circle.link-action
-                %a{"data-target" => "#link-edit-modal", "data-toggle" => "modal", :href => "#"}
-                  %i.fas.fa-edit.link-action
-                %a{:href => "#"}
-                  %i.fas.fa-trash-alt.link-action
-                %a{:href => "https://social-plugins.line.me/lineit/share?comment=test?url=https://www.google.co.jp/", :target => "_blank"}
-                  %i.fab.fa-line.link-action
-                %a{:href => "https://twitter.com/intent/tweet?text=Google%0a%0aGoogle検索%0ahttps://www.google.co.jp/%0a%0aLinkSからの共有", :target => "_blank"}
-                  %i.fab.fa-twitter.link-action
-                %a.url-copy{"data-clipboard-target" => "#link-url-for-copy", :href => "#"}
-                  %i.fas.fa-copy.link-action
+        .add-link-box.col-12
+          %a{:href => "#", "data-toggle" => "modal", "data-target" => "#link-create-modal"}
+            .row
+              .col-12
+                %i.fas.fa-plus-circle
+
 / フォルダー変更モーダル
 #folder-edit-modal.modal.fade{"aria-labelledby" => "myModalLabel", :role => "dialog", :tabindex => "-1"}
   .modal-dialog.modal-xl{:role => "document"}
@@ -126,4 +133,54 @@
         .modal-footer
           = form_tag("/users/#{@user.id}/folders/#{@folder.id}", method: :delete, id: "folder-delete-form") do
             %a.btn.btn-danger{:href => "#", "onclick" => "this.parentNode.submit()"} 削除
+            %button.btn.btn-secondary{"data-dismiss" => "modal", :type => "button"} 閉じる
+/ リンク登録モーダル
+#link-create-modal.modal.fade{"aria-labelledby" => "myModalLabel", :role => "dialog", :tabindex => "-1"}
+  .modal-dialog.modal-xl{:role => "document"}
+    .modal-content
+      = form_tag("/users/#{@user.id}/folders/#{@folder.id}/links", method: :post, id: "link-create-form") do
+        .modal-header
+          %h5#exampleModalLabel.modal-title ブックマーク登録
+          %button.close{"aria-label" => "Close", "data-dismiss" => "modal", :type => "button"}
+            %span{"aria-hidden" => "true"} ×
+        .modal-body.text-muted
+          .row
+            .col-12
+              .row
+                .col-12
+                  .input-group.input-group.mb-3
+                    .input-group-prepend
+                      %span#inputGroup-sizing-lg.input-group-text
+                        %i.fa.fa-bookmark
+                    #{text_field_tag 'link[name]', "", class:"form-control", placeholder:"ブックマーク名称", maxlength:'20', id:"link-create-name-form"}
+                .col-12
+                  .input-group.input-group.mb-3
+                    .input-group-prepend
+                      %span#inputGroup-sizing-lg.input-group-text
+                        %i.fa.fa-link
+                    #{text_field_tag 'link[url]', "", class:"form-control", placeholder:"URL", maxlength:'2000', id:"link-create-url-form"}
+                .col-12
+                  .input-group.input-group.mb-3
+                    .input-group-prepend
+                      %span#inputGroup-sizing-lg.input-group-text
+                        %i.fas.fa-sticky-note
+                    #{text_area_tag 'link[comment]', "", class:"form-control", placeholder:"メモ", maxlength:'400', id:"link-create-comment-form"}
+                .col-12
+                  .input-group.input-group.mb-3
+                    %a.info-pop{"tabindex"=> "0", "data-toggle" => "popover", "data-trigger" => "click", "title" => "スキンカラー", "data-content" => "画面に表示される際の配色です。用途に合わせて変更してください。", "data-placement" => "auto"}
+                      %i.fas.fa-info-circle &nbsp;スキンカラー
+                .col-12
+                  .input-group.input-group.mb-3
+                    %span#link-create-skin-type-default.link-skin-default.active{"link-skin-data" => "default"}
+                    %span#link-create-skin-type-gray.link-skin-gray{"link-skin-data" => "gray"}
+                    %span#link-create-skin-type-red.link-skin-red{"link-skin-data" => "red"}
+                    %span#link-create-skin-type-orange.link-skin-orange{"link-skin-data" => "orange"}
+                    %span#link-create-skin-type-yellow.link-skin-yellow{"link-skin-data" => "yellow"}
+                    %span#link-create-skin-type-green.link-skin-green{"link-skin-data" => "green"}
+                    %span#link-create-skin-type-blue.link-skin-blue{"link-skin-data" => "blue"}
+                    %span#link-create-skin-type-purple.link-skin-purple{"link-skin-data" => "purple"}
+                    %span#link-create-skin-type-pink.link-skin-pink{"link-skin-data" => "pink"}
+                    #{hidden_field_tag 'link[skin_type]', "default", id:"link-create-skin-type-form"}
+          .modal-footer
+            #{submit_tag "登録", :name => nil , :id => "folder_edit_btn", :class => "btn btn-primary"}
             %button.btn.btn-secondary{"data-dismiss" => "modal", :type => "button"} 閉じる

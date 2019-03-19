@@ -1,6 +1,6 @@
 class FoldersController < ApplicationController
   skip_before_action :login_check, only: [:create, :user_check, :login]
-  before_action :login_user_check, only: [:create]
+  before_action :login_user_check, only: [:create, :update, :destroy]
 
   # GET /users
   # GET /users.json
@@ -11,7 +11,7 @@ class FoldersController < ApplicationController
   # GET /users/:user_id/folders/:folder_id
   def show
     # TODO 本人以外がアクセスする時、公開されていない場合はTOPに
-    # TODO 紐付いているリンクを取得
+    @links = Link.where(folder_id: @folder.id).is_valid
     render layout: "main"
   end
 
@@ -25,11 +25,6 @@ class FoldersController < ApplicationController
     if @folder.name == ""
       @folder.name = FOLDER_DEFAULT_NAME
     end
-
-    # TODO バリデーションチェック
-    # if @user.invalid?
-    #   render :new, layout: "application" and return
-    # end
 
     if @folder.save
       flash[:info] = "フォルダーを登録しました"

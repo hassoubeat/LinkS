@@ -120,7 +120,7 @@
                             #{text_area_tag 'folder[comment]', "", class:"form-control", placeholder:"メモ", maxlength:'400' }
                         .col-12
                           .input-group.input-group.mb-3
-                            %a.info-pop{"tabindex"=> "0", "data-toggle" => "popover", "data-trigger" => "click", "title" => "公開設定", "data-content" => "作成するフォルダーを他のユーザにも公開する場合は「公開」、そうでない場合は「非公開」を選択してください"}
+                            %a.info-pop{"tabindex"=> "0", "data-toggle" => "popover", "data-trigger" => "click", "title" => "公開設定", "data-content" => "作成するフォルダーを他のユーザにも公開する場合は「公開」、そうでない場合は「非公開」を選択してください", "data-placement" => "auto"}
                               %i.fas.fa-info-circle &nbsp;公開設定
                         .col-12
                           .btn-group.btn-group-toggle{"data-toggle" => "buttons", "style" => "width:100%; margin-bottom:10px;"}
@@ -199,7 +199,7 @@
     :javascript
       $(document).ready(function() {
         // サイドバーの高さを定義
-        $(".main-sidebar").height($(document).height() - 62);
+        $(".main-sidebar").height($(window).height() - 62);
         // 画面表示時にアニメーション付きで遷移させる
         $('.animsition').animsition({
           inDuration: 700,
@@ -337,6 +337,14 @@
           $('.sidebar-toggle')[0].click();
         }
         $('#folder-create-modal').modal();
+      });
+
+      // リンク登録時のカラースキンクリック時の挙動
+      $("[id^='link-create-skin-type']").click(function(){
+        // 一度すべてのスキンからactive要素を除外
+        $("[id^='link-create-skin-type']").removeClass("active");
+        $(this).addClass("active");
+        $("#link-create-skin-type-form").val($(this).attr("link-skin-data"));
       });
 
       function toggleDetailArea(){
