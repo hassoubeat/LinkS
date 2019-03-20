@@ -31,8 +31,8 @@
     .link-box-area
       - @links.each do |link|
         - domain = URI.parse(URI.encode(link.url)).host
-        .row
-          %div{"class" => "link-box-skin-#{link.skin_type} col-12"}
+        .row_
+          %div{"class" => "link-box-skin-#{link.skin_type} link-box col-12"}
             .row
               .link-name.col-lg-5.col-6
                 %a{:href => "#{link.url}", :target => "_blank"}

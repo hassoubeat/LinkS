@@ -84,15 +84,6 @@
       / メインコンテンツ
       .content-wrapper
         = yield
-        / 詳細エリア
-        .detail-area
-          .detail-area-title
-            テスト用のエリア
-          .detail-area-sub-title
-            テスト用エリア
-          .detail-area-note
-            テスト用のエリアテスト用のエリアテスト用のエリアテスト用のエリアテスト用のエリアテスト用のエリアテスト用のエリアテスト用のエリアテスト用のエリアテスト用のエリアテスト用のエリアテスト用のエリアテスト用のエリアテスト用のエリアテスト用のエリアテスト用のエリアテスト用のエリアテスト用のエリアテスト用のエリアテスト用のエリアテスト用のエリアテスト用のエリアテスト用のエリアテスト用のエリアテスト用のエリアテスト用のエリアテスト用のエリアテスト用のエリアテスト用のエリアテスト用のエリアテスト用のエリアテスト用のエリアテスト用のエリアテスト用のエリアテスト用のエリアテスト用のエリアテスト用のエリアテスト用のエリアテスト用のエリアテスト用のエリアテスト用のエリアテスト用のエリアテスト用のエリアテスト用のエリアテスト用のエリアテスト用のエリアテスト用のエリアテスト用のエリアテスト用のエリアテスト用のエリアテスト用のエリアテスト用のエリアテスト用のエリアテスト用のエリアテスト用のエリアテスト用のエリアテスト用のエリアテスト用のエリアテスト用のエリアテスト用のエリアテスト用のエリアテスト用のエリアテスト用のエリアテスト用のエリアテスト用のエリアテスト用のエリアテスト用のエリアテスト用のエリアテスト用のエリアテスト用のエリアテスト用のエリアテスト用のエリアテスト用のエリアテスト用のエリアテスト用のエリアテスト用のエリアテスト用のエリアテスト用のエリアテスト用のエリアテスト用のエリアテスト用のエリアテスト用のエリアテスト用のエリアテスト用のエリア
-            テスト用のエリア
         / フォルダー登録モーダル
         #folder-create-modal.modal.fade{"aria-labelledby" => "myModalLabel", :role => "dialog", :tabindex => "-1"}
           .modal-dialog.modal-xl{:role => "document"}
@@ -166,6 +157,12 @@
                 .modal-footer
                   %a.btn.btn-primary{:href => "#", :target => "_blank"} 変更
                   %button.btn.btn-secondary{"data-dismiss" => "modal", :type => "button"} 閉じる
+
+      / 詳細エリア
+      .detail-area
+        .detail-area-title
+        .detail-area-sub-title
+        .detail-area-note
 
       %div.sidebar-toggle-botton
         %a{"href" => "#", "class" => "sidebar-toggle", "data-toggle" => "push-menu", "role" => "button"}
@@ -276,6 +273,9 @@
           $(".detail-area-title").text(folder_name);
           $(".detail-area-note").text(folder_note);
           $(".detail-area-sub-title").text("");
+          $(".detail-area").removeClass(function(index, className) {
+            return (className.match(/\bdetail-area-skin-\S+/g) || []).join(' ');
+          });
           // 非表示の時
           if(!$(".detail-area").hasClass('active')){
             toggleDetailArea();
@@ -290,6 +290,12 @@
           $(".detail-area-title").text(link_name);
           $(".detail-area-note").text(link_note);
           $(".detail-area-sub-title").text(link_url);
+          // リンクに適用されたスキンをdetail-areaに適用する
+          var color = $(this).attr("class").split(" ")[0].split("-")[3];
+          $(".detail-area").removeClass(function(index, className) {
+            return (className.match(/\bdetail-area-skin-\S+/g) || []).join(' ');
+          });
+          $(".detail-area").addClass("detail-area-skin-" + color);
         },
         function() {
         }

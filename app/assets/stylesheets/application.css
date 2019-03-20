@@ -273,48 +273,48 @@ footer {
   padding-bottom: 5px;
   padding-right: 5px;
   background: white;
-  border-left: solid 25px #E6E6E6;
+  border-left: solid 15px #E6E6E6;
   border-bottom: solid 1px #D8D8D8;
 }
 
 .link-box-skin-gray {
   background: #F2F2F2;
-  border-left: solid 25px gray;
+  border-left: solid 15px gray;
 }
 
 .link-box-skin-red {
   background: #F6CECE;
-  border-left: solid 25px #F78181;
+  border-left: solid 15px #F78181;
 }
 
 .link-box-skin-orange {
   background: #F6E3CE;
-  border-left: solid 25px #FE9A2E;
+  border-left: solid 15px #FE9A2E;
 }
 
 .link-box-skin-yellow {
   background: #F5F6CE;
-  border-left: solid 25px #FFFF00;
+  border-left: solid 15px #FFFF00;
 }
 
 .link-box-skin-green {
   background: #E0F8E0;
-  border-left: solid 25px #2EFE64;
+  border-left: solid 15px #2EFE64;
 }
 
 .link-box-skin-blue {
   background: #E0F2F7;
-  border-left: solid 25px #2E9AFE;
+  border-left: solid 15px #2E9AFE;
 }
 
 .link-box-skin-purple {
   background: #E6E0F8;
-  border-left: solid 25px #8258FA;
+  border-left: solid 15px #8258FA;
 }
 
 .link-box-skin-pink {
   background: #F8E0F7;
-  border-left: solid 25px #FA58F4;
+  border-left: solid 15px #FA58F4;
 }
 
 .add-link-box {
@@ -417,14 +417,74 @@ footer {
 }
 
 .detail-area {
-  background-color: #FBEFF2;
-	width:100%;
+  background-color: white;
+  width: calc(100% - 20px);
   height: 0px;
 	position: fixed;
   bottom: 0px;
   box-sizing: border-box;
   transition:all 0.3s ease-out;
   box-shadow: 0 0 1px gray;
+  margin-left:10px;
+  margin-bottom:10px;
+  margin-right:10px;
+  border-radius: 8px;
+  border-left: solid 15px #E6E6E6;
+}
+
+@media (min-width: 768px) {
+  .detail-area {
+    width: calc(100% - 300px);
+    margin-left:290px;
+    margin-right:10px;
+    margin-bottom:10px;
+    margin-right:10px;
+  }
+
+  .sidebar-collapse .detail-area {
+    width: calc(100% - 20px);
+    margin-left:10px;
+  }
+}
+
+.detail-area-skin-gray {
+  background: #F2F2F2;
+  border-left: solid 15px gray;
+}
+
+.detail-area-skin-red {
+  background: #F6CECE;
+  border-left: solid 15px #F78181;
+}
+
+.detail-area-skin-orange {
+  background: #F6E3CE;
+  border-left: solid 15px #FE9A2E;
+}
+
+.detail-area-skin-yellow {
+  background: #F5F6CE;
+  border-left: solid 15px #FFFF00;
+}
+
+.detail-area-skin-green {
+  background: #E0F8E0;
+  border-left: solid 15px #2EFE64;
+}
+
+.detail-area-skin-blue {
+  background: #E0F2F7;
+  border-left: solid 15px #2E9AFE;
+}
+
+.detail-area-skin-purple {
+  background: #E6E0F8;
+  border-left: solid 15px #8258FA;
+}
+
+.detail-area-skin-pink {
+  background: #F8E0F7;
+  border-left: solid 15px #FA58F4;
 }
 
 .detail-area > .detail-area-title {
