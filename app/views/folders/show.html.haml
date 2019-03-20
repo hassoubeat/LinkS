@@ -51,14 +51,9 @@
                     %i.fas.fa-info-circle.link-action
                   %a{"data-target" => "#link-edit-modal", "data-toggle" => "modal", :href => "#"}
                     %i.fas.fa-edit.link-action
-                  %a{:href => "#"}
-                    %i.fas.fa-trash-alt.link-action
-                  -# %a{:href => "https://social-plugins.line.me/lineit/share?url=#{link.url}", :target => "_blank"}
-                  -#   %i.fab.fa-line.link-action
-                  -# %a{:href => "https://twitter.com/intent/tweet?text=#{link.name}%0a%0a#{link.comment}%0a#{link.url}%0a%0aLinkSからの共有", :target => "_blank"}
-                  -#   %i.fab.fa-twitter.link-action
-                  -# %a.url-copy{"data-clipboard-target" => "#link-url-for-copy", :href => "#"}
-                  -#   %i.fas.fa-copy.link-action
+                  = form_tag("/users/#{@user.id}/folders/#{@folder.id}/links/#{link.id}", method: :delete, id: "link-delete-form", style: "display:inline;") do
+                    %a{:href => "#", "onclick" => "this.parentNode.submit()"}
+                      %i.fas.fa-trash-alt.link-action
       .row
         .add-link-box.col-12
           %a{:href => "#", "data-toggle" => "modal", "data-target" => "#link-create-modal"}

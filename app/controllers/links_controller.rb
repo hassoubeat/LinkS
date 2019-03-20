@@ -1,5 +1,5 @@
 class LinksController < ApplicationController
-  before_action :login_user_check, only: [:create]
+  before_action :login_user_check, only: [:create, :destroy]
 
   # POST /users/:user_id/folders/:folder_id/links
   def create
@@ -18,6 +18,19 @@ class LinksController < ApplicationController
     else
       # TODO システムエラー
       flash[:info] = "ブックマークの登録に失敗しました"
+    end
+    redirect_to "/users/#{session[:user_id]}/folders/#{params[:folder_id]}" and return
+  end
+
+  # DELETE /users/:user_id/folders/:folder_id/links/:link_id
+  def destroy
+    @link = Link.find(params[:link_id])
+    @link.is_valid = false;
+    if @link.save
+      flash[:info] = "ブックマーク : #{@link.name}を削除しました"
+    else
+      # TODO システムエラー
+      flash[:info] = "ブックマークの削除に失敗しました"
     end
     redirect_to "/users/#{session[:user_id]}/folders/#{params[:folder_id]}" and return
   end

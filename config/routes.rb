@@ -19,6 +19,8 @@ Rails.application.routes.draw do
   delete '/users/:user_id/folders/:folder_id', to: 'folders#destroy'
   # リンク登録処理
   post '/users/:user_id/folders/:folder_id/links/', to: 'links#create'
+  # リンク削除処理
+  delete '/users/:user_id/folders/:folder_id/links/:link_id', to: 'links#destroy'
   # ログイン
   post '/login', to: 'users#login'
   # ログアウト
