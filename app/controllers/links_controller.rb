@@ -22,6 +22,18 @@ class LinksController < ApplicationController
     redirect_to "/users/#{session[:user_id]}/folders/#{params[:folder_id]}" and return
   end
 
+  # PATCH /users/:user_id/folders/:folder_id/links/:link_id
+  def update
+    @link = Link.find(params[:link_id])
+    if @link.update(link_params)
+      flash[:info] = "リンク : #{@link.name}を変更しました"
+    else
+      # TODO システムエラー
+      flash[:info] = "リンクの変更に失敗しました"
+    end
+    redirect_to "/users/#{session[:user_id]}/folders/#{params[:folder_id]}}" and return
+  end
+
   # DELETE /users/:user_id/folders/:folder_id/links/:link_id
   def destroy
     @link = Link.find(params[:link_id])

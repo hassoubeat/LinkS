@@ -49,11 +49,17 @@
                 .link-actions
                   %a.link-info{:href => "#"}
                     %i.fas.fa-info-circle.link-action
-                  %a{"data-target" => "#link-edit-modal", "data-toggle" => "modal", :href => "#"}
+                  %a{:href => "#", "data-toggle" => "modal", "data-target" => "#link-edit-modal", "id" => "link-edit-botton-#{link.id}"}
                     %i.fas.fa-edit.link-action
                   = form_tag("/users/#{@user.id}/folders/#{@folder.id}/links/#{link.id}", method: :delete, id: "link-delete-form", style: "display:inline;") do
                     %a{:href => "#", "onclick" => "this.parentNode.submit()"}
                       %i.fas.fa-trash-alt.link-action
+              .link-hidden-params.hide
+                = form_tag("/users/#{link.user_id}/folders/#{link.folder_id}/links/#{link.id}", method: :patch, id: "link-edit-form-#{link.id}") do
+                  #{hidden_field_tag 'link[name]', link.name, class:"form-control", placeholder:"ブックマーク名称", maxlength:'20', id:'link-edit-name-form'}
+                  #{hidden_field_tag 'link[url]', link.url, class:"form-control", placeholder:"URL", maxlength:'2000', id:"link-edit-url-form"}
+                  #{hidden_field_tag 'link[comment]', link.comment, class:"form-control", placeholder:"メモ", maxlength:'400', id:"link-edit-comment-form"}
+                  #{hidden_field_tag 'link[skin_type]', link.skin_type, id:"link-edit-skin-type-form"}
       .row
         .add-link-box.col-12
           %a{:href => "#", "data-toggle" => "modal", "data-target" => "#link-create-modal"}
@@ -177,5 +183,55 @@
                     %span#link-create-skin-type-pink.link-skin-pink{"link-skin-data" => "pink"}
                     #{hidden_field_tag 'link[skin_type]', "default", id:"link-create-skin-type-form"}
           .modal-footer
-            #{submit_tag "登録", :name => nil , :id => "folder_edit_btn", :class => "btn btn-primary"}
+            #{submit_tag "登録", :name => nil , :id => "link_create_btn", :class => "btn btn-primary"}
             %button.btn.btn-secondary{"data-dismiss" => "modal", :type => "button"} 閉じる
+/ リンク変更モーダル
+#link-edit-modal.modal.fade{"aria-labelledby" => "myModalLabel", :role => "dialog", :tabindex => "-1"}
+  .modal-dialog.modal-xl{:role => "document"}
+    .modal-content
+      .modal-header
+        %h5#exampleModalLabel.modal-title ブックマーク変更
+        %button.close{"aria-label" => "Close", "data-dismiss" => "modal", :type => "button"}
+          %span{"aria-hidden" => "true"} ×
+      .modal-body.text-muted
+        .row
+          .col-12
+            .row
+              .col-12
+                .input-group.input-group.mb-3
+                  .input-group-prepend
+                    %span#inputGroup-sizing-lg.input-group-text
+                      %i.fa.fa-bookmark
+                  #{text_field_tag '', "", class:"form-control", placeholder:"ブックマーク名称", maxlength:'20', id:"mock-link-edit-name-form"}
+              .col-12
+                .input-group.input-group.mb-3
+                  .input-group-prepend
+                    %span#inputGroup-sizing-lg.input-group-text
+                      %i.fa.fa-link
+                  #{text_field_tag '', "", class:"form-control", placeholder:"URL", maxlength:'2000', id:"mock-link-edit-url-form"}
+              .col-12
+                .input-group.input-group.mb-3
+                  .input-group-prepend
+                    %span#inputGroup-sizing-lg.input-group-text
+                      %i.fas.fa-sticky-note
+                  #{text_area_tag '', "", class:"form-control", placeholder:"メモ", maxlength:'400', id:"mock-link-edit-comment-form"}
+              .col-12
+                .input-group.input-group.mb-3
+                  %a.info-pop{"tabindex"=> "0", "data-toggle" => "popover", "data-trigger" => "click", "title" => "スキンカラー", "data-content" => "画面に表示される際の配色です。用途に合わせて変更してください。", "data-placement" => "auto"}
+                    %i.fas.fa-info-circle &nbsp;スキンカラー
+              .col-12
+                .input-group.input-group.mb-3
+                  %span#link-edit-skin-type-default.link-skin-default.active{"link-skin-data" => "default"}
+                  %span#link-edit-skin-type-gray.link-skin-gray{"link-skin-data" => "gray"}
+                  %span#link-edit-skin-type-red.link-skin-red{"link-skin-data" => "red"}
+                  %span#link-edit-skin-type-orange.link-skin-orange{"link-skin-data" => "orange"}
+                  %span#link-edit-skin-type-yellow.link-skin-yellow{"link-skin-data" => "yellow"}
+                  %span#link-edit-skin-type-green.link-skin-green{"link-skin-data" => "green"}
+                  %span#link-edit-skin-type-blue.link-skin-blue{"link-skin-data" => "blue"}
+                  %span#link-edit-skin-type-purple.link-skin-purple{"link-skin-data" => "purple"}
+                  %span#link-edit-skin-type-pink.link-skin-pink{"link-skin-data" => "pink"}
+                  #{hidden_field_tag '', "default", id:"mock-link-edit-skin-type-form"}
+        .modal-footer
+          #{hidden_field_tag '', "", id:"editing-link-id"}
+          %button.btn.btn-primary{"id" => "mock_link_edit_btn", :type => "button"} 変更
+          %button.btn.btn-secondary{"data-dismiss" => "modal", :type => "button"} 閉じる

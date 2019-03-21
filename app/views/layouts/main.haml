@@ -353,6 +353,48 @@
         $("#link-create-skin-type-form").val($(this).attr("link-skin-data"));
       });
 
+      // リンク変更時のカラースキンクリック時の挙動
+      $("[id^='link-edit-skin-type']").click(function(){
+        // 一度すべてのスキンからactive要素を除外
+        $("[id^='link-edit-skin-type']").removeClass("active");
+        $(this).addClass("active");
+        $("#mock-link-edit-skin-type-form").val($(this).attr("link-skin-data"));
+      });
+
+      // リンク変更ボタン押下時の挙動
+      $("[id^='link-edit-botton-']").click(function(){
+        // リンク変更フォームの値を空にする
+        $("#mock-link-edit-name-form").val("");
+        $("#mock-link-edit-url-form").val("");
+        $("#mock-link-edit-comment-form").val("");
+        $("#mock-link-edit-skin-type-form").val("");
+        $("#editing-link-id").val("");
+        // カラースキンの選択状態をクリア、初期値にセット
+        $("[id^='link-edit-skin-type']").removeClass("active");
+        $("#mock-link-edit-skin-type-default").addClass("active");
+
+        // リンク変更フォームに値をセットする
+        var id = $(this).attr("id").split("-")[3];
+        var form = $("#link-edit-form-" + id);
+        $("#mock-link-edit-name-form").val(form.children("#link-edit-name-form").val());
+        $("#mock-link-edit-url-form").val(form.children("#link-edit-url-form").val());
+        $("#mock-link-edit-comment-form").val(form.children("#link-edit-comment-form").val());
+        $("#mock-link-edit-skin-type-form").val(form.children("#link-edit-skin-type-form").val());
+        $("#link-edit-skin-type-" + form.children("#link-edit-skin-type-form").val()).addClass("active");
+        $("#editing-link-id").val(id);
+      });
+
+      // リンク変更ボタン押下時の挙動
+      $("#mock_link_edit_btn").click(function(){
+        var id = $("#editing-link-id").val();
+        var form = $("#link-edit-form-" + id);
+        form.children("#link-edit-name-form").val($("#mock-link-edit-name-form").val());
+        form.children("#link-edit-url-form").val($("#mock-link-edit-url-form").val());
+        form.children("#link-edit-comment-form").val($("#mock-link-edit-comment-form").val());
+        form.children("#link-edit-skin-type-form").val($("#mock-link-edit-skin-type-form").val());
+        form.submit();
+      });
+
       function toggleDetailArea(){
         $(".detail-area").toggleClass('active');
         // キャレットの向きを変更する
