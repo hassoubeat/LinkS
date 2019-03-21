@@ -9,7 +9,7 @@
             %span.content-header-folder-name
               = @folder.name
             %span.hide.content-header-folder-note
-              = @folder.comment
+              = @folder.comment.gsub(/\r\n|\r|\n/, '\n');
         .col-6
           .content-header-actions
             %a.content-header-folder-info{:href => "#"}
@@ -40,7 +40,7 @@
                     %img{:src => "http://www.google.com/s2/favicons?domain=#{domain}"}/
                     = link.name
               .hide.link-note
-                = link.comment
+                = link.comment.gsub(/\r\n|\r|\n/, '\n');
               .link-url.col-lg-4.d-none.d-lg-inline
                 %a{:href => "#{link.url}", :target => "_blank"}
                   #link-url-for-copy.text-ellipsis

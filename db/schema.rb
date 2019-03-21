@@ -10,11 +10,11 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_03_19_065513) do
+ActiveRecord::Schema.define(version: 2019_03_21_151034) do
 
   create_table "folders", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
     t.string "name"
-    t.string "comment"
+    t.string "comment", limit: 2000
     t.integer "sort"
     t.boolean "is_valid"
     t.boolean "is_open"
@@ -26,7 +26,7 @@ ActiveRecord::Schema.define(version: 2019_03_19_065513) do
   create_table "links", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
     t.string "name"
     t.string "url"
-    t.string "comment"
+    t.string "comment", limit: 2000
     t.string "skin_type"
     t.integer "sort"
     t.boolean "is_valid"

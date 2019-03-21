@@ -269,9 +269,9 @@
       // コンテンツヘッダーのインフォメーションアイコンを押下時に詳細エリアに情報を表示する
       $('.content-header-folder-info').click(function(){
           var folder_name = $('.content-header-folder-name').text();
-          var folder_note = $('.content-header-folder-note').text();
+          var folder_note = antiXSS($('.content-header-folder-note').text());
           $(".detail-area-title").text(folder_name);
-          $(".detail-area-note").text(folder_note);
+          $(".detail-area-note").html(folder_note);
           $(".detail-area-sub-title").text("");
           $(".detail-area").removeClass(function(index, className) {
             return (className.match(/\bdetail-area-skin-\S+/g) || []).join(' ');
@@ -285,10 +285,10 @@
       // リンクをマウスホバー時に詳細エリアに情報を表示する
       $('.link-box').hover(function(){
           var link_name = $(this).find('.link-name').text();
-          var link_note = $(this).find('.link-note').text();
+          var link_note = antiXSS($(this).find('.link-note').text());
           var link_url = $(this).find('.link-url').text();
           $(".detail-area-title").text(link_name);
-          $(".detail-area-note").text(link_note);
+          $(".detail-area-note").html(link_note);
           $(".detail-area-sub-title").text(link_url);
           // リンクに適用されたスキンをdetail-areaに適用する
           var color = $(this).attr("class").split(" ")[0].split("-")[3];
@@ -304,10 +304,10 @@
       // リンクのインフォメーションアイコンを押下時に詳細エリアに情報を表示する
       $('.link-info').click(function(){
           var link_name = $(this).parents(".link-box").find('.link-name').text();
-          var link_note = $(this).parents(".link-box").find('.link-note').text();
+          var link_note = antiXSS($(this).parents(".link-box").find('.link-note').text());
           var link_url = $(this).parents(".link-box").find('.link-url').text();
           $(".detail-area-title").text(link_name);
-          $(".detail-area-note").text(link_note);
+          $(".detail-area-note").html(link_note);
           $(".detail-area-sub-title").text(link_url);
           // 非表示の時
           if(!$(".detail-area").hasClass('active')){
@@ -405,5 +405,11 @@
           $(".detail-toggle-icon").removeClass('fa-caret-down');
           $(".detail-toggle-icon").addClass('fa-caret-up');
         }
+      }
+
+      // 改行以外のHTMLタグを無効化するXSS対策
+      function antiXSS(str){
+        str = $('<dummy>').text(str).html().replace(/\\r\\n|\\r|\\n/g, '<br>');
+        return str;
       }
 
