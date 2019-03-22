@@ -4,13 +4,13 @@
   .col-12
     .content-header
       .row
-        .col-6
+        .col-md-6.col-12
           .text-ellipsis
             %span.content-header-folder-name
               = @folder.name
             %span.hide.content-header-folder-note
               = @folder.comment.gsub(/\r\n|\r|\n/, '\n');
-        .col-6
+        .col-md-6.col-12
           .content-header-actions
             %a.content-header-folder-info{:href => "#"}
               %i.fas.fa-info-circle.content-header-action
