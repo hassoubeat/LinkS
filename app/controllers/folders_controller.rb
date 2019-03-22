@@ -51,15 +51,25 @@ class FoldersController < ApplicationController
     redirect_to "/users/#{session[:user_id]}/folders/#{@folder.id}}" and return
   end
 
-  # DELETE /users/:user_id/folders/:folder_id
-  def destroy
-    @folder.is_valid = false;
-    if @folder.save
-      flash[:info] = "フォルダーを削除しました"
-    else
-      # TODO システムエラー
-      flash[:info] = "フォルダーの削除に失敗しました"
+  # GET /users/:user_id/folders/:folder_sort_ids
+  def sort
+    ActiveRecord::Base.transaction do
+      folder_ids = params[:folder_sort_ids].split(",");
+      folder_ids.each_with_index do |folder_id, i|
+        folder = Folder.find(folder_id);
+        if !login_user?(folder.user_id)
+          # ログインユーザが管轄するフォルダー以外を変更しようとしているため、エラー
+          raise RuntimeError.new();
+        end
+        folder.sort = i;
+        folder.save
+      end
+      flash[:info] = "フォルダーのソートが完了しました"
     end
+    redirect_to "/users/#{session[:user_id]}" and return
+  rescue => e
+    logger.debug(e.message);
+    flash[:error] = "フォルダーのソートに失敗しました"
     redirect_to "/users/#{session[:user_id]}" and return
   end
 

@@ -66,11 +66,11 @@
                   %a{:href => "#"}
                     %span.sidebar-folder-create
                       %i.far.fa-plus-square
-                  %a{:href => "#"}
+                  %a#mock-folder-sort-button{:href => "#"}
                     %span.sidebar-folder-sort
                       %i.fas.fa-sort
               - @folders.each do |folder|
-                %li{class: "sidebar-folder #{'selected' if folder.id == @folder.id}"}
+                %li{class: "sidebar-folder sortable-item #{'selected' if folder.id == @folder.id}", "id" => "#{folder.id}"}
                   %a.text-ellipsis.sidemenu{:href => "/users/#{folder.user_id}/folders/#{folder.id}"}
                     - if folder.is_open == true
                       %i.fas.fa-share-alt &nbsp;
@@ -124,6 +124,24 @@
                     -# %a.btn.btn-primary{:href => "#", :target => "_blank"}
                     #{submit_tag "登録", :name => nil , :id => "folder_create_btn", :class => "btn btn-primary"}
                     %button.btn.btn-secondary{"data-dismiss" => "modal", :type => "button"} 閉じる
+        / フォルダーソートモーダル
+        #folder-sort-modal.modal.fade{"aria-labelledby" => "myModalLabel", :role => "dialog", :tabindex => "-1"}
+          .modal-dialog.modal-xl{:role => "document"}
+            .modal-content
+              .modal-header
+                %h5#exampleModalLabel.modal-title フォルダーソート
+                %button.close{"aria-label" => "Close", "data-dismiss" => "modal", :type => "button"}
+                  %span{"aria-hidden" => "true"} ×
+              .modal-body.text-muted
+                .row
+                  .col-12
+                    %div{"style" => "margin-bottom:10px;"}
+                      現在の順序でフォルダーの順番を登録します。
+                      %br
+                      %span.warning フォルダーをドラッグアンドドロップすることで順番を入れ替えることが可能です。
+                .modal-footer
+                  %a#folder-sort-button.btn.btn-primary{:href => "/users/#{@user.id}/folders/sort/"} ソート
+                  %button.btn.btn-secondary{"data-dismiss" => "modal", :type => "button"} 閉じる
         / リンク変更モーダル
         #link-edit-modal.modal.fade{"aria-labelledby" => "myModalLabel", :role => "dialog", :tabindex => "-1"}
           .modal-dialog.modal-xl{:role => "document"}
@@ -219,11 +237,6 @@
           items: '.sortable-item',
         });
         $(".sortable").disableSelection();
-        $("#submit").click(function() {
-            var result = $(".sortable").sortable("toArray");
-            $("#result").val(result);
-            $("form").submit();
-        });
         // URLコピーの初期化処理
         // var clipboard = new Clipboard('.url-copy');
         // clipboard.on('success', function(e) {
@@ -237,6 +250,21 @@
             text : info_message,
             showHideTransition : 'slide',
             bgColor : "#B8DCEF",
+            textColor : "#797F82",
+            hideAfter: 5000,
+            position: 'top-right',
+            stack : 5,
+            textAlign : 'left',
+            position : 'bottom-right'
+          });
+        }
+        // エラーメッセージの表示
+        var error_message = $(".error-message").text();
+        if (error_message) {
+          $.toast({
+            text : error_message,
+            showHideTransition : 'slide',
+            bgColor : "#F6CECE",
             textColor : "#797F82",
             hideAfter: 5000,
             position: 'top-right',
@@ -350,6 +378,14 @@
         form.children("#link-edit-comment-form").val($("#mock-link-edit-comment-form").val());
         form.children("#link-edit-skin-type-form").val($("#mock-link-edit-skin-type-form").val());
         form.submit();
+      });
+
+      // フォルダーソートボタン押下時の挙動
+      $("#mock-folder-sort-button").click(function(){
+        var updateFolderIdArray =  $(".sidebar-menu").sortable("toArray").join(",");
+        var sortURL = $("#folder-sort-button").attr("href") + updateFolderIdArray;
+        $("#folder-sort-button").attr("href", sortURL);
+        $("#folder-sort-modal").modal();
       });
 
       function toggleDetailArea(){
