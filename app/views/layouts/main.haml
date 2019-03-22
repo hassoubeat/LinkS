@@ -382,6 +382,11 @@
 
       // フォルダーソートボタン押下時の挙動
       $("#mock-folder-sort-button").click(function(){
+        var width = $(window).width();
+        // 現在の画面サイズがスマホ画面だった場合は、サイドバーを非表示にする
+        if (width < 768) {
+          $('.sidebar-toggle')[0].click();
+        }
         var updateFolderIdArray =  $(".sidebar-menu").sortable("toArray").join(",");
         var sortURL = $("#folder-sort-button").attr("href") + updateFolderIdArray;
         $("#folder-sort-button").attr("href", sortURL);
