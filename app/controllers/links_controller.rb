@@ -5,6 +5,7 @@ class LinksController < ApplicationController
   def create
     @link = Link.new(link_params)
     @link.is_valid = true
+    @link.sort = LINK_DEFAULT_SORT
     @link.user_id = session[:user_id]
     @link.folder_id = params[:folder_id]
 

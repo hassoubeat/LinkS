@@ -19,6 +19,7 @@ class FoldersController < ApplicationController
   def create
     @folder = Folder.new(folder_params)
     @folder.is_valid = true
+    @folder.sort = FOLDER_DEFAULT_SORT
     @folder.user_id = session[:user_id]
 
     # フォルダー名が入力されていない時は、デフォルト名で登録する
