@@ -24,14 +24,15 @@
                 %i.fab.fa-line.content-header-action
               %a{:href => "https://twitter.com/intent/tweet?text=#{@folder.name}%0a%0a#{@folder.comment}%0a#{root_url(only_path: false)}/users/#{@user.id}/folders/#{@folder.id}%0a%0aLinkSからの共有", :target => "_blank"}
                 %i.fab.fa-twitter.content-header-action
-              %a{:href => "#"}
-                %i.fas.fa-copy.content-header-action
+            - if login_user?(@user.id)
+              %a#mock-link-sort-button{:href => "#"}
+                %i.fas.fa-sort.content-header-action
   / リンク
   .col-12
-    .link-box-area
+    .link-box-area.sortable
       - @links.each do |link|
         - domain = URI.parse(URI.encode(link.url)).host
-        .row_
+        .row_.sortable-item{"id" => "#{link.id}"}
           %div{"class" => "link-box-skin-#{link.skin_type} link-box col-12"}
             .row
               .link-name.col-lg-5.col-6
@@ -234,4 +235,22 @@
         .modal-footer
           #{hidden_field_tag '', "", id:"editing-link-id"}
           %button.btn.btn-primary{"id" => "mock_link_edit_btn", :type => "button"} 変更
+          %button.btn.btn-secondary{"data-dismiss" => "modal", :type => "button"} 閉じる
+/ リンクーソートモーダル
+#link-sort-modal.modal.fade{"aria-labelledby" => "myModalLabel", :role => "dialog", :tabindex => "-1"}
+  .modal-dialog.modal-xl{:role => "document"}
+    .modal-content
+      .modal-header
+        %h5#exampleModalLabel.modal-title ブックマークソート
+        %button.close{"aria-label" => "Close", "data-dismiss" => "modal", :type => "button"}
+          %span{"aria-hidden" => "true"} ×
+      .modal-body.text-muted
+        .row
+          .col-12
+            %div{"style" => "margin-bottom:10px;"}
+              現在の順序でブックマークの順番を登録します。
+              %br
+              %span.warning ブックマークをドラッグアンドドロップすることで順番を入れ替えることが可能です。
+        .modal-footer
+          %a#link-sort-button.btn.btn-primary{:href => "/users/#{@user.id}/folders/#{@folder.id}/links/sort/"} ソート
           %button.btn.btn-secondary{"data-dismiss" => "modal", :type => "button"} 閉じる

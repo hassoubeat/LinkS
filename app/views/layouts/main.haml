@@ -393,6 +393,14 @@
         $("#folder-sort-modal").modal();
       });
 
+      // リンクソートボタン押下時の挙動
+      $("#mock-link-sort-button").click(function(){
+        var updateLinkIdArray =  $(".link-box-area").sortable("toArray").join(",");
+        var sortURL = $("#link-sort-button").attr("href") + updateLinkIdArray;
+        $("#link-sort-button").attr("href", sortURL);
+        $("#link-sort-modal").modal();
+      });
+
       function toggleDetailArea(){
         $(".detail-area").toggleClass('active');
         // キャレットの向きを変更する

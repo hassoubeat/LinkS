@@ -48,6 +48,28 @@ class LinksController < ApplicationController
     redirect_to "/users/#{session[:user_id]}/folders/#{params[:folder_id]}" and return
   end
 
+  # GET /users/:user_id/folders/:folder_id/links/sort/:link_sort_ids
+  def sort
+    ActiveRecord::Base.transaction do
+      link_ids = params[:link_sort_ids].split(",");
+      link_ids.each_with_index do |link_id, i|
+        link = Link.find(link_id);
+        if !login_user?(link.user_id)
+          # ログインユーザが管轄するリンク以外を変更しようとしているため、エラー
+          raise RuntimeError.new();
+        end
+        link.sort = i;
+        link.save
+      end
+      flash[:info] = "ブックマークのソートが完了しました"
+    end
+    redirect_to "/users/#{session[:user_id]}/folders/#{@folder.id}" and return
+  rescue => e
+    logger.debug(e.message);
+    flash[:error] = "ブックマークのソートに失敗しました"
+    redirect_to "/users/#{session[:user_id]}/folders/#{@folder.id}" and return
+  end
+
   private
     def link_params
       params.require(:link).permit(:name, :url, :comment, :skin_type)
