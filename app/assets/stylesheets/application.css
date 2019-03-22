@@ -362,6 +362,7 @@ footer {
 [class^="link-skin"] {
   width:25px;
   height:25px;
+  margin-top:5px;
   margin-left:10px;
   background: white;
   border-radius:5px;
