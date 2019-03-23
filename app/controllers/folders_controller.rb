@@ -1,5 +1,5 @@
 class FoldersController < ApplicationController
-  skip_before_action :login_check, only: [:create, :user_check, :login]
+  skip_before_action :login_check, only: [:show, :create, :user_check, :login]
   before_action :login_user_check, only: [:create, :update, :destroy]
 
   # GET /users
@@ -10,9 +10,18 @@ class FoldersController < ApplicationController
 
   # GET /users/:user_id/folders/:folder_id
   def show
-    # TODO 本人以外がアクセスする時、公開されていない場合はTOPに
-    @links = Link.where(folder_id: @folder.id).is_valid
-    render layout: "main"
+    # 本人以外がアクセスする時、公開されていない場合はTOPに
+    if login_user?(@user.id) or @folder.is_open
+      @links = Link.where(folder_id: @folder.id).is_valid
+      # 本人以外がアクセスしたときには、詳細メッセージエリアを初期表示する
+      if !login_user?(@user.id)
+        @intial_display_detail_area = true
+      end
+      render layout: "main"
+    else
+      flash[:info] = "公開されていないフォルダーもしくはフォルダーが存在しません"
+      redirect_to "/users/#{@user.id}" and return
+    end
   end
 
   # POST /users/:user_id/folders
@@ -50,6 +59,18 @@ class FoldersController < ApplicationController
       flash[:info] = "フォルダーの変更に失敗しました"
     end
     redirect_to "/users/#{session[:user_id]}/folders/#{@folder.id}}" and return
+  end
+
+  # DELETE /users/:user_id/folders/:folder_id
+  def destroy
+    @folder.is_valid = false;
+    if @folder.save
+      flash[:info] = "フォルダーを削除しました"
+    else
+      # TODO システムエラー
+      flash[:info] = "フォルダーの削除に失敗しました"
+    end
+    redirect_to "/users/#{session[:user_id]}" and return
   end
 
   # GET /users/:user_id/folders/:folder_sort_ids

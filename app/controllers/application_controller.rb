@@ -83,6 +83,8 @@ class ApplicationController < ActionController::Base
   def set_params
     # 画面遷移時にサイドバーを表示するフラグ(基本スマホのみに適用)
     @intial_display_sidebar = false
+    # 画面遷移時に詳エリアを表示するフラグ
+    @intial_display_detail_area = false
 
     @user = User.new()
     @folder = Folder.new()

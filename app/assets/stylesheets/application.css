@@ -232,6 +232,10 @@ footer {
   z-index:998;
 }
 
+.content-wrapper.hidden-sidebar {
+  margin-left:0px;
+}
+
 .pink {
   color:pink;
 }
@@ -426,6 +430,11 @@ footer {
   margin-right:10px;
   border-radius: 8px;
   border-left: solid 15px #E6E6E6;
+}
+
+.detail-area.hidden-sidebar {
+  width: calc(100% - 20px);
+  margin-left:10px;
 }
 
 @media (min-width: 768px) {
