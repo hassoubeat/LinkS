@@ -121,8 +121,10 @@
                               #{radio_button_tag 'folder[is_open]', true}
                               %i.fas.fa-share-alt &nbsp;公開
                   .modal-footer
-                    -# %a.btn.btn-primary{:href => "#", :target => "_blank"}
-                    #{submit_tag "登録", :name => nil , :id => "folder_create_btn", :class => "btn btn-primary"}
+                    - if @folders.count() >= Folder::FOLDER_CREATE_LIMIT
+                      %button.btn.btn-danger{"disabled" => true} 作成可能なフォルダー数は#{Folder::FOLDER_CREATE_LIMIT}までです
+                    - else
+                      #{submit_tag "登録", :name => nil , :id => "folder_create_btn", :class => "btn btn-primary"}
                     %button.btn.btn-secondary{"data-dismiss" => "modal", :type => "button"} 閉じる
         / フォルダーソートモーダル
         #folder-sort-modal.modal.fade{"aria-labelledby" => "myModalLabel", :role => "dialog", :tabindex => "-1"}

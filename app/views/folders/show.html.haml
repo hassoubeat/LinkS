@@ -184,7 +184,10 @@
                     %span#link-create-skin-type-pink.link-skin-pink{"link-skin-data" => "pink"}
                     #{hidden_field_tag 'link[skin_type]', "default", id:"link-create-skin-type-form"}
           .modal-footer
-            #{submit_tag "登録", :name => nil , :id => "link_create_btn", :class => "btn btn-primary"}
+            - if @links.count() >= Link::LINK_CREATE_LIMIT
+              %button.btn.btn-danger{"disabled" => true} 1つのフォルダーに登録可能なブックマーク数は#{Link::LINK_CREATE_LIMIT}までです
+            - else
+              #{submit_tag "登録", :name => nil , :id => "link_create_btn", :class => "btn btn-primary"}
             %button.btn.btn-secondary{"data-dismiss" => "modal", :type => "button"} 閉じる
 / リンク変更モーダル
 #link-edit-modal.modal.fade{"aria-labelledby" => "myModalLabel", :role => "dialog", :tabindex => "-1"}

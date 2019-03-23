@@ -17,20 +17,26 @@ class FoldersController < ApplicationController
 
   # POST /users/:user_id/folders
   def create
+
+    # 登録上限数のチェック
+    if @folders.count() >= Folder::FOLDER_CREATE_LIMIT
+      flash[:error] = "フォルダーの登録上限に達しています"
+      redirect_to "/users/#{session[:user_id]}" and return
+    end
+
     @folder = Folder.new(folder_params)
     @folder.is_valid = true
-    @folder.sort = FOLDER_DEFAULT_SORT
+    @folder.sort = Folder::FOLDER_DEFAULT_SORT
     @folder.user_id = session[:user_id]
 
     # フォルダー名が入力されていない時は、デフォルト名で登録する
     if @folder.name == ""
-      @folder.name = FOLDER_DEFAULT_NAME
+      @folder.name = Folder::FOLDER_DEFAULT_NAME
     end
 
     if @folder.save
       flash[:info] = "フォルダーを登録しました"
     else
-      # TODO システムエラー
       flash[:info] = "フォルダーの登録に失敗しました"
     end
     redirect_to "/users/#{session[:user_id]}" and return
@@ -38,15 +44,9 @@ class FoldersController < ApplicationController
 
   # PATCH /users/:user_id/folders/:folder_id
   def update
-    # TODO バリデーションチェック
-    # if @user.invalid?
-    #   render :new, layout: "application" and return
-    # end
-
     if @folder.update(folder_params)
       flash[:info] = "フォルダーを変更しました"
     else
-      # TODO システムエラー
       flash[:info] = "フォルダーの変更に失敗しました"
     end
     redirect_to "/users/#{session[:user_id]}/folders/#{@folder.id}}" and return

@@ -3,21 +3,27 @@ class LinksController < ApplicationController
 
   # POST /users/:user_id/folders/:folder_id/links
   def create
+    # 登録上限数のチェック
+    links = Link.where(folder_id: @folder.id).is_valid
+    if links.count() >= Link::LINK_CREATE_LIMIT
+      flash[:error] = "ブックマークの登録上限に達しています"
+      redirect_to "/users/#{session[:user_id]}/folders/#{params[:folder_id]}" and return
+    end
+
     @link = Link.new(link_params)
     @link.is_valid = true
-    @link.sort = LINK_DEFAULT_SORT
+    @link.sort = Link::LINK_DEFAULT_SORT
     @link.user_id = session[:user_id]
     @link.folder_id = params[:folder_id]
 
     # フォルダー名が入力されていない時は、デフォルト名で登録する
     if @link.name == ""
-      @link.name = LINK_DEFAULT_NAME
+      @link.name = Link::LINK_DEFAULT_NAME
     end
 
     if @link.save
       flash[:info] = "ブックマークを登録しました"
     else
-      # TODO システムエラー
       flash[:info] = "ブックマークの登録に失敗しました"
     end
     redirect_to "/users/#{session[:user_id]}/folders/#{params[:folder_id]}" and return
@@ -29,7 +35,6 @@ class LinksController < ApplicationController
     if @link.update(link_params)
       flash[:info] = "リンク : #{@link.name}を変更しました"
     else
-      # TODO システムエラー
       flash[:info] = "リンクの変更に失敗しました"
     end
     redirect_to "/users/#{session[:user_id]}/folders/#{params[:folder_id]}}" and return
@@ -42,7 +47,6 @@ class LinksController < ApplicationController
     if @link.save
       flash[:info] = "ブックマーク : #{@link.name}を削除しました"
     else
-      # TODO システムエラー
       flash[:info] = "ブックマークの削除に失敗しました"
     end
     redirect_to "/users/#{session[:user_id]}/folders/#{params[:folder_id]}" and return

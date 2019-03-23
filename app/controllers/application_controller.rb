@@ -3,10 +3,6 @@ class ApplicationController < ActionController::Base
   # 定数
   REDIS_USER_UNAUTH_PREFIX = "user_unauth_"
   REDIS_USER_UNAUTH_EXPIRE = "3600" #1時間
-  FOLDER_DEFAULT_NAME = "No Name"
-  FOLDER_DEFAULT_SORT = 99999;
-  LINK_DEFAULT_NAME = "No Name"
-  LINK_DEFAULT_SORT = 99999;
 
   protect_from_forgery with: :exception
 
