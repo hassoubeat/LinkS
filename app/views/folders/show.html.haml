@@ -6,6 +6,11 @@
       .row
         .col-md-6.col-12
           .text-ellipsis
+            - if @folder.is_open == true
+              %i.fas.fa-thumbs-up
+              %span.content-header-folder-likes
+                = @folder.likes.size
+              &nbsp;
             %span.content-header-folder-name
               = @folder.name
             %span.hide.content-header-folder-note
@@ -51,7 +56,7 @@
                   %a.link-info{:href => "#"}
                     %i.fas.fa-info-circle.link-action
                   - if login_user?(@user.id)
-                    %a{:href => "#", "data-toggle" => "modal", "data-target" => "#link-edit-modal", "id" => "link-edit-botton-#{link.id}"}
+                    %a{:href => "#", "data-toggle" => "modal", "data-target" => "#link-edit-modal", "id" => "link-edit-button-#{link.id}"}
                       %i.fas.fa-edit.link-action
                     = form_tag("/users/#{@user.id}/folders/#{@folder.id}/links/#{link.id}", method: :delete, id: "link-delete-form", style: "display:inline;") do
                       %a{:href => "#", "onclick" => "this.parentNode.submit()"}
@@ -187,7 +192,7 @@
                       %span#link-create-skin-type-pink.link-skin-pink{"link-skin-data" => "pink"}
                       #{hidden_field_tag 'link[skin_type]', "default", id:"link-create-skin-type-form"}
             .modal-footer
-              - if @links.count() >= Link::LINK_CREATE_LIMIT
+              - if @links.size() >= Link::LINK_CREATE_LIMIT
                 %button.btn.btn-danger{"disabled" => true} 1つのフォルダーに登録可能なブックマーク数は#{Link::LINK_CREATE_LIMIT}までです
               - else
                 #{submit_tag "登録", :name => nil , :id => "link_create_btn", :class => "btn btn-primary"}

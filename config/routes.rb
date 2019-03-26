@@ -19,6 +19,8 @@ Rails.application.routes.draw do
   delete '/users/:user_id/folders/:folder_id', to: 'folders#destroy'
   # フォルダーソート処理
   get '/users/:user_id/folders/sort/:folder_sort_ids', to: 'folders#sort'
+  # フォルダーいいね！処理
+  get '/users/:user_id/folders/:folder_id/like', to: 'folders#like'
   # リンク登録処理
   post '/users/:user_id/folders/:folder_id/links/', to: 'links#create'
   # リンク変更処理

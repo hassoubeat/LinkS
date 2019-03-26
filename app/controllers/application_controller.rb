@@ -6,6 +6,7 @@ class ApplicationController < ActionController::Base
 
   protect_from_forgery with: :exception
 
+  helper_method :login_check?
   helper_method :login_user?
 
   before_action :login_check
@@ -61,7 +62,7 @@ class ApplicationController < ActionController::Base
     end
   end
 
-  # ログイン本人チェック
+  # ログイン本人チェックフィルター
   def login_user_check
     if !login_user?(params[:user_id].to_i)
       # 自分のTOPページへ
@@ -73,6 +74,15 @@ class ApplicationController < ActionController::Base
   # ログインチェック
   def login_user?(user_id)
     if (session[:user_id] == user_id)
+      return true
+    else
+      return false
+    end
+  end
+
+  # ログイン本人チェック
+  def login_check?
+    if session[:user_id]
       return true
     else
       return false

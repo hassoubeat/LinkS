@@ -123,7 +123,7 @@
                                 #{radio_button_tag 'folder[is_open]', true}
                                 %i.fas.fa-share-alt &nbsp;公開
                     .modal-footer
-                      - if @folders.count() >= Folder::FOLDER_CREATE_LIMIT
+                      - if @folders.size() >= Folder::FOLDER_CREATE_LIMIT
                         %button.btn.btn-danger{"disabled" => true} 作成可能なフォルダー数は#{Folder::FOLDER_CREATE_LIMIT}までです
                       - else
                         #{submit_tag "登録", :name => nil , :id => "folder_create_btn", :class => "btn btn-primary"}
@@ -155,11 +155,15 @@
         .detail-area-note
           = @folder.comment
       - if login_user?(@user.id)
-        %div.sidebar-toggle-botton
+        %div.sidebar-toggle-button
           %a{"href" => "#", "class" => "sidebar-toggle", "data-toggle" => "push-menu", "role" => "button"}
             %i.nav-tab.fas.fa-list-ul.pink
             %span.sr-only Toggle navigation
-      %div.detail-area-toggle-botton
+      - elsif login_check?
+        %div.folder-like-button
+          %a{"href" => "#" ,"class" => "folder-like", "role" => "button", "data-href": "/users/#{@user.id}/folders/#{@folder.id}/like"}
+            %i{"class" => "folder-like-icon fas fa-thumbs-up #{'liked' if folder_liked?(session["user_id"], @folder.id)}"}
+      %div.detail-area-toggle-button
         %span{"class" => "detail-area-toggle", "role" => "button"}
           %i.detail-toggle-icon.nav-tab.fas.fa-caret-up.pink
           %span.sr-only Toggle navigation
@@ -216,49 +220,43 @@
           items: '.sortable-item',
         });
         $(".sortable").disableSelection();
-        // URLコピーの初期化処理
-        // var clipboard = new Clipboard('.url-copy');
-        // clipboard.on('success', function(e) {
-        //  alert("success");
-        // });
 
         // インフォメーションメッセージの表示
         var info_message = $(".info-message").text();
         if (info_message) {
-          $.toast({
-            text : info_message,
-            showHideTransition : 'slide',
-            bgColor : "#B8DCEF",
-            textColor : "#797F82",
-            hideAfter: 5000,
-            position: 'top-right',
-            stack : 5,
-            textAlign : 'left',
-            position : 'bottom-right'
-          });
+          viewToaster(info_message, "info");
         }
         // エラーメッセージの表示
         var error_message = $(".error-message").text();
         if (error_message) {
-          $.toast({
-            text : error_message,
-            showHideTransition : 'slide',
-            bgColor : "#F6CECE",
-            textColor : "#797F82",
-            hideAfter: 5000,
-            position: 'top-right',
-            stack : 5,
-            textAlign : 'left',
-            position : 'bottom-right'
-          });
+          viewToaster(error_message, "error");
         }
       });
 
 
 
       // 詳細テキスト表示エリアを切り替えるイベント
-      $('.detail-area-toggle-botton').click(function(){
+      $('.detail-area-toggle-button').click(function(){
         toggleDetailArea();
+      });
+
+      // いいねボタン押下時のイベント
+      $('.folder-like').click(function(){
+        $(".folder-like-icon").toggleClass("liked");
+        $.ajax({
+          type: 'GET',
+          url: $(this).attr("data-href"),
+          dataType: 'json',
+          success: function(json){
+            if (json['liked']) {
+              $(".folder-like-icon").addClass("liked");
+            } else {
+              $(".folder-like-icon").removeClass("liked");
+            }
+            $(".content-header-folder-likes").text(json['like_count'])
+            viewToaster(json['info_message'], "info")
+          }
+        });
       });
 
       // サイドバーのフォルダー名マウスホバー時に詳細エリアに情報を表示する
@@ -326,7 +324,7 @@
       });
 
       // リンク変更ボタン押下時の挙動
-      $("[id^='link-edit-botton-']").click(function(){
+      $("[id^='link-edit-button-']").click(function(){
         // リンク変更フォームの値を空にする
         $("#mock-link-edit-name-form").val("");
         $("#mock-link-edit-url-form").val("");
@@ -411,5 +409,24 @@
         $(".detail-area-sub-title").text(title_sub);
         $(".detail-area-note").html(antiXSS(note));
         $(".detail-area").addClass("detail-area-skin-" + skin_color);
+      }
+
+      // トースターメッセージの表示
+      function viewToaster(message, message_type) {
+        background_color = "#B8DCEF";
+        if (message_type == "error") {
+          background_color = "#F6CECE";
+        }
+        $.toast({
+          text : message,
+          showHideTransition : 'slide',
+          bgColor : background_color,
+          textColor : "#797F82",
+          hideAfter: 5000,
+          position: 'top-right',
+          stack : 5,
+          textAlign : 'left',
+          position : 'bottom-right'
+        });
       }
 

@@ -1,4 +1,7 @@
 class FoldersController < ApplicationController
+
+  helper_method :folder_liked?
+
   skip_before_action :login_check, only: [:show, :create, :user_check, :login]
   before_action :login_user_check, only: [:create, :update, :destroy]
 
@@ -73,7 +76,7 @@ class FoldersController < ApplicationController
     redirect_to "/users/#{session[:user_id]}" and return
   end
 
-  # GET /users/:user_id/folders/:folder_sort_ids
+  # GET /users/:user_id/folders/sort/:folder_sort_ids
   def sort
     ActiveRecord::Base.transaction do
       folder_ids = params[:folder_sort_ids].split(",");
@@ -94,6 +97,36 @@ class FoldersController < ApplicationController
     flash[:error] = "フォルダーのソートに失敗しました"
     redirect_to "/users/#{session[:user_id]}" and return
   end
+
+  # GET /users/:user_id/folders/:folder_id/links/like
+  def like
+    @like = Like.find_by(user_id: session[:user_id], folder_id: @folder.id)
+    if @like
+      # 存在した場合はいいね！取り消し
+      @like.destroy
+      response = {info_message: "いいね！を取り消しました", like_count: Like.where(folder_id: @folder.id).count, liked: false}
+      render :json => response
+    else
+      # 存在しない場合はいいね！
+      @like = Like.new()
+      @like.user_id = session[:user_id]
+      @like.folder_id = @folder.id
+      @like.save
+      response = {info_message: "いいね！しました", like_count: Like.where(folder_id: @folder.id).count, liked: true}
+      render :json => response
+    end
+  end
+
+  protected
+    # フォルダーいいねチェック
+    def folder_liked?(user_id, folder_id)
+      @like = Like.find_by(user_id: user_id, folder_id: folder_id)
+      if @like
+        return true
+      else
+        return false
+      end
+    end
 
   private
     def folder_params
