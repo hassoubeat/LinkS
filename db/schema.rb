@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_03_26_060334) do
+ActiveRecord::Schema.define(version: 2019_03_27_064539) do
 
   create_table "folders", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
     t.string "name"
@@ -43,6 +43,16 @@ ActiveRecord::Schema.define(version: 2019_03_26_060334) do
     t.datetime "updated_at", null: false
   end
 
+  create_table "news", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
+    t.string "title", limit: 200
+    t.string "content", limit: 2000
+    t.string "skin_type"
+    t.boolean "is_valid"
+    t.integer "user_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
   create_table "users", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
     t.string "email"
     t.string "password_digest"
@@ -50,6 +60,7 @@ ActiveRecord::Schema.define(version: 2019_03_26_060334) do
     t.boolean "is_valid"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.string "authority"
   end
 
 end

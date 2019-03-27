@@ -17,8 +17,6 @@
     = stylesheet_link_tag 'jquery.toast.min', media: 'all'
     -# App CSS
     = stylesheet_link_tag 'application', media: 'all'
-    -# Genre CSS
-    = stylesheet_link_tag 'genre', media: 'all'
 
 
     -# Google Font(Comfortaa )
@@ -42,8 +40,12 @@
           %i.nav-tab.fas.fa-list-ul
         #navbarNav.collapse.navbar-collapse
           %ul.navbar-nav.mr-auto
+          - if admin_check?(@current_user.authority)
+            %ul.navbar-nav
+              %a.nav-link{:href => "/management"}
+                管理者ページ
           %ul.navbar-nav
-            - if @current_user
+            - if login_check?
               %li.nav-item
                 %a.nav-link{:href => "/logout"}
                   ログアウト

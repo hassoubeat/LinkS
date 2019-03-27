@@ -1,0 +1,82 @@
+!!!
+%html{lang: "ja"}
+  %head
+    %meta{name:"viewport", content:"width=device-width,initial-scale=1.0"}
+    %meta{:content => "text/html; charset=UTF-8", "http-equiv" => "Content-Type"}/
+    %title LinkS_Management
+    = csrf_meta_tags
+    = csp_meta_tag
+
+    -# Bootstrap CSS
+    %link{rel: "stylesheet", href: "https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css", integrity:"sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T", crossorigin:"anonymous"}
+    -# FontAwesome CSS
+    %link{rel: "stylesheet", href: "https://use.fontawesome.com/releases/v5.7.2/css/all.css", integrity:"sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr", crossorigin:"anonymous"}
+    -# jQuery toast CSS (jQuery Plugin CSS)
+    = stylesheet_link_tag 'jquery.toast.min', media: 'all'
+    -# Management CSS
+    = stylesheet_link_tag 'management', media: 'all'
+
+
+    -# Google Font(Comfortaa )
+    %link{rel: "stylesheet", href: "https://fonts.googleapis.com/css?family=Comfortaa"}
+    -# Google Font(Londrina+Shadow)
+    %link{rel: "stylesheet", href: "https://fonts.googleapis.com/css?family=Londrina+Shadow"}
+    -# Google Font(MPlus 1p)
+    %link{rel: "stylesheet", href: "https://fonts.googleapis.com/css?family=M+PLUS+Rounded+1c"}
+
+  %body{"data-spy" => "scroll", "data-target" => "#navbarNav"}
+    %div.animsition
+      - if flash[:info]
+        %div.info-message.hide
+          = flash[:info]
+      - if flash[:error]
+        %div.error-message.hide
+          = flash[:error]
+      .jumbotron.jumbotron-fluid
+        .container
+          %h1 LinkS管理画面
+          %p.lead
+            本ページは管理者以外にアクセスができません。
+            %br
+            システムに影響を与える処理は慎重に操作を行ってください。
+      / メインコンテンツ
+      %div{"class" => "content-wrapper"}
+        = yield
+      %div.hide.hide-params
+    -# jQuery
+    = javascript_include_tag 'https://ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js'
+    -# jQuery UI (jQuery Plugin)
+    = javascript_include_tag 'http://code.jquery.com/ui/1.11.3/jquery-ui.js'
+    -# jQuery Plugin UI TouchPunch (jQuery Plugin) スマホ環境でもD&Dを実現する
+    = javascript_include_tag 'jquery.ui.touch-punch.min'
+    -# jQuery.toast.js (jQuery Plugin)
+    = javascript_include_tag 'jquery.toast.min'
+    -# Popper JS
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
+    -# Bootstrap JS
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+    -# management.js
+    = javascript_include_tag 'management'
+
+    :javascript
+      $(document).ready(function() {
+        // 画面表示時にアニメーション付きで遷移させる
+        $('.animsition').animsition({
+          inDuration: 700,
+          outDuration: 500,
+        }).one('animsition.inEnd',function(){
+          // 画面表示アニメーション実行後処理(コールバック)
+        });
+
+        // インフォメーションメッセージの表示
+        var info_message = $(".info-message").text();
+        if (info_message) {
+          viewToaster(info_message, "info");
+        }
+        // エラーメッセージの表示
+        var error_message = $(".error-message").text();
+        if (error_message) {
+          viewToaster(error_message, "error");
+        }
+      });
+

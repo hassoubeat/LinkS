@@ -6,54 +6,59 @@
       %span
         ようこそLinkS(リンクス)へ！
         LinkSであなたが集めたブックマークを誰かと共有しましょう！
-  .col-12.col-md-6
-    .links-infomation-nice-ranking-area
-      %h4 今週のいいねランキング
-      .row
-        .col-12
-          .nice-ranking-1.text-ellipsis
-            %a{href:"#", style:"color:white;"}
-              %i.fas.fa-thumbs-up 112 テスト
-          .nice-ranking-2.text-ellipsis
-            %a{href:"#", style:"color:white;"}
-              %i.fas.fa-thumbs-up 112 テスト
-          .nice-ranking-3.text-ellipsis
-            %a{href:"#", style:"color:white;"}
-              %i.fas.fa-thumbs-up 112 テスト
-          .nice-ranking-other.text-ellipsis
-            %a{href:"#", style:"color:white;"}
-              %i.fas.fa-thumbs-up 112 テスト
-          .nice-ranking-other.text-ellipsis
-            %a{href:"#", style:"color:white;"}
-              %i.fas.fa-thumbs-up 112 テスト
-  .col-12.col-md-6
-    .links-infomation-view-ranking-area
-      %h4 今週の閲覧数ランキング
-      .row
-        .col-12
-          .nice-ranking-1.text-ellipsis
-            %a{href:"#", style:"color:white;"}
-              114514view テスト
-          .nice-ranking-2.text-ellipsis
-            %a{href:"#", style:"color:white;"}
-              114514view テスト
-          .nice-ranking-3.text-ellipsis
-            %a{href:"#", style:"color:white;"}
-              114514view テスト
-          .nice-ranking-other.text-ellipsis
-            %a{href:"#", style:"color:white;"}
-              114514view テスト
-          .nice-ranking-other.text-ellipsis
-            %a{href:"#", style:"color:white;"}
-              114514view テスト
+  -# .col-12.col-md-6
+  -#   .links-infomation-nice-ranking-area
+  -#     %h4 今週のいいねランキング
+  -#     .row
+  -#       .col-12
+  -#         .nice-ranking-1.text-ellipsis
+  -#           %a{href:"#", style:"color:white;"}
+  -#             %i.fas.fa-thumbs-up 112 テスト
+  -#         .nice-ranking-2.text-ellipsis
+  -#           %a{href:"#", style:"color:white;"}
+  -#             %i.fas.fa-thumbs-up 112 テスト
+  -#         .nice-ranking-3.text-ellipsis
+  -#           %a{href:"#", style:"color:white;"}
+  -#             %i.fas.fa-thumbs-up 112 テスト
+  -#         .nice-ranking-other.text-ellipsis
+  -#           %a{href:"#", style:"color:white;"}
+  -#             %i.fas.fa-thumbs-up 112 テスト
+  -#         .nice-ranking-other.text-ellipsis
+  -#           %a{href:"#", style:"color:white;"}
+  -#             %i.fas.fa-thumbs-up 112 テスト
+  -# .col-12.col-md-6
+  -#   .links-infomation-view-ranking-area
+  -#     %h4 今週の閲覧数ランキング
+  -#     .row
+  -#       .col-12
+  -#         .nice-ranking-1.text-ellipsis
+  -#           %a{href:"#", style:"color:white;"}
+  -#             114514view テスト
+  -#         .nice-ranking-2.text-ellipsis
+  -#           %a{href:"#", style:"color:white;"}
+  -#             114514view テスト
+  -#         .nice-ranking-3.text-ellipsis
+  -#           %a{href:"#", style:"color:white;"}
+  -#             114514view テスト
+  -#         .nice-ranking-other.text-ellipsis
+  -#           %a{href:"#", style:"color:white;"}
+  -#             114514view テスト
+  -#         .nice-ranking-other.text-ellipsis
+  -#           %a{href:"#", style:"color:white;"}
+  -#             114514view テスト
   .col-12
     .links-infomation-notice-area
       %h4 News
       .row
         .col-12
           .news
-            %span.news-timestamp XXXX/YY/DD
-            %span.news-title テスト
+            .row
+              .col-12
+                %a{"href" => "#collapseExample", "data-toggle" => "collapse", "aria-controls" => "collapseExample"}
+                  %span.news-timestamp XXXX/YY/DD
+                  %span.news-title テスト
+              #collapseExample.col-12.collapse.show
+                %span.news-content テスト
           .news
             %span.news-timestamp XXXX/YY/DD
             %span.news-title テスト

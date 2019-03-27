@@ -33,6 +33,10 @@ Rails.application.routes.draw do
   post '/login', to: 'users#login'
   # ログアウト
   get '/logout', to: 'users#logout'
+  # 管理トップページ(管理画面)
+  get '/management', to: 'application#admin_index'
+  # ニュース一覧ページ(管理画面)
+  get '/management/news', to: 'news#index'
   # ルート
   root :controller => 'application', :action => 'index'
 end
