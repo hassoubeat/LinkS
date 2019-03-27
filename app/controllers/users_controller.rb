@@ -51,7 +51,7 @@ class UsersController < ApplicationController
     logger.debug("email:" + @user.email + ", Redis_key:" + key);
 
     # 認証メールの送付
-    EmailCheckMailer.send_user_email_check(user_hash, rand_param).deliver
+    EmailCheckMailer.send_user_email_check(user_hash, rand_param).deliver_later
 
     flash[:info] = "入力頂いたメールアドレスに認証用のメールを送付致しました。1時間以内に認証を行って本登録を完了させてください。"
     redirect_to controller: 'application', action: 'index'
