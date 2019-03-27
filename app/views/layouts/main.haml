@@ -52,7 +52,7 @@
                 %a.nav-link{:href => "/"}
                   ログイン
       / サイドバー
-      - if login_user?(@user.id)
+      - if login_id_check?(@user.id)
         %aside.main-sidebar.sidebar-default-skin
           %section.sidebar{:style => "height: auto;"}
             %form{:action => "", :method => "post"}
@@ -83,9 +83,9 @@
               %button#submit{:style => "display:none"} ソート確定
       / サイドバー
       / メインコンテンツ
-      %div{"class" => "content-wrapper #{"hidden-sidebar" if !@folder.user_id.nil? and !login_user?(@folder.user_id)}"}
+      %div{"class" => "content-wrapper #{"hidden-sidebar" if !@folder.user_id.nil? and !login_id_check?(@folder.user_id)}"}
         = yield
-        - if login_user?(@user.id)
+        - if login_id_check?(@user.id)
           / フォルダー登録モーダル
           #folder-create-modal.modal.fade{"aria-labelledby" => "myModalLabel", :role => "dialog", :tabindex => "-1"}
             .modal-dialog.modal-xl{:role => "document"}
@@ -148,13 +148,13 @@
                     %button.btn.btn-secondary{"data-dismiss" => "modal", :type => "button"} 閉じる
 
       / 詳細エリア
-      %div{"class" => "detail-area #{"hidden-sidebar" if !@folder.user_id.nil? and !login_user?(@folder.user_id)}"}
+      %div{"class" => "detail-area #{"hidden-sidebar" if !@folder.user_id.nil? and !login_id_check?(@folder.user_id)}"}
         .detail-area-title
           = @folder.name
         .detail-area-sub-title
         .detail-area-note
           = @folder.comment
-      - if login_user?(@user.id)
+      - if login_id_check?(@user.id)
         %div.sidebar-toggle-button
           %a{"href" => "#", "class" => "sidebar-toggle", "data-toggle" => "push-menu", "role" => "button"}
             %i.nav-tab.fas.fa-list-ul.pink
@@ -162,7 +162,7 @@
       - elsif login_check?
         %div.folder-like-button
           %a{"href" => "#" ,"class" => "folder-like", "role" => "button", "data-href": "/users/#{@user.id}/folders/#{@folder.id}/like"}
-            %i{"class" => "folder-like-icon fas fa-thumbs-up #{'liked' if folder_liked?(session["user_id"], @folder.id)}"}
+            %i{"class" => "folder-like-icon fas fa-thumbs-up #{'liked' if folder_liked?(@current_user.id, @folder.id)}"}
       %div.detail-area-toggle-button
         %span{"class" => "detail-area-toggle", "role" => "button"}
           %i.detail-toggle-icon.nav-tab.fas.fa-caret-up.pink

@@ -19,7 +19,7 @@
           .content-header-actions
             %a.content-header-folder-info{:href => "#"}
               %i.fas.fa-info-circle.content-header-action
-            - if login_user?(@user.id)
+            - if login_id_check?(@user.id)
               %a{:href => "#", "data-toggle" => "modal", "data-target" => "#folder-edit-modal"}
                 %i.fas.fa-edit.content-header-action
               %a{:href => "#", "data-toggle" => "modal", "data-target" => "#folder-delete-modal"}
@@ -29,7 +29,7 @@
                 %i.fab.fa-line.content-header-action
               %a{:href => "https://twitter.com/intent/tweet?text=#{@folder.name}%0a%0a#{@folder.comment}%0a#{root_url(only_path: false)}/users/#{@user.id}/folders/#{@folder.id}%0a%0aLinkSからの共有", :target => "_blank"}
                 %i.fab.fa-twitter.content-header-action
-            - if login_user?(@user.id)
+            - if login_id_check?(@user.id)
               %a#mock-link-sort-button{:href => "#"}
                 %i.fas.fa-sort.content-header-action
   / リンク
@@ -55,7 +55,7 @@
                 .link-actions
                   %a.link-info{:href => "#"}
                     %i.fas.fa-info-circle.link-action
-                  - if login_user?(@user.id)
+                  - if login_id_check?(@user.id)
                     %a{:href => "#", "data-toggle" => "modal", "data-target" => "#link-edit-modal", "id" => "link-edit-button-#{link.id}"}
                       %i.fas.fa-edit.link-action
                     = form_tag("/users/#{@user.id}/folders/#{@folder.id}/links/#{link.id}", method: :delete, id: "link-delete-form", style: "display:inline;") do
@@ -67,7 +67,7 @@
                   #{hidden_field_tag 'link[url]', link.url, class:"form-control", placeholder:"URL", maxlength:'2000', id:"link-edit-url-form"}
                   #{hidden_field_tag 'link[comment]', link.comment, class:"form-control", placeholder:"メモ", maxlength:'400', id:"link-edit-comment-form"}
                   #{hidden_field_tag 'link[skin_type]', link.skin_type, id:"link-edit-skin-type-form"}
-      - if login_user?(@user.id)
+      - if login_id_check?(@user.id)
         .row
           .add-link-box.col-12
             %a{:href => "#", "data-toggle" => "modal", "data-target" => "#link-create-modal"}
@@ -75,7 +75,7 @@
                 .col-12
                   %i.fas.fa-plus-circle
 
-- if login_user?(@user.id)
+- if login_id_check?(@user.id)
   / フォルダー変更モーダル
   #folder-edit-modal.modal.fade{"aria-labelledby" => "myModalLabel", :role => "dialog", :tabindex => "-1"}
     .modal-dialog.modal-xl{:role => "document"}

@@ -7,20 +7,19 @@ class ApplicationController < ActionController::Base
   protect_from_forgery with: :exception
 
   helper_method :login_check?
-  helper_method :login_user?
+  helper_method :login_id_check?
 
-  before_action :login_check
+  before_action :login_check_filter
   before_action :init_action
-  before_action :set_params
   around_action :around_logger
 
-  skip_before_action :login_check, only: [:index,:login_form]
+  skip_before_action :login_check_filter, only: [:index, :login_form]
 
   # トップ画面の表示
   def index
     # ログイン済みの場合は、ユーザページへリダイレクト
-    if session[:user_id]
-      redirect_to "/users/#{session[:user_id]}" and return
+    if login_check?
+      redirect_to "/users/#{@current_user.id}" and return
     end
     render template: 'index'
   end
@@ -38,9 +37,32 @@ class ApplicationController < ActionController::Base
 
   # 汎用的な初期化処理
   def init_action
+    # 画面遷移時にサイドバーを表示するフラグ(基本スマホのみに適用)
+    @intial_display_sidebar = false
+    # 画面遷移時に詳エリアを表示するフラグ
+    @intial_display_detail_area = false
+
+    @user = User.new()
+    @folder = Folder.new()
+
     # ログインしていた場合、テンプレート変数にログインユーザのデータをセット
-    if session[:user_id]
+    if login_check?
       @current_user = User.find(session[:user_id])
+    end
+
+    # パラメータでユーザIDを受けている時に、ユーザ情報を取得する
+    if params[:user_id]
+      @user = User.find(params[:user_id])
+    end
+
+    # パラメータでフォルダーIDを受けている時に、フォルダー情報を取得する
+    if params[:folder_id]
+      @folder = Folder.find(params[:folder_id])
+    end
+
+    # ユーザIDを取得できた際には、紐づくフォルダー一覧を取得する
+    if @user
+      @folders = Folder.where(user_id: @user.id).is_valid
     end
   end
 
@@ -56,31 +78,22 @@ class ApplicationController < ActionController::Base
   protected
 
   # ログインチェックフィルター
-  def login_check
-    unless session[:user_id]
+  def login_check_filter
+    if !login_check?
       redirect_to controller: 'application', action: 'index'
     end
   end
 
   # ログイン本人チェックフィルター
-  def login_user_check
-    if !login_user?(params[:user_id].to_i)
+  def login_id_check_filter
+    if !login_id_check?(params[:user_id].to_i)
       # 自分のTOPページへ
-      @folders = Folder.where(user_id: session[:user_id]).is_valid
-      redirect_to "/users/#{session[:user_id]}" and return
+      @folders = Folder.where(user_id: @current_user.id).is_valid
+      redirect_to "/users/#{@current_user.id}" and return
     end
   end
 
   # ログインチェック
-  def login_user?(user_id)
-    if (session[:user_id] == user_id)
-      return true
-    else
-      return false
-    end
-  end
-
-  # ログイン本人チェック
   def login_check?
     if session[:user_id]
       return true
@@ -89,29 +102,12 @@ class ApplicationController < ActionController::Base
     end
   end
 
-  # 各種パラメータのセット
-  def set_params
-    # 画面遷移時にサイドバーを表示するフラグ(基本スマホのみに適用)
-    @intial_display_sidebar = false
-    # 画面遷移時に詳エリアを表示するフラグ
-    @intial_display_detail_area = false
-
-    @user = User.new()
-    @folder = Folder.new()
-
-    # パラメータでユーザIDを受けている時に、ユーザ情報を取得する
-    if params[:user_id]
-      @user = User.find(params[:user_id])
-    end
-
-    # パラメータでフォルダーIDを受けている時に、フォルダー情報を取得する
-    if params[:folder_id]
-      @folder = Folder.find(params[:folder_id])
-    end
-
-    # ユーザIDを取得できた際には、紐づくフォルダー一覧を取得する
-    if @user
-      @folders = Folder.where(user_id: @user.id).is_valid
+  # ログイン本人チェック
+  def login_id_check?(user_id)
+    if (session[:user_id] == user_id)
+      return true
+    else
+      return false
     end
   end
 end

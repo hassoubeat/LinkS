@@ -1,12 +1,6 @@
 class UsersController < ApplicationController
-  skip_before_action :login_check, only: [:new, :create, :user_check, :login]
-  before_action :login_user_check, only: [:show]
-
-  # GET /users
-  # GET /users.json
-  def index
-    @users = User.all
-  end
+  skip_before_action :login_check_filter, only: [:new, :create, :user_check, :login]
+  before_action :login_id_check_filter, only: [:show]
 
   # GET /users/:user_id
   def show
