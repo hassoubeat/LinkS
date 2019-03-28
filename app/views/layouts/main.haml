@@ -7,26 +7,15 @@
     = csrf_meta_tags
     = csp_meta_tag
 
-    -# Bootstrap CSS
-    %link{rel: "stylesheet", href: "https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css", integrity:"sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T", crossorigin:"anonymous"}
+    -# CSSs
+    = render 'css'
     -# AdminLTE CSS (Bootstrap拡張FW)
     = stylesheet_link_tag 'AdminLTE', media: 'all'
-    -# FontAwesome CSS
-    %link{rel: "stylesheet", href: "https://use.fontawesome.com/releases/v5.7.2/css/all.css", integrity:"sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr", crossorigin:"anonymous"}
-    -# jQuery toast CSS (jQuery Plugin CSS)
-    = stylesheet_link_tag 'jquery.toast.min', media: 'all'
-    -# App CSS
-    = stylesheet_link_tag 'application', media: 'all'
     -# Main CSS
     = stylesheet_link_tag 'main', media: 'all'
 
-
-    -# Google Font(Comfortaa )
-    %link{rel: "stylesheet", href: "https://fonts.googleapis.com/css?family=Comfortaa"}
-    -# Google Font(Londrina+Shadow)
-    %link{rel: "stylesheet", href: "https://fonts.googleapis.com/css?family=Londrina+Shadow"}
-    -# Google Font(MPlus 1p)
-    %link{rel: "stylesheet", href: "https://fonts.googleapis.com/css?family=M+PLUS+Rounded+1c"}
+    -# Fonts
+    = render 'font'
 
   %body{"data-spy" => "scroll", "data-target" => "#navbarNav"}
     %div.animsition
@@ -174,24 +163,17 @@
       %div.hide.hide-params
         %span{id: "intial_display_sidebar", class: "#{'active' if @intial_display_sidebar}"}
         %span{id: "intial_display_detail_area", class: "#{'active' if @intial_display_detail_area}"}
-    -# jQuery
-    = javascript_include_tag 'https://ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js'
+
+    -# JSs
+    = render "js"
     -# jQuery UI (jQuery Plugin)
     = javascript_include_tag 'http://code.jquery.com/ui/1.11.3/jquery-ui.js'
     -# jQuery Plugin UI TouchPunch (jQuery Plugin) スマホ環境でもD&Dを実現する
     = javascript_include_tag 'jquery.ui.touch-punch.min'
     -# Clipboard.js (jQuery Plugin)
     = javascript_include_tag 'clipboard.min'
-    -# jQuery.toast.js (jQuery Plugin)
-    = javascript_include_tag 'jquery.toast.min'
-    -# Popper JS
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
-    -# Bootstrap JS
-    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
     -# AdminLTE JS
     = javascript_include_tag 'adminlte'
-    -# App JS
-    = javascript_include_tag 'application'
     -# Main JS
     = javascript_include_tag 'main'
 

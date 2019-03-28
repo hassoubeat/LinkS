@@ -174,7 +174,7 @@
   color:#424242;
   background-color:#FAFAFA;
   padding: 10px;
-  box-shadow: 2px 2px 2px gray;
+  box-shadow: 1px 1px 1px #D8D8D8;
   box-sizing: border-box;
   border-bottom: solid 1px #D8D8D8;
 }
