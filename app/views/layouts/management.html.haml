@@ -13,6 +13,8 @@
     %link{rel: "stylesheet", href: "https://use.fontawesome.com/releases/v5.7.2/css/all.css", integrity:"sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr", crossorigin:"anonymous"}
     -# jQuery toast CSS (jQuery Plugin CSS)
     = stylesheet_link_tag 'jquery.toast.min', media: 'all'
+    -# App CSS
+    = stylesheet_link_tag 'application', media: 'all'
     -# Management CSS
     = stylesheet_link_tag 'management', media: 'all'
 
@@ -32,13 +34,25 @@
       - if flash[:error]
         %div.error-message.hide
           = flash[:error]
-      .jumbotron.jumbotron-fluid
-        .container
-          %h1 LinkS管理画面
-          %p.lead
-            本ページは管理者以外にアクセスができません。
-            %br
-            システムに影響を与える処理は慎重に操作を行ってください。
+      %nav.navbar.navbar-expand-md.navbar-default.navbar-fixed-top.navbar-management
+        %a.navbar-brand{:href => "/management"} LinkS Management
+        %button.navbar-toggler{"aria-controls" => "navbarNav", "aria-expanded" => "false", "aria-label" => "ナビゲーションの切替", "data-target" => "#navbarNav", "data-toggle" => "collapse", :type => "button"}
+          %i.nav-tab.fas.fa-list-ul
+        #navbarNav.collapse.navbar-collapse
+          %ul.navbar-nav.mr-auto
+          - if admin_check?(@current_user.authority)
+            %ul.navbar-nav
+              %a.nav-link{:href => "/"}
+                メインページ
+          %ul.navbar-nav
+            - if login_check?
+              %li.nav-item
+                %a.nav-link{:href => "/logout"}
+                  ログアウト
+            - else
+              %li.nav-item
+                %a.nav-link{:href => "/"}
+                  ログイン
       / メインコンテンツ
       %div{"class" => "content-wrapper"}
         = yield
@@ -55,6 +69,8 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
     -# Bootstrap JS
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+    -# App JS
+    = javascript_include_tag 'application'
     -# management.js
     = javascript_include_tag 'management'
 
@@ -66,17 +82,17 @@
           outDuration: 500,
         }).one('animsition.inEnd',function(){
           // 画面表示アニメーション実行後処理(コールバック)
-        });
 
-        // インフォメーションメッセージの表示
-        var info_message = $(".info-message").text();
-        if (info_message) {
-          viewToaster(info_message, "info");
-        }
-        // エラーメッセージの表示
-        var error_message = $(".error-message").text();
-        if (error_message) {
-          viewToaster(error_message, "error");
-        }
+          // インフォメーションメッセージの表示
+          var info_message = $(".info-message").text();
+          if (info_message) {
+            viewToaster(info_message, "info");
+          }
+          // エラーメッセージの表示
+          var error_message = $(".error-message").text();
+          if (error_message) {
+            viewToaster(error_message, "error");
+          }
+        });
       });
 

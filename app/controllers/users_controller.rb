@@ -5,6 +5,7 @@ class UsersController < ApplicationController
   # GET /users/:user_id
   def show
     @intial_display_sidebar = true;
+    @newses = News.all.is_valid.is_open.created_at_desc.limit(10)
     render layout: "main"
   end
 

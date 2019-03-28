@@ -37,6 +37,16 @@ Rails.application.routes.draw do
   get '/management', to: 'application#admin_index'
   # ニュース一覧ページ(管理画面)
   get '/management/news', to: 'news#index'
+  # ニュース登録ページ(管理画面)
+  get '/management/news/new', to: 'news#new'
+  # ニュース登録処理(管理画面)
+  post '/management/news', to: 'news#create'
+  # ニュース変更処理(管理画面)
+  get '/management/news/edit/:news_id', to: 'news#edit'
+  # ニュース変更処理(管理画面)
+  patch '/management/news/:news_id', to: 'news#update'
+  # ニュース削除処理(管理画面)
+  delete '/management/news/:news_id', to: 'news#destroy'
   # ルート
   root :controller => 'application', :action => 'index'
 end

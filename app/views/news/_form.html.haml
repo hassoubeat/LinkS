@@ -1,0 +1,36 @@
+%div.container
+  - news.id ? action = "update" : action = "create"
+  = form_with(model: news, :url => {:action => action}, local: true) do |form|
+    %div.row
+      %div.col-12.news-form
+        %div.row
+          - if news.errors.any?
+            %div.col-lg-12.input-form-error
+              - news.errors.full_messages.each do |message|
+                %li
+                  = message
+          %div.col-12
+            %div.input-group.input-group.mb-3
+              %div.input-group-prepend
+                %span{class:"input-group-text", id:"inputGroup-sizing-lg"}
+                  %i.fas.fa-newspaper
+              = form.text_field :title, :placeholder => "ニュースタイトル", :maxlength => 200, :class => "form-control"
+          %div.col-12
+            %div.input-group.input-group.mb-3
+              %div.input-group-prepend
+                %span{class:"input-group-text", id:"inputGroup-sizing-lg"}
+                  %i.fas.fa-file-alt
+              = form.text_area :content, :placeholder => "コンテンツ(HTMLタグの利用が可能です)", :maxlength => 2000, :class => "form-control"
+          %div.col-12
+            %div.input-group.input-group.mb-3
+              %div
+                公開する
+              = form.check_box :is_open, :placeholder => "公開", :style => "margin:4px;"
+          %div.col-12.text-center
+            %div.btn-group.d-flex
+              - if news.id
+                = form.submit "更新", :class => "btn btn-primary w-100"
+              - else
+                = form.submit "登録" , :class => "btn btn-primary w-100"
+              %a.btn.btn-secondary.w-100{:href => "/management/news"}
+                戻る
