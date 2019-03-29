@@ -263,5 +263,5 @@
                 %br
                 %span.warning ブックマークをドラッグアンドドロップすることで順番を入れ替えることが可能です。
           .modal-footer
-            %a#link-sort-button.btn.btn-primary{:href => "/users/#{@user.id}/folders/#{@folder.id}/links/sort/"} ソート
+            %a#link-sort-button{:href => "/users/#{@user.id}/folders/#{@folder.id}/links/sort/", "class" => "btn btn-primary #{"disabled" if @links.size == 0}", "aria-disabled" => true, "role" => "button"} ソート
             %button.btn.btn-secondary{"data-dismiss" => "modal", :type => "button"} 閉じる

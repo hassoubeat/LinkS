@@ -140,7 +140,7 @@
                         %br
                         %span.warning フォルダーをドラッグアンドドロップすることで順番を入れ替えることが可能です。
                   .modal-footer
-                    %a#folder-sort-button.btn.btn-primary{:href => "/users/#{@user.id}/folders/sort/"} ソート
+                    %a#folder-sort-button{:href => "/users/#{@user.id}/folders/sort/", "class" => "btn btn-primary #{"disabled" if @folders.size == 0}", "aria-disabled" => true, "role" => "button"} ソート
                     %button.btn.btn-secondary{"data-dismiss" => "modal", :type => "button"} 閉じる
 
       / 詳細エリア
