@@ -60,7 +60,7 @@ Rails.application.configure do
   config.file_watcher = ActiveSupport::EventedFileUpdateChecker
 
   # セッション保存にRedisを利用する
-  config.session_store :redis_store, servers: 'redis://localhost:6379/0', expire_in: 60.minutes
+  config.session_store :redis_store, servers: 'redis://localhost:6379/0', expire_in: 7.days
 
   # アプリケーションのデフォルトルートの設定
   host = 'links.com:9090'
