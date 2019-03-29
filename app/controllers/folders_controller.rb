@@ -14,7 +14,7 @@ class FoldersController < ApplicationController
   # GET /users/:user_id/folders/:folder_id
   def show
     # 本人以外がアクセスする時、公開されていない場合はTOPに
-    if (login_id_check?(@user.id) or @folder.is_open) and @folder.is_valid
+    if (login_id_check?(@user.id) or @folder.is_open) and @folder.is_valid and @user.id == @folder.user_id
       @links = Link.where(folder_id: @folder.id).is_valid
       # 本人以外がアクセスしたときには、詳細メッセージエリアを初期表示する
       if !login_id_check?(@user.id)
