@@ -7,6 +7,9 @@ class ApplicationController < ActionController::Base
 
   protect_from_forgery with: :exception
 
+  rescue_from Exception, with: :server_error
+  rescue_from ActionController::RoutingError, with: :not_found
+
   helper_method :login_check?
   helper_method :login_id_check?
   helper_method :admin_check?
@@ -16,7 +19,7 @@ class ApplicationController < ActionController::Base
   before_action :admin_check_filter, only: [:admin_index]
   around_action :around_logger
 
-  skip_before_action :login_check_filter, only: [:index, :login_form]
+  skip_before_action :login_check_filter, only: [:index, :login_form, :raise_not_found]
 
   # トップ画面の表示
   def index
@@ -37,6 +40,7 @@ class ApplicationController < ActionController::Base
     render layout: 'login'
   end
 
+  # NoRoutingError発生時に実行するアクション
   def raise_not_found
     raise ActionController::RoutingError, "No route matches #{params[:unmatched_route]}"
   end
@@ -135,6 +139,28 @@ class ApplicationController < ActionController::Base
       return true
     else
       return false
+    end
+  end
+
+  # 404エラーページ
+  def not_found(e)
+    logger.error "error_404: #{e.message}"
+    flash[:error] = "対象のページは存在しません"
+    if login_check?
+      redirect_to "/users/#{@current_user.id}" and return
+    else
+      redirect_to "/"
+    end
+  end
+
+  # 500エラーページ
+  def server_error(e)
+    logger.error "error_500: #{e.message}"
+    flash[:error] = "サーバエラーが発生しました"
+    if login_check?
+      redirect_to "/users/#{@current_user.id}" and return
+    else
+      redirect_to "/"
     end
   end
 end

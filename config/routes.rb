@@ -49,4 +49,6 @@ Rails.application.routes.draw do
   delete '/management/news/:news_id', to: 'news#destroy'
   # ルート
   root :controller => 'application', :action => 'index'
+  # ルーティングエラー
+  match '*unmatched_route', via: :all, to: 'application#raise_not_found', format: false
 end
