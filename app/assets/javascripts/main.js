@@ -1,5 +1,10 @@
 // 詳細テキスト表示エリアを切り替えるイベント
 $('.detail-area-toggle-button').click(function(){
+  // スマホ画面でサイドバーが開いていたら閉じる
+  if ($("body").hasClass("sidebar-open")) {
+    $('.sidebar-toggle')[0].click();
+  }
+  $.toast().reset('all');
   toggleDetailArea();
 });
 

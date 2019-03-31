@@ -191,12 +191,27 @@
         }).one('animsition.inEnd',function(){
           // 画面表示アニメーション実行後処理(コールバック)
 
-          // サイドバーの初期表示有無(スマホ限定)
-          if ($("#intial_display_sidebar").hasClass("active")) {
-            var width = $(window).width();
-            if (width < 768) {
-              // 現在の画面サイズがスマホサイズかつ、サイドバー初期表示が有効な場合サイドバーを表示する
-              $('.sidebar-toggle')[0].click();
+          // インフォメーションメッセージ
+          var info_message = $(".info-message").text();
+          // エラーメッセージ
+          var error_message = $(".error-message").text();
+
+          // インフォメーション、エラーメッセージが存在した時はサイドバーは表示しない
+          if (info_message || error_message) {
+            if (info_message) {
+              viewToaster(info_message, "info");
+            }
+            if (error_message) {
+              viewToaster(error_message, "error");
+            }
+          } else {
+            // サイドバーの初期表示有無(スマホ限定)
+            if ($("#intial_display_sidebar").hasClass("active")) {
+              var width = $(window).width();
+              if (width < 768) {
+                // 現在の画面サイズがスマホサイズかつ、サイドバー初期表示が有効な場合サイドバーを表示する
+                $('.sidebar-toggle')[0].click();
+              }
             }
           }
           // 詳細エリアの初期表示有無
@@ -211,15 +226,4 @@
           items: '.sortable-item',
         });
         $(".sortable").disableSelection();
-
-        // インフォメーションメッセージの表示
-        var info_message = $(".info-message").text();
-        if (info_message) {
-          viewToaster(info_message, "info");
-        }
-        // エラーメッセージの表示
-        var error_message = $(".error-message").text();
-        if (error_message) {
-          viewToaster(error_message, "error");
-        }
       });

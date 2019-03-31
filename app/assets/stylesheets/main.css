@@ -360,6 +360,7 @@
   margin-right:10px;
   border-radius: 8px;
   border-left: solid 15px #E6E6E6;
+  z-index:500;
 }
 
 .detail-area.hidden-sidebar {

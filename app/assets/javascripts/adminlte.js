@@ -802,6 +802,7 @@ throw new Error('AdminLTE requires jQuery')
         .trigger($.Event(Event.expanded));
     }
     else {
+      $.toast().reset('all');
       $('body').addClass(ClassName.open)
         .trigger($.Event(Event.expanded));
     }

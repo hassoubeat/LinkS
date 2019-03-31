@@ -115,7 +115,6 @@ class UsersController < ApplicationController
     # ハッシュ化したパスワードで認証
     if @user && @user.authenticate(params[:password]);
       session[:user_id] = @user.id
-      flash[:info] = "ログインしました"
       redirect_to "/users/#{@user.id}"
     else
       flash.now[:error] = "メールアドレスまたはパスワードが間違っています"
