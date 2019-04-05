@@ -40,18 +40,19 @@
         .row_.sortable-item{"id" => "#{link.id}"}
           %div{"class" => "link-box-skin-#{link.skin_type} link-box col-12"}
             .row
-              .link-name.col-lg-5.col-6
-                %a{:href => "#{link.url}", :target => "_blank"}
-                  .text-ellipsis
-                    %img{:src => "http://www.google.com/s2/favicons?domain=#{domain}"}/
-                    = link.name
-              .hide.link-note
-                = link.comment.gsub(/\r\n|\r|\n/, '\n');
-              .link-url.col-lg-4.d-none.d-lg-inline
-                %a{:href => "#{link.url}", :target => "_blank"}
-                  #link-url-for-copy.text-ellipsis
-                    = link.url
-              .link-actions.col-lg-3.col-6
+              .link-title-and-url
+                .link-name
+                  %a{:href => "#{link.url}", :target => "_blank"}
+                    .text-ellipsis
+                      %img{:src => "http://www.google.com/s2/favicons?domain=#{domain}"}/
+                      = link.name
+                .link-url.text-ellipsis
+                  = domain
+                .hide.link-note
+                  = link.comment.gsub(/\r\n|\r|\n/, '\n');
+                #link-url-for-copy.hide
+                  = link.url
+              .link-actions
                 .link-actions
                   %a.link-info{:href => "#"}
                     %i.fas.fa-info-circle.link-action

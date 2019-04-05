@@ -267,16 +267,23 @@
   background: #EFF8FB;
 }
 
-.link-name {
+.link-title-and-url {
+  padding-left:10px;
+  width:calc(100% - 130px);
 }
 
 .link-url {
+  font-size:10px;
   color:gray;
 }
 
 .link-actions {
   font-size: 1em;
   text-align: right;
+  position: absolute;
+  width: 105px;
+  height: 25px;
+  right: 10px;
 }
 
 .link-actions  a {
