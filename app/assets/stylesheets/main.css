@@ -162,6 +162,10 @@
   z-index:998;
 }
 
+.content-wrapper {
+  margin-top:62px;
+}
+
 .content-wrapper.hidden-sidebar {
   margin-left:0px;
 }
