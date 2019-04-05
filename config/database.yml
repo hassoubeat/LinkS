@@ -13,12 +13,9 @@ default: &default
   adapter: mysql2
   encoding: utf8
   pool: <%= ENV.fetch("RAILS_MAX_THREADS") { 5 } %>
-  username: root
-  password: Arialove0
-  host: 54.65.36.86
-  # username: <%= ENV['DB_USER'] %>
-  # password: <%= ENV['DB_PASSWORD'] %>
-  # host: <%= ENV['DB_IP_ADDRESS'] %>
+  username: <%= ENV['DB_USER'] %>
+  password: <%= ENV['DB_PASSWORD'] %>
+  host: <%= ENV['DB_IP_ADDRESS'] %>
 
 development:
   <<: *default
@@ -53,5 +50,3 @@ test:
 production:
   <<: *default
   database: LinkS_production
-  username: LinkS
-  password: <%= ENV['LINKS_DATABASE_PASSWORD'] %>
