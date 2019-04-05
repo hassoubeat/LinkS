@@ -185,6 +185,11 @@
       $(document).ready(function() {
         // サイドバーの高さを定義
         $(".main-sidebar").height($(window).height() - 62);
+        // リンクエリアの表示領域の設定
+        var link_box_width = $('.link-box').width();
+        var link_actions_width = $('.link-actions').width();
+        var link_actions_margin = 20;
+        $('.link-title-and-url').width(link_box_width - (link_actions_width + link_actions_margin));
         // 画面表示時にアニメーション付きで遷移させる
         $('.animsition').animsition({
           inDuration: 700,
