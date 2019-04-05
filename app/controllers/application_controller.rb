@@ -83,9 +83,13 @@ class ApplicationController < ActionController::Base
   def around_logger
     method = request.method
     request_url = request.url
-    logger.debug('START【' + method + '】:' + request_url + ", TIME:" + Time.now.to_s)
+    user_id = "NOT_LOGIN"
+    if login_check?
+      user_id = @current_user.email
+    end
+    logger.debug('START【' + method + '】:' + request_url + ", USER:" + user_id + ", TIME:" + Time.now.to_s)
     yield
-    logger.debug(' END 【' + method + '】:' + request_url + ", TIME:" + Time.now.to_s)
+    logger.debug(' END 【' + method + '】:' + request_url + ", USER:" + user_id + ", TIME:" + Time.now.to_s)
   end
 
   protected
