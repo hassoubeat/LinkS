@@ -50,18 +50,17 @@
                   = domain
                 .hide.link-note
                   = link.comment.gsub(/\r\n|\r|\n/, '\n');
-                #link-url-for-copy.hide
+                .link-full-url.hide
                   = link.url
               .link-actions
-                .link-actions
-                  %a.link-info{:href => "#"}
-                    %i.fas.fa-info-circle.link-action
-                  - if login_id_check?(@user.id)
-                    %a{:href => "#", "data-toggle" => "modal", "data-target" => "#link-edit-modal", "id" => "link-edit-button-#{link.id}"}
-                      %i.fas.fa-edit.link-action
-                    = form_tag("/users/#{@user.id}/folders/#{@folder.id}/links/#{link.id}", method: :delete, id: "link-delete-form", style: "display:inline;") do
-                      %a{:href => "#", "onclick" => "this.parentNode.submit()"}
-                        %i.fas.fa-trash-alt.link-action
+                %span.link-info
+                  %i.fas.fa-info-circle.link-action
+                - if login_id_check?(@user.id)
+                  %a{:href => "#", "data-toggle" => "modal", "data-target" => "#link-edit-modal", "id" => "link-edit-button-#{link.id}"}
+                    %i.fas.fa-edit.link-action
+                  = form_tag("/users/#{@user.id}/folders/#{@folder.id}/links/#{link.id}", method: :delete, id: "link-delete-form", style: "display:inline;") do
+                    %a{:href => "#", "onclick" => "this.parentNode.submit()"}
+                      %i.fas.fa-trash-alt.link-action
               .link-hidden-params.hide
                 = form_tag("/users/#{link.user_id}/folders/#{link.folder_id}/links/#{link.id}", method: :patch, id: "link-edit-form-#{link.id}") do
                   #{hidden_field_tag 'link[name]', link.name, class:"form-control", placeholder:"ブックマーク名称", maxlength:'20', id:'link-edit-name-form'}

@@ -145,9 +145,10 @@
 
       / 詳細エリア
       %div{"class" => "detail-area #{"hidden-sidebar" if !@folder.user_id.nil? and !login_id_check?(@folder.user_id)}"}
-        .detail-area-title
-          = @folder.name
-        .detail-area-sub-title
+        .detail-title-and-sub-title
+          .detail-area-title.text-ellipsis
+            = @folder.name
+          .detail-area-sub-title.text-ellipsis
         .detail-area-note
           = @folder.comment
       - if login_id_check?(@user.id)

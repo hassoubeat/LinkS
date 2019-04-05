@@ -51,7 +51,7 @@ $('.content-header-folder-info').click(function(){
 // リンクのインフォメーションアイコンを押下時に詳細エリアに情報を表示する
 $('.link-info').click(function(){
     var link_name = $(this).parents(".link-box").find('.link-name').text();
-    var link_url = $(this).parents(".link-box").find('.link-url').text();
+    var link_url = $(this).parents(".link-box").find('.link-full-url').text();
     var link_note = $(this).parents(".link-box").find('.link-note').text();
     var color = $(this).parents(".link-box").attr("class").split(" ")[0].split("-")[3];
     setDetailArea(link_name, link_url, link_note, color);
@@ -159,6 +159,9 @@ function setDetailArea(title, title_sub, note, skin_color) {
   $(".detail-area-title").text("");
   $(".detail-area-note").text("");
   $(".detail-area-sub-title").text("");
+  // noteのスクロール位置を初期表示位置に
+  $(".detail-area-note").scrollTop(0);
+  // スキンクラスを削除
   $(".detail-area").removeClass(function(index, className) {
     return (className.match(/\bdetail-area-skin-\S+/g) || []).join(' ');
   })
