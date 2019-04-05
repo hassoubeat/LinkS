@@ -22,7 +22,7 @@ $('.folder-like').click(function(){
         $(".folder-like-icon").removeClass("liked");
       }
       $(".content-header-folder-likes").text(json['like_count'])
-      viewToaster(json['info_message'], "info")
+      viewToaster(json['info_message'], 5000, "info")
     }
   });
 });

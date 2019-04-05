@@ -34,7 +34,7 @@
                 %i.fas.fa-sort.content-header-action
   / リンク
   .col-12
-    .link-box-area.sortable
+    .link-box-area.link-sortable
       - @links.each do |link|
         - domain = URI.parse(URI.encode(link.url)).host
         .row_.sortable-item{"id" => "#{link.id}"}
@@ -61,6 +61,8 @@
                   = form_tag("/users/#{@user.id}/folders/#{@folder.id}/links/#{link.id}", method: :delete, id: "link-delete-form", style: "display:inline;") do
                     %a{:href => "#", "onclick" => "this.parentNode.submit()"}
                       %i.fas.fa-trash-alt.link-action
+                  %span.link-sortable-handle.link-action
+                    %i.fas.fa-arrows-alt-v
               .link-hidden-params.hide
                 = form_tag("/users/#{link.user_id}/folders/#{link.folder_id}/links/#{link.id}", method: :patch, id: "link-edit-form-#{link.id}") do
                   #{hidden_field_tag 'link[name]', link.name, class:"form-control", placeholder:"ブックマーク名称", maxlength:'20', id:'link-edit-name-form'}

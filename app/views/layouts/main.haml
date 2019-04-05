@@ -53,7 +53,7 @@
           %section.sidebar{:style => "height: auto;"}
             %form{:action => "", :method => "post"}
               / サイドバーメニュー
-              %ul.sidebar-menu.fixed.tree.sortable{"data-widget" => "tree"}
+              %ul.sidebar-menu.fixed.tree.folder-sortable{"data-widget" => "tree"}
                 %li
                   .hidden-sidebar-brand
                     %span LinkS
@@ -205,10 +205,10 @@
           // インフォメーション、エラーメッセージが存在した時はサイドバーは表示しない
           if (info_message || error_message) {
             if (info_message) {
-              viewToaster(info_message, "info");
+              viewToaster(info_message, 5000, "info");
             }
             if (error_message) {
-              viewToaster(error_message, "error");
+              viewToaster(error_message, 5000, "error");
             }
           } else {
             // サイドバーの初期表示有無(スマホ限定)
@@ -227,9 +227,13 @@
           // インフォメーションポップアップの設定
           $(".info-pop").popover();
         });
-        // フォルダーのソート確定処理
-        $(".sortable").sortable({
+        // フォルダーのソート対応処理
+        $(".folder-sortable").sortable({
           items: '.sortable-item',
         });
-        $(".sortable").disableSelection();
+        // リンクのソート対応処理
+        $(".link-sortable").sortable({
+          items: '.sortable-item',
+          handle: '.link-sortable-handle',
+        });
       });

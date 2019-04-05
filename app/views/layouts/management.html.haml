@@ -66,12 +66,12 @@
           // インフォメーションメッセージの表示
           var info_message = $(".info-message").text();
           if (info_message) {
-            viewToaster(info_message, "info");
+            viewToaster(info_message, 5000, "info");
           }
           // エラーメッセージの表示
           var error_message = $(".error-message").text();
           if (error_message) {
-            viewToaster(error_message, "error");
+            viewToaster(error_message, 5000, "error");
           }
         });
       });

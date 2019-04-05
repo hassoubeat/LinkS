@@ -21,7 +21,7 @@ function antiXSS(str){
 }
 
 // トースターメッセージの表示
-function viewToaster(message, message_type) {
+function viewToaster(message, view_ms, message_type) {
   background_color = "#B8DCEF";
   if (message_type == "error") {
     background_color = "#F6CECE";
@@ -31,7 +31,7 @@ function viewToaster(message, message_type) {
     showHideTransition : 'slide',
     bgColor : background_color,
     textColor : "#797F82",
-    hideAfter: 5000,
+    hideAfter: view_ms,
     position: 'top-right',
     stack : 5,
     textAlign : 'left',
