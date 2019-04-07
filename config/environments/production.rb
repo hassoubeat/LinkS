@@ -96,6 +96,6 @@ Rails.application.configure do
   config.session_store :redis_store, servers: 'redis://localhost:6379/0', expire_in: 7.days
 
   # アプリケーションのデフォルトルートの設定
-  host = 'links.com:9090'
+  host = 'links-share.xyz'
   Rails.application.routes.default_url_options[:host] = host
 end
