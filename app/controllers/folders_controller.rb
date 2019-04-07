@@ -48,10 +48,11 @@ class FoldersController < ApplicationController
 
     if @folder.save
       flash[:info] = "フォルダーを登録しました"
+      redirect_to "/users/#{@current_user.id}/folders/#{@folder.id}" and return
     else
       flash[:info] = "フォルダーの登録に失敗しました"
+      redirect_to "/users/#{@current_user.id}" and return
     end
-    redirect_to "/users/#{@current_user.id}" and return
   end
 
   # PATCH /users/:user_id/folders/:folder_id
