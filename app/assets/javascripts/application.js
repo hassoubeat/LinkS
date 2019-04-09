@@ -27,7 +27,7 @@ function viewToaster(message, view_ms, message_type) {
     background_color = "#F6CECE";
   }
   $.toast({
-    text : message,
+    text : antiXSS(message),
     showHideTransition : 'slide',
     bgColor : background_color,
     textColor : "#797F82",
