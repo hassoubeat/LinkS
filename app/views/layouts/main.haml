@@ -73,8 +73,10 @@
                         %i.fas.fa-share-alt &nbsp;
                       - else
                         %i.fas.fa-share-alt{"style" => "visibility:hidden;"} &nbsp;
-                      %span.sidebar-folder-name= folder.name
-                      %span.hide.sidebar-folder-note= folder.comment
+                      %span.sidebar-folder-name
+                        = folder.name
+                      %span.hide.sidebar-folder-note
+                        = folder.comment.gsub(/\r\n|\r|\n/, '\n');
               %input#result{:name => "result", :type => "hidden"}/
               %button#submit{:style => "display:none"} ソート確定
       / サイドバー
@@ -150,7 +152,7 @@
             = @folder.name
           .detail-area-sub-title.text-ellipsis
         .detail-area-note
-          = @folder.comment
+          = simple_format(h(@folder.comment))
       - if login_id_check?(@user.id)
         %div.sidebar-toggle-button
           %a{"href" => "#", "class" => "sidebar-toggle", "data-toggle" => "push-menu", "role" => "button"}
