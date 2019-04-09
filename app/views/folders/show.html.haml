@@ -25,9 +25,9 @@
               %a{:href => "#", "data-toggle" => "modal", "data-target" => "#folder-delete-modal"}
                 %i.fas.fa-trash-alt.content-header-action
             - if @folder.is_open == true
-              %a{:href => "http://line.me/R/msg/text/?#{@folder.name}%0a%0a#{@folder.comment.gsub(/\r\n|\r|\n/, '%0a')}%0a#{root_url(only_path: false)}users/#{@user.id}/folders/#{@folder.id}%0a%0aLinkSからの共有", :target => "_blank"}
+              %a{:href => "http://line.me/R/msg/text/?#{h(@folder.name)}%0a%0a#{h(@folder.comment.gsub(/\r\n|\r|\n/, '%0a'))}%0a#{root_url(only_path: false)}users/#{@user.id}/folders/#{@folder.id}%0a%0aLinkSからの共有", :target => "_blank"}
                 %i.fab.fa-line.content-header-action
-              %a{:href => "https://twitter.com/intent/tweet?text=#{@folder.name}%0a%0a#{@folder.comment.gsub(/\r\n|\r|\n/, '%0a')}%0a#{root_url(only_path: false)}users/#{@user.id}/folders/#{@folder.id}%0a%0aLinkSからの共有", :target => "_blank"}
+              %a{:href => "https://twitter.com/intent/tweet?text=#{h(@folder.name)}%0a%0a#{h(@folder.comment.gsub(/\r\n|\r|\n/, '%0a'))}%0a#{root_url(only_path: false)}users/#{@user.id}/folders/#{@folder.id}%0a%0aLinkSからの共有", :target => "_blank"}
                 %i.fab.fa-twitter.content-header-action
               %a{:href => "https://www.facebook.com/sharer.php?&u=#{root_url(only_path: false)}users/#{@user.id}/folders/#{@folder.id}", :target => "_blank"}
                 %i.fab.fa-facebook.content-header-action
@@ -40,11 +40,11 @@
       - @links.each do |link|
         - domain = URI.parse(URI.encode(link.url)).host
         .row_.sortable-item{"id" => "#{link.id}"}
-          %div{"class" => "link-box-skin-#{link.skin_type} link-box col-12"}
+          %div{"class" => "link-box-skin-#{h(link.skin_type)} link-box col-12"}
             .row
               .link-title-and-url
                 .link-name
-                  %a{:href => "#{link.url}", :target => "_blank"}
+                  %a{:href => "#{h(link.url)}", :target => "_blank"}
                     .text-ellipsis
                       %img{:src => "http://www.google.com/s2/favicons?domain=#{domain}"}/
                       = link.name
