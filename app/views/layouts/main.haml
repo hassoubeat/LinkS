@@ -90,7 +90,7 @@
               .modal-content
                 = form_tag("/users/#{@user.id}/folders", method: :post, id: "folder-create-form") do
                   .modal-header
-                    %h5#exampleModalLabel.modal-title フォルダー
+                    %h5#exampleModalLabel.modal-title フォルダー登録
                     %button.close{"aria-label" => "Close", "data-dismiss" => "modal", :type => "button"}
                       %span{"aria-hidden" => "true"} ×
                   .modal-body.text-muted
