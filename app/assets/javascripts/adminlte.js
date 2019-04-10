@@ -803,13 +803,15 @@ throw new Error('AdminLTE requires jQuery')
     }
     else {
       // スマホ画面で詳細エリアが開いていたら閉じる
+      var sidebar_open_delay = 0;
       if ($(".detail-area").hasClass("active")) {
         $('.detail-area-toggle-button')[0].click();
+        sidebar_open_delay = 500;
       }
       $.toast().reset('all');
       setTimeout(function(){
         $('body').addClass(ClassName.open).trigger($.Event(Event.expanded));
-      },500);
+      }, sidebar_open_delay);
     }
   };
 

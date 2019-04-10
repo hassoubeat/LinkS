@@ -1,11 +1,15 @@
 // 詳細テキスト表示エリアを切り替えるイベント
 $('.detail-area-toggle-button').click(function(){
   // スマホ画面でサイドバーが開いていたら閉じる
+  var detail_area_open_delay = 0;
   if ($("body").hasClass("sidebar-open")) {
     $('.sidebar-toggle')[0].click();
+    detail_area_open_delay = 500;
   }
   $.toast().reset('all');
-  toggleDetailArea();
+  setTimeout(function(){
+    toggleDetailArea();
+  }, detail_area_open_delay);
 });
 
 // いいねボタン押下時のイベント
