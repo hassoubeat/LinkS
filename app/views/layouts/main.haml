@@ -153,6 +153,11 @@
           .detail-area-sub-title.text-ellipsis
         .detail-area-note
           = simple_format(h(@folder.comment))
+        .detail-show-back-botton
+          %i.fas.fa-angle-double-up.fa-lg.pink
+        .detail-show-forward-botton
+          %i.fas.fa-angle-double-down.fa-lg.pink
+        .detail-area-show-content.hide folder
       - if login_id_check?(@user.id)
         %div.sidebar-toggle-button
           %a{"href" => "#", "class" => "sidebar-toggle", "data-toggle" => "push-menu", "role" => "button"}

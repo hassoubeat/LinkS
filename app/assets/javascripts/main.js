@@ -42,6 +42,7 @@ $('.content-header-folder-info').click(function(){
     var folder_name = $('.content-header-folder-name').text();
     var folder_note = $('.content-header-folder-note').text();
     setDetailArea(folder_name, "", folder_note, "");
+    $(".detail-area-show-content").text("folder");
     // 非表示の時に表示
     if(!$(".detail-area").hasClass('active')){
       toggleDetailArea();
@@ -49,12 +50,13 @@ $('.content-header-folder-info').click(function(){
 });
 
 // リンクのインフォメーションアイコンを押下時に詳細エリアに情報を表示する
-$('.link-info').click(function(){
+$('[id^=link-info]').click(function(){
     var link_name = $(this).parents(".link-box").find('.link-name').text();
     var link_url = $(this).parents(".link-box").find('.link-full-url').text();
     var link_note = $(this).parents(".link-box").find('.link-note').text();
     var color = $(this).parents(".link-box").attr("class").split(" ")[0].split("-")[3];
     setDetailArea(link_name, link_url, link_note, color);
+    $(".detail-area-show-content").text($(this).attr("id"));
     // 非表示の時に表示
     if(!$(".detail-area").hasClass('active')){
       toggleDetailArea();
@@ -156,6 +158,16 @@ $("#mock-link-sort-button").click(function(){
   $("#link-sort-modal").modal();
 });
 
+// 詳細エリア表示項目切り替えボタン(前)クリック時の動作
+$(".detail-show-back-botton").click(function(){
+  changeShowDetailArea(-1);
+});
+
+// 詳細エリア表示項目切り替えボタン(前)クリック時の動作
+$(".detail-show-forward-botton").click(function(){
+  changeShowDetailArea(1);
+});
+
 function toggleDetailArea(){
   $(".detail-area").toggleClass('active');
   // キャレットの向きを変更する
@@ -184,4 +196,37 @@ function setDetailArea(title, title_sub, note, skin_color) {
   $(".detail-area-sub-title").text(title_sub);
   $(".detail-area-note").html(antiXSS(note));
   $(".detail-area").addClass("detail-area-skin-" + skin_color);
+}
+
+// 詳細エリアの表示内容を切り替える
+function changeShowDetailArea(change_index) {
+  var links_array_max_index = parseInt($(".links-array-size").text()) - 1;
+  if (links_array_max_index < 0) {
+    // リンクが1件もなければ、何もしない
+    return;
+  }
+  var show_content = $(".detail-area-show-content").text();
+  if (show_content == "folder") {
+    // 現在表示されている項目がフォルダーだった場合
+    if (change_index > 0) {
+      var view_link_info = "link-info-" + 0;
+      $("#" + view_link_info).click();
+    } else {
+      var view_link_info = "link-info-" + links_array_max_index;
+      $("#" + view_link_info).click();
+    }
+    return;
+  }
+
+  var view_link_index = parseInt(show_content.split("-")[2]) + change_index;
+  if (view_link_index < 0 || view_link_index > links_array_max_index) {
+    // リンクの表示可能インデックスを超過した場合は、フォルダーを表示
+    $(".content-header-folder-info").click();
+    return;
+  } else {
+    // 指定したインデックス分ずらした情報の表示
+    var view_link_info = "link-info-" + view_link_index;
+    $("#" + view_link_info).click();
+    return;
+  }
 }

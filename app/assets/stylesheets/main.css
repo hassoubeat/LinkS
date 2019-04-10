@@ -469,6 +469,24 @@
   display: none;
 }
 
+.detail-show-back-botton {
+  position:fixed;
+  bottom:135px;
+  right:0px;
+  padding:5px;
+  z-index:1500;
+  display: none;
+}
+
+.detail-show-forward-botton {
+  position:fixed;
+  bottom:65px;
+  right:0px;
+  padding:5px;
+  z-index:1500;
+  display: none;
+}
+
 .detail-area.active {
   height: 200px;
 }
@@ -485,6 +503,25 @@
   display: block;
 }
 
+.detail-area.active  .detail-show-back-botton{
+  display: block;
+  animation-duration: 1s;
+  animation-name: fade-in;
+  -moz-animation-duration: 1s;
+  -moz-animation-name: fade-in;
+  -webkit-animation-duration: 1s;
+  -webkit-animation-name: fade-in;
+}
+
+.detail-area.active  .detail-show-forward-botton{
+  display: block;
+  animation-duration: 1s;
+  animation-name: fade-in;
+  -moz-animation-duration: 1s;
+  -moz-animation-name: fade-in;
+  -webkit-animation-duration: 1s;
+  -webkit-animation-name: fade-in;
+}
 .links-infomation-title-area , .links-infomation-nice-ranking-area, .links-infomation-view-ranking-area, .links-infomation-notice-area {
   color: dimgray;
   background-color: whitesmoke;

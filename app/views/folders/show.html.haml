@@ -37,7 +37,7 @@
   / リンク
   .col-12
     .link-box-area.link-sortable
-      - @links.each do |link|
+      - @links.each_with_index do |link, index|
         - domain = URI.parse(URI.encode(link.url)).host
         .row_.sortable-item{"id" => "#{link.id}"}
           %div{"class" => "link-box-skin-#{h(link.skin_type)} link-box col-12"}
@@ -55,7 +55,7 @@
                 .link-full-url.hide
                   = link.url
               .link-actions
-                %span.link-info
+                %span{"id" => "link-info-#{index}"}
                   %i.fas.fa-info-circle.link-action
                 - if login_id_check?(@user.id)
                   %a{:href => "#", "data-toggle" => "modal", "data-target" => "#link-edit-modal", "id" => "link-edit-button-#{link.id}"}
@@ -81,6 +81,9 @@
               .row
                 .col-12
                   %i.fas.fa-plus-circle
+    .links-hidden-params.hide
+      %span.links-array-size
+        = @links.size
 
 - if login_id_check?(@user.id)
   / フォルダー変更モーダル
