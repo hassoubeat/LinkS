@@ -120,6 +120,21 @@ $("#mock_link_edit_btn").click(function(){
   form.submit();
 });
 
+// リンク削除ボタン押下時の挙動
+$("[id^='link-delete-button-']").click(function(){
+  // IDをセットする
+  $("deleting-link-id").val("");
+  var id = $(this).attr("id").split("-")[3];
+  $("#deleting-link-id").val(id);
+});
+
+// リンク削除ボタン押下時の挙動
+$("#mock_link_delete_btn").click(function(){
+  var id = $("#deleting-link-id").val();
+  var form = $("#link-delete-form-" + id);
+  form.submit();
+});
+
 // フォルダーソートボタン押下時の挙動
 $("#mock-folder-sort-button").click(function(){
   var width = $(window).width();

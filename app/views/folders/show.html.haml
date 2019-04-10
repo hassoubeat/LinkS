@@ -60,17 +60,20 @@
                 - if login_id_check?(@user.id)
                   %a{:href => "#", "data-toggle" => "modal", "data-target" => "#link-edit-modal", "id" => "link-edit-button-#{link.id}"}
                     %i.fas.fa-edit.link-action
-                  = form_tag("/users/#{@user.id}/folders/#{@folder.id}/links/#{link.id}", method: :delete, id: "link-delete-form", style: "display:inline;") do
-                    %a{:href => "#", "onclick" => "this.parentNode.submit()"}
-                      %i.fas.fa-trash-alt.link-action
+                  %a{:href => "#", "data-toggle" => "modal", "data-target" => "#link-delete-modal", "id" => "link-delete-button-#{link.id}"}
+                    %i.fas.fa-trash-alt.link-action
                   %span.link-sortable-handle
                     %i.fas.fa-arrows-alt-v.link-action
-              .link-hidden-params.hide
-                = form_tag("/users/#{link.user_id}/folders/#{link.folder_id}/links/#{link.id}", method: :patch, id: "link-edit-form-#{link.id}") do
-                  #{hidden_field_tag 'link[name]', link.name, class:"form-control", placeholder:"ブックマーク名称", maxlength:'20', id:'link-edit-name-form'}
-                  #{hidden_field_tag 'link[url]', link.url, class:"form-control", placeholder:"URL", maxlength:'2000', id:"link-edit-url-form"}
-                  #{hidden_field_tag 'link[comment]', link.comment, class:"form-control", placeholder:"メモ", maxlength:'400', id:"link-edit-comment-form"}
-                  #{hidden_field_tag 'link[skin_type]', link.skin_type, id:"link-edit-skin-type-form"}
+              - if login_id_check?(@user.id)
+                .link-edit-hidden-params.hide
+                  = form_tag("/users/#{link.user_id}/folders/#{link.folder_id}/links/#{link.id}", method: :patch, id: "link-edit-form-#{link.id}") do
+                    #{hidden_field_tag 'link[name]', link.name, class:"form-control", placeholder:"ブックマーク名称", maxlength:'20', id:'link-edit-name-form'}
+                    #{hidden_field_tag 'link[url]', link.url, class:"form-control", placeholder:"URL", maxlength:'2000', id:"link-edit-url-form"}
+                    #{hidden_field_tag 'link[comment]', link.comment, class:"form-control", placeholder:"メモ", maxlength:'400', id:"link-edit-comment-form"}
+                    #{hidden_field_tag 'link[skin_type]', link.skin_type, id:"link-edit-skin-type-form"}
+                .link-delete-hidden-params.hide
+                  = form_tag("/users/#{@user.id}/folders/#{@folder.id}/links/#{link.id}", method: :delete, id: "link-delete-form-#{link.id}") do
+                    #{hidden_field_tag 'link[id]', link.id, id:"link-delete-id"}
       - if login_id_check?(@user.id)
         .row
           .add-link-box.col-12
@@ -251,7 +254,24 @@
             #{hidden_field_tag '', "", id:"editing-link-id"}
             %button.btn.btn-primary{"id" => "mock_link_edit_btn", :type => "button"} 変更
             %button.btn.btn-secondary{"data-dismiss" => "modal", :type => "button"} 閉じる
-  / リンクーソートモーダル
+  / リンク削除モーダル
+  #link-delete-modal.modal.fade{"aria-labelledby" => "myModalLabel", :role => "dialog", :tabindex => "-1"}
+    .modal-dialog.modal-xl{:role => "document"}
+      .modal-content
+        .modal-header
+          %h5#exampleModalLabel.modal-title ブックマーク削除
+          %button.close{"aria-label" => "Close", "data-dismiss" => "modal", :type => "button"}
+            %span{"aria-hidden" => "true"} ×
+        .modal-body.text-muted
+          .row
+            .col-12
+              %div{"style" => "margin-bottom:10px;"}
+                ブックマークを削除します。
+          .modal-footer
+            #{hidden_field_tag '', "", id:"deleting-link-id"}
+            %button.btn.btn-danger{"id" => "mock_link_delete_btn", :type => "button"} 削除
+            %button.btn.btn-secondary{"data-dismiss" => "modal", :type => "button"} 閉じる
+  / リンクソートモーダル
   #link-sort-modal.modal.fade{"aria-labelledby" => "myModalLabel", :role => "dialog", :tabindex => "-1"}
     .modal-dialog.modal-xl{:role => "document"}
       .modal-content
