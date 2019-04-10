@@ -802,9 +802,14 @@ throw new Error('AdminLTE requires jQuery')
         .trigger($.Event(Event.expanded));
     }
     else {
+      // スマホ画面で詳細エリアが開いていたら閉じる
+      if ($(".detail-area").hasClass("active")) {
+        $('.detail-area-toggle-button')[0].click();
+      }
       $.toast().reset('all');
-      $('body').addClass(ClassName.open)
-        .trigger($.Event(Event.expanded));
+      setTimeout(function(){
+        $('body').addClass(ClassName.open).trigger($.Event(Event.expanded));
+      },500);
     }
   };
 
