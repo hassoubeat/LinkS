@@ -1,0 +1,37 @@
+- user.id ? action = "update" : action = "create"
+= form_with(model: user, :url => {:action => action}, local: true, :class => "max-width") do |form|
+  %div.col-lg-12
+    %div.input-group.input-group.mb-3
+      %div.input-group-prepend
+        %span{class:"input-group-text", id:"inputGroup-sizing-lg"}
+          %i.fas.fa-envelope
+      - if user.id
+        %input.form-control{"type" =>"text", "readonly" => "true", "placeholder" => "#{user.email}"}
+      - else
+        = form.text_field :email, :placeholder => "メールアドレス", :class => "form-control", :maxlength => 255
+  %div.col-lg-12
+    %div.input-group.input-group.mb-3
+      %div.input-group-prepend
+        %span{class:"input-group-text", id:"inputGroup-sizing-lg"}
+          %i.fas.fa-key
+      = form.password_field :password, :placeholder => "#{"新しい" if @user.id}パスワード", :class => "form-control"
+  %div.col-lg-12
+    %div.input-group.input-group.mb-3
+      %div.input-group-prepend
+        %span{class:"input-group-text", id:"inputGroup-sizing-lg"}
+          %i.fas.fa-key
+      = form.password_field :password_confirmation, :placeholder => "#{"新しい" if @user.id}パスワード(再入力)", :class => "form-control"
+  %div.col-lg-12
+    %div.input-group.input-group.mb-3
+      %div.input-group-prepend
+        %span{class:"input-group-text", id:"inputGroup-sizing-lg"}
+          %i.fas.fa-user
+      = form.text_field :name, :placeholder => "システム内での名前", :class => "form-control", :maxlength => 20
+  %div.col-lg-12.text-center
+    %div.btn-group.d-flex
+      - if user.id
+        = form.submit "更新", :class => "btn btn-blue w-100"
+      - else
+        = form.submit "サインアップ", :class => "btn btn-blue w-100"
+        %a.btn.btn-secondary.w-100{:href => "/"}
+          戻る

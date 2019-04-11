@@ -10,6 +10,31 @@
 // Read Sprockets README (https://github.com/rails/sprockets#sprockets-directives) for details
 // about supported directives.
 //
-//= require rails-ujs
 //= require activestorage
-//= require_tree .
+//= require wow.js
+//= require animsition.min.js
+
+// 改行以外のHTMLタグを無効化するXSS対策
+function antiXSS(str){
+  str = $('<dummy>').text(str).html().replace(/\\r\\n|\\r|\\n/g, '<br>');
+  return str;
+}
+
+// トースターメッセージの表示
+function viewToaster(message, view_ms, message_type) {
+  background_color = "#B8DCEF";
+  if (message_type == "error") {
+    background_color = "#F6CECE";
+  }
+  $.toast({
+    text : antiXSS(message),
+    showHideTransition : 'slide',
+    bgColor : background_color,
+    textColor : "#797F82",
+    hideAfter: view_ms,
+    position: 'top-right',
+    stack : 5,
+    textAlign : 'left',
+    position : 'bottom-right'
+  });
+}

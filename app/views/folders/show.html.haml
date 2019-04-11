@@ -1,0 +1,303 @@
+/ メインコンテンツ
+.row
+  / コンテンツヘッダー
+  .col-12
+    .content-header
+      .row
+        .col-md-6.col-12
+          .text-ellipsis
+            - if @folder.is_open == true
+              %i.fas.fa-thumbs-up
+              %span.content-header-folder-likes
+                = @folder.likes.size
+              &nbsp;
+            %span.content-header-folder-name
+              = @folder.name
+            %span.content-header-folder-user-name.hide
+              = @user.name
+            %span.hide.content-header-folder-note
+              = @folder.comment.gsub(/\r\n|\r|\n/, '\n');
+        .col-md-6.col-12
+          .content-header-actions
+            %a.content-header-folder-info{:href => "#"}
+              %i.fas.fa-info-circle.content-header-action
+            - if login_id_check?(@user.id)
+              %a{:href => "#", "data-toggle" => "modal", "data-target" => "#folder-edit-modal"}
+                %i.fas.fa-edit.content-header-action
+              %a{:href => "#", "data-toggle" => "modal", "data-target" => "#folder-delete-modal"}
+                %i.fas.fa-trash-alt.content-header-action
+            - if @folder.is_open == true
+              %a{:href => "http://line.me/R/msg/text/?#{h(@folder.name)} : #{h(@user.name)}%0a%0a#{h(@folder.comment.gsub(/\r\n|\r|\n/, '%0a'))}%0a#{root_url(only_path: false)}users/#{@user.id}/folders/#{@folder.id}%0a%0aLinkSからの共有", :target => "_blank"}
+                %i.fab.fa-line.content-header-action
+              %a{:href => "https://twitter.com/intent/tweet?text=#{h(@folder.name)} : #{h(@user.name)}%0a%0a#{h(@folder.comment.gsub(/\r\n|\r|\n/, '%0a'))}%0a#{root_url(only_path: false)}users/#{@user.id}/folders/#{@folder.id}%0a%0aLinkSからの共有", :target => "_blank"}
+                %i.fab.fa-twitter.content-header-action
+              %a{:href => "https://www.facebook.com/sharer.php?&u=#{root_url(only_path: false)}users/#{@user.id}/folders/#{@folder.id}", :target => "_blank"}
+                %i.fab.fa-facebook.content-header-action
+            - if login_id_check?(@user.id)
+              %a#mock-link-sort-button{:href => "#"}
+                %i.fas.fa-sort.content-header-action
+  / リンク
+  .col-12
+    .link-box-area.link-sortable
+      - @links.each_with_index do |link, index|
+        - domain = URI.parse(URI.encode(link.url)).host
+        .row_.sortable-item{"id" => "#{link.id}"}
+          %div{"class" => "link-box-skin-#{h(link.skin_type)} link-box col-12"}
+            .row
+              .link-title-and-url
+                .link-name
+                  - if h(link.url) =~ /\Ahttps?:\/\//
+                    / 正常なURLの場合は、aタグ & favicon
+                    %a{:href => "#{h(link.url)}", :target => "_blank"}
+                      .text-ellipsis
+                        %img{:src => "http://www.google.com/s2/favicons?domain=#{domain}"}/
+                        = link.name
+                  - else
+                    / 正常なURLでない場合は、汎用ブックマークアイコンでaタグでは囲わない
+                    .text-ellipsis
+                      %i.fa.fa-bookmark
+                      = link.name
+                .link-url.text-ellipsis
+                  = domain
+                .hide.link-note
+                  = link.comment.gsub(/\r\n|\r|\n/, '\n');
+                .link-full-url.hide
+                  = link.url
+              .link-actions
+                %span{"id" => "link-info-#{index}"}
+                  %i.fas.fa-info-circle.link-action
+                - if login_id_check?(@user.id)
+                  %a{:href => "#", "data-toggle" => "modal", "data-target" => "#link-edit-modal", "id" => "link-edit-button-#{link.id}"}
+                    %i.fas.fa-edit.link-action
+                  %a{:href => "#", "data-toggle" => "modal", "data-target" => "#link-delete-modal", "id" => "link-delete-button-#{link.id}"}
+                    %i.fas.fa-trash-alt.link-action
+                  %span.link-sortable-handle
+                    %i.fas.fa-arrows-alt-v.link-action
+              - if login_id_check?(@user.id)
+                .link-edit-hidden-params.hide
+                  = form_tag("/users/#{link.user_id}/folders/#{link.folder_id}/links/#{link.id}", method: :patch, id: "link-edit-form-#{link.id}") do
+                    #{hidden_field_tag 'link[name]', link.name, class:"form-control", placeholder:"ブックマーク名称", maxlength:'20', id:'link-edit-name-form'}
+                    #{hidden_field_tag 'link[url]', link.url, class:"form-control", placeholder:"URL", maxlength:'2000', id:"link-edit-url-form"}
+                    #{hidden_field_tag 'link[comment]', link.comment, class:"form-control", placeholder:"メモ", maxlength:'400', id:"link-edit-comment-form"}
+                    #{hidden_field_tag 'link[skin_type]', link.skin_type, id:"link-edit-skin-type-form"}
+                .link-delete-hidden-params.hide
+                  = form_tag("/users/#{@user.id}/folders/#{@folder.id}/links/#{link.id}", method: :delete, id: "link-delete-form-#{link.id}") do
+                    #{hidden_field_tag 'link[id]', link.id, id:"link-delete-id"}
+      - if login_id_check?(@user.id)
+        .row
+          .add-link-box.col-12
+            %a{:href => "#", "data-toggle" => "modal", "data-target" => "#link-create-modal"}
+              .row
+                .col-12
+                  %i.fas.fa-plus-circle
+    .links-hidden-params.hide
+      %span.links-array-size
+        = @links.size
+
+- if login_id_check?(@user.id)
+  / フォルダー変更モーダル
+  #folder-edit-modal.modal.fade{"aria-labelledby" => "myModalLabel", :role => "dialog", :tabindex => "-1"}
+    .modal-dialog.modal-xl{:role => "document"}
+      .modal-content
+        = form_tag("/users/#{@user.id}/folders/#{@folder.id}", method: :patch, id: "folder-edit-form") do
+          .modal-header
+            %h5#exampleModalLabel.modal-title フォルダー変更
+            %button.close{"aria-label" => "Close", "data-dismiss" => "modal", :type => "button"}
+              %span{"aria-hidden" => "true"} ×
+          .modal-body.text-muted
+            .row
+              .col-12
+                .row
+                  .col-12
+                    .input-group.input-group.mb-3
+                      .input-group-prepend
+                        %span#inputGroup-sizing-lg.input-group-text
+                          %i.fa.fa-folder
+                      #{text_field_tag 'folder[name]', @folder['name'], class:"form-control", placeholder:"フォルダー名称", maxlength:'200' }
+                  .col-12
+                    .input-group.input-group.mb-3
+                      .input-group-prepend
+                        %span#inputGroup-sizing-lg.input-group-text
+                          %i.fas.fa-sticky-note
+                      #{text_area_tag 'folder[comment]', @folder["comment"], class:"form-control", placeholder:"メモ", maxlength:'400' }
+                  .col-12
+                    .input-group.input-group.mb-3
+                      %a.info-pop{"tabindex"=> "0", "data-toggle" => "popover", "data-trigger" => "focus", "title" => "公開設定", "data-content" => "作成するフォルダーを他のユーザにも公開する場合は「公開」、そうでない場合は「非公開」を選択してください"}
+                        %i.fas.fa-info-circle &nbsp;公開設定
+                  .col-12
+                    .btn-group.btn-group-toggle{"data-toggle" => "buttons", "style" => "width:100%; margin-bottom:10px;"}
+                      -if @folder.is_open == true
+                        %label.btn.btn-outline-secondary{"style" => "width:50%; border-color: #6c757d;"}
+                          #{radio_button_tag 'folder[is_open]', false} 非公開
+                      -else
+                        %label.btn.btn-outline-secondary.active{"style" => "width:50%; border-color: #6c757d;"}
+                          #{radio_button_tag 'folder[is_open]', false, "checked" => true} 非公開
+                      -if @folder.is_open == true
+                        %label.btn.btn-outline-success.active{"style" => "width:50%; border-color: #28a745;"}
+                          #{radio_button_tag 'folder[is_open]', true, "checked" => true}
+                          %i.fas.fa-share-alt &nbsp;公開
+                      -else
+                        %label.btn.btn-outline-success{"style" => "width:50%; border-color: #28a745;"}
+                          #{radio_button_tag 'folder[is_open]', true}
+                          %i.fas.fa-share-alt &nbsp;公開
+            .modal-footer
+              #{submit_tag "変更", :name => nil , :id => "folder_edit_btn", :class => "btn btn-primary"}
+              %button.btn.btn-secondary{"data-dismiss" => "modal", :type => "button"} 閉じる
+  / フォルダー削除モーダル
+  #folder-delete-modal.modal.fade{"aria-labelledby" => "myModalLabel", :role => "dialog", :tabindex => "-1"}
+    .modal-dialog.modal-xl{:role => "document"}
+      .modal-content
+        .modal-header
+          %h5#exampleModalLabel.modal-title フォルダー削除
+          %button.close{"aria-label" => "Close", "data-dismiss" => "modal", :type => "button"}
+            %span{"aria-hidden" => "true"} ×
+        .modal-body.text-muted
+          .row
+            .col-12
+              %div{"style" => "margin-bottom:10px;"}
+                フォルダーを削除します。
+                %br
+                %span.warning
+                  %i.fas.fa-exclamation-triangle フォルダーに紐づくブックマークも同時に削除されます。
+          .modal-footer
+            = form_tag("/users/#{@user.id}/folders/#{@folder.id}", method: :delete, id: "folder-delete-form") do
+              %a.btn.btn-danger{:href => "#", "onclick" => "this.parentNode.submit()"} 削除
+              %button.btn.btn-secondary{"data-dismiss" => "modal", :type => "button"} 閉じる
+  / リンク登録モーダル
+  #link-create-modal.modal.fade{"aria-labelledby" => "myModalLabel", :role => "dialog", :tabindex => "-1"}
+    .modal-dialog.modal-xl{:role => "document"}
+      .modal-content
+        = form_tag("/users/#{@user.id}/folders/#{@folder.id}/links", method: :post, id: "link-create-form") do
+          .modal-header
+            %h5#exampleModalLabel.modal-title ブックマーク登録
+            %button.close{"aria-label" => "Close", "data-dismiss" => "modal", :type => "button"}
+              %span{"aria-hidden" => "true"} ×
+          .modal-body.text-muted
+            .row
+              .col-12
+                .row
+                  .col-12
+                    .input-group.input-group.mb-3
+                      .input-group-prepend
+                        %span#inputGroup-sizing-lg.input-group-text
+                          %i.fa.fa-bookmark
+                      #{text_field_tag 'link[name]', "", class:"form-control", placeholder:"ブックマーク名称", maxlength:'200', id:"link-create-name-form"}
+                  .col-12
+                    .input-group.input-group.mb-3
+                      .input-group-prepend
+                        %span#inputGroup-sizing-lg.input-group-text
+                          %i.fa.fa-link
+                      #{text_field_tag 'link[url]', "", class:"form-control", placeholder:"URL", maxlength:'2000', id:"link-create-url-form"}
+                  .col-12
+                    .input-group.input-group.mb-3
+                      .input-group-prepend
+                        %span#inputGroup-sizing-lg.input-group-text
+                          %i.fas.fa-sticky-note
+                      #{text_area_tag 'link[comment]', "", class:"form-control", placeholder:"メモ", maxlength:'400', id:"link-create-comment-form"}
+                  .col-12
+                    .input-group.input-group.mb-3
+                      %a.info-pop{"tabindex"=> "0", "data-toggle" => "popover", "data-trigger" => "click", "title" => "スキンカラー", "data-content" => "画面に表示される際の配色です。用途に合わせて変更してください。", "data-placement" => "auto"}
+                        %i.fas.fa-info-circle &nbsp;スキンカラー
+                  .col-12
+                    .input-group.input-group.mb-3
+                      %span#link-create-skin-type-default.link-skin-default.active{"link-skin-data" => "default"}
+                      %span#link-create-skin-type-gray.link-skin-gray{"link-skin-data" => "gray"}
+                      %span#link-create-skin-type-red.link-skin-red{"link-skin-data" => "red"}
+                      %span#link-create-skin-type-orange.link-skin-orange{"link-skin-data" => "orange"}
+                      %span#link-create-skin-type-yellow.link-skin-yellow{"link-skin-data" => "yellow"}
+                      %span#link-create-skin-type-green.link-skin-green{"link-skin-data" => "green"}
+                      %span#link-create-skin-type-blue.link-skin-blue{"link-skin-data" => "blue"}
+                      %span#link-create-skin-type-purple.link-skin-purple{"link-skin-data" => "purple"}
+                      %span#link-create-skin-type-pink.link-skin-pink{"link-skin-data" => "pink"}
+                      #{hidden_field_tag 'link[skin_type]', "default", id:"link-create-skin-type-form"}
+            .modal-footer
+              - if @links.size() >= Link::LINK_CREATE_LIMIT
+                %button.btn.btn-danger{"disabled" => true} 1つのフォルダーに登録可能なブックマーク数は#{Link::LINK_CREATE_LIMIT}までです
+              - else
+                #{submit_tag "登録", :name => nil , :id => "link_create_btn", :class => "btn btn-primary"}
+              %button.btn.btn-secondary{"data-dismiss" => "modal", :type => "button"} 閉じる
+  / リンク変更モーダル
+  #link-edit-modal.modal.fade{"aria-labelledby" => "myModalLabel", :role => "dialog", :tabindex => "-1"}
+    .modal-dialog.modal-xl{:role => "document"}
+      .modal-content
+        .modal-header
+          %h5#exampleModalLabel.modal-title ブックマーク変更
+          %button.close{"aria-label" => "Close", "data-dismiss" => "modal", :type => "button"}
+            %span{"aria-hidden" => "true"} ×
+        .modal-body.text-muted
+          .row
+            .col-12
+              .row
+                .col-12
+                  .input-group.input-group.mb-3
+                    .input-group-prepend
+                      %span#inputGroup-sizing-lg.input-group-text
+                        %i.fa.fa-bookmark
+                    #{text_field_tag '', "", class:"form-control", placeholder:"ブックマーク名称", maxlength:'200', id:"mock-link-edit-name-form"}
+                .col-12
+                  .input-group.input-group.mb-3
+                    .input-group-prepend
+                      %span#inputGroup-sizing-lg.input-group-text
+                        %i.fa.fa-link
+                    #{text_field_tag '', "", class:"form-control", placeholder:"URL", maxlength:'2000', id:"mock-link-edit-url-form"}
+                .col-12
+                  .input-group.input-group.mb-3
+                    .input-group-prepend
+                      %span#inputGroup-sizing-lg.input-group-text
+                        %i.fas.fa-sticky-note
+                    #{text_area_tag '', "", class:"form-control", placeholder:"メモ", maxlength:'400', id:"mock-link-edit-comment-form"}
+                .col-12
+                  .input-group.input-group.mb-3
+                    %a.info-pop{"tabindex"=> "0", "data-toggle" => "popover", "data-trigger" => "click", "title" => "スキンカラー", "data-content" => "画面に表示される際の配色です。用途に合わせて変更してください。", "data-placement" => "auto"}
+                      %i.fas.fa-info-circle &nbsp;スキンカラー
+                .col-12
+                  .input-group.input-group.mb-3
+                    %span#link-edit-skin-type-default.link-skin-default.active{"link-skin-data" => "default"}
+                    %span#link-edit-skin-type-gray.link-skin-gray{"link-skin-data" => "gray"}
+                    %span#link-edit-skin-type-red.link-skin-red{"link-skin-data" => "red"}
+                    %span#link-edit-skin-type-orange.link-skin-orange{"link-skin-data" => "orange"}
+                    %span#link-edit-skin-type-yellow.link-skin-yellow{"link-skin-data" => "yellow"}
+                    %span#link-edit-skin-type-green.link-skin-green{"link-skin-data" => "green"}
+                    %span#link-edit-skin-type-blue.link-skin-blue{"link-skin-data" => "blue"}
+                    %span#link-edit-skin-type-purple.link-skin-purple{"link-skin-data" => "purple"}
+                    %span#link-edit-skin-type-pink.link-skin-pink{"link-skin-data" => "pink"}
+                    #{hidden_field_tag '', "default", id:"mock-link-edit-skin-type-form"}
+          .modal-footer
+            #{hidden_field_tag '', "", id:"editing-link-id"}
+            %button.btn.btn-primary{"id" => "mock_link_edit_btn", :type => "button"} 変更
+            %button.btn.btn-secondary{"data-dismiss" => "modal", :type => "button"} 閉じる
+  / リンク削除モーダル
+  #link-delete-modal.modal.fade{"aria-labelledby" => "myModalLabel", :role => "dialog", :tabindex => "-1"}
+    .modal-dialog.modal-xl{:role => "document"}
+      .modal-content
+        .modal-header
+          %h5#exampleModalLabel.modal-title ブックマーク削除
+          %button.close{"aria-label" => "Close", "data-dismiss" => "modal", :type => "button"}
+            %span{"aria-hidden" => "true"} ×
+        .modal-body.text-muted
+          .row
+            .col-12
+              %div{"style" => "margin-bottom:10px;"}
+                ブックマークを削除します。
+          .modal-footer
+            #{hidden_field_tag '', "", id:"deleting-link-id"}
+            %button.btn.btn-danger{"id" => "mock_link_delete_btn", :type => "button"} 削除
+            %button.btn.btn-secondary{"data-dismiss" => "modal", :type => "button"} 閉じる
+  / リンクソートモーダル
+  #link-sort-modal.modal.fade{"aria-labelledby" => "myModalLabel", :role => "dialog", :tabindex => "-1"}
+    .modal-dialog.modal-xl{:role => "document"}
+      .modal-content
+        .modal-header
+          %h5#exampleModalLabel.modal-title ブックマークソート
+          %button.close{"aria-label" => "Close", "data-dismiss" => "modal", :type => "button"}
+            %span{"aria-hidden" => "true"} ×
+        .modal-body.text-muted
+          .row
+            .col-12
+              %div{"style" => "margin-bottom:10px;"}
+                現在の順序でブックマークの順番を登録します。
+                %br
+                %span.warning ブックマークをドラッグアンドドロップすることで順番を入れ替えることが可能です。
+          .modal-footer
+            %a#link-sort-button{:href => "/users/#{@user.id}/folders/#{@folder.id}/links/sort/", "class" => "btn btn-primary #{"disabled" if @links.size == 0}", "aria-disabled" => true, "role" => "button"} ソート
+            %button.btn.btn-secondary{"data-dismiss" => "modal", :type => "button"} 閉じる

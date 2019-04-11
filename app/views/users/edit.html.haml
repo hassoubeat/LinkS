@@ -1,0 +1,11 @@
+.content-header
+  .row
+    .col-12
+      ユーザ情報変更
+.user_edit_form_area
+  - if @user.errors.any?
+    .col-12.input-form-error
+      - @user.errors.full_messages.each do |message|
+        %li
+          = message
+  = render 'form', user: @user

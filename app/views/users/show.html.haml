@@ -1,0 +1,66 @@
+/ メインコンテンツ
+.row
+  .col-12
+    .links-infomation-title-area
+      %h4 Infomation
+      %span
+        ようこそLinkS(リンクス)へ！
+        LinkSであなたが集めたブックマークを誰かと共有しましょう！
+  -# .col-12.col-md-6
+  -#   .links-infomation-nice-ranking-area
+  -#     %h4 今週のいいねランキング
+  -#     .row
+  -#       .col-12
+  -#         .nice-ranking-1.text-ellipsis
+  -#           %a{href:"#", style:"color:white;"}
+  -#             %i.fas.fa-thumbs-up 112 テスト
+  -#         .nice-ranking-2.text-ellipsis
+  -#           %a{href:"#", style:"color:white;"}
+  -#             %i.fas.fa-thumbs-up 112 テスト
+  -#         .nice-ranking-3.text-ellipsis
+  -#           %a{href:"#", style:"color:white;"}
+  -#             %i.fas.fa-thumbs-up 112 テスト
+  -#         .nice-ranking-other.text-ellipsis
+  -#           %a{href:"#", style:"color:white;"}
+  -#             %i.fas.fa-thumbs-up 112 テスト
+  -#         .nice-ranking-other.text-ellipsis
+  -#           %a{href:"#", style:"color:white;"}
+  -#             %i.fas.fa-thumbs-up 112 テスト
+  -# .col-12.col-md-6
+  -#   .links-infomation-view-ranking-area
+  -#     %h4 今週の閲覧数ランキング
+  -#     .row
+  -#       .col-12
+  -#         .nice-ranking-1.text-ellipsis
+  -#           %a{href:"#", style:"color:white;"}
+  -#             114514view テスト
+  -#         .nice-ranking-2.text-ellipsis
+  -#           %a{href:"#", style:"color:white;"}
+  -#             114514view テスト
+  -#         .nice-ranking-3.text-ellipsis
+  -#           %a{href:"#", style:"color:white;"}
+  -#             114514view テスト
+  -#         .nice-ranking-other.text-ellipsis
+  -#           %a{href:"#", style:"color:white;"}
+  -#             114514view テスト
+  -#         .nice-ranking-other.text-ellipsis
+  -#           %a{href:"#", style:"color:white;"}
+  -#             114514view テスト
+  .col-12
+    .links-infomation-notice-area
+      %h4 News
+      .row
+        .col-12
+          - @newses.each do |news|
+            .news
+              .row
+                .col-12
+                  %a{"href" => "#news-collapse-#{news.id}", "data-toggle" => "collapse", "aria-controls" => "news-collapse-#{news.id}"}
+                    %span.news-timestamp
+                      = news.created_at.strftime("%Y-%m-%d")
+                    %span.news-title
+                      = news.title
+                .col-12.news-content-area.collapse{"id" => "news-collapse-#{news.id}"}
+                  %span.news-content
+                    = news.content.html_safe
+

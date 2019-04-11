@@ -1,0 +1,82 @@
+/*
+ * This is a manifest file that'll be compiled into application.css, which will include all the files
+ * listed below.
+ *
+ * Any CSS and SCSS file within this directory, lib/assets/stylesheets, or any plugin's
+ * vendor/assets/stylesheets directory can be referenced here using a relative path.
+ *
+ * You're free to add application-wide styles to this file and they'll appear at the bottom of the
+ * compiled file so the styles you add here take precedence over styles defined in any other CSS/SCSS
+ * files in this directory. Styles in this file should be added after the last require_* statement.
+ * It is generally better to create a new file per style scope.
+ *
+ *= require animate.css
+ *= require animsition.min.css
+ *= require_self
+ */
+
+body {
+  font-family: "M PLUS Rounded 1c";
+}
+
+.navbar-management {
+  background-color: #E6E6E6;
+}
+
+.navbar-brand {
+  font-family: 'Londrina Shadow', cursive;
+  font-size: 1.5em;
+  color: gray;
+}
+
+.nav-link {
+  text-transform: uppercase;
+  font-weight: 400;
+  letter-spacing: 1px;
+  color: gray;
+}
+
+.management-jumbotron {
+  background-color: #FBEFEF;
+  color: #6E6E6E;
+}
+
+.management-link-menu:hover {
+  text-decoration: none;
+}
+
+[class^="management-menu-"] {
+  box-shadow: 0 0 2px gray;
+  padding: 10px;
+  border-radius: 8px;
+  border-left: solid 15px #E6E6E6;
+  color: #819FF7;
+}
+
+[class^="management-menu-"]:hover {
+  background-color: #E0ECF8;
+}
+
+.management-page-top {
+  width: calc(100% - 20px);
+  border-radius: 8px;
+  padding: 10px;
+  margin:10px;
+  border-left: solid 15px #E6E6E6;
+  color:#585858;
+  box-shadow: 0 0 2px gray;
+}
+
+.actions {
+  font-size: 1em;
+  text-align: center;
+}
+
+.action {
+  padding-left: 12px;
+  padding-right: 4px;
+}
+
+.news-close {
+  background-color: #D8D8D8;
+}

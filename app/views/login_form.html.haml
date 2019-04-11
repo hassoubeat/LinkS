@@ -1,0 +1,15 @@
+%div.col.s12.m10.offset-m1
+  = form_tag(:login, method: :post, id: "login-form") do
+    %div.row
+      %div.col.s12.input-field
+        %i.material-icons.prefix contact_mail
+        #{text_field_tag 'email', @email, class:"materialize-textarea"}
+        %label{for: "email"} メールアドレス
+      %div.col.s12.input-field
+        %i.material-icons.prefix vpn_key
+        #{password_field_tag 'password', @password, class:"materialize-textarea"}
+        %label{for: "password"} パスワード
+    %div.row
+      %div.col.s12
+        #{submit_tag "ログイン", :name => nil , :id => "login_btn", :class => "waves-effect waves-light btn"}
+        = link_to "サインアップ", new_user_path, :id => "signup_btn", :class => "waves-effect waves-light btn"

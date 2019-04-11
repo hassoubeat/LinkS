@@ -1,0 +1,18 @@
+%div.col-lg-6.col-md-12
+  %div.container.auto-middle
+    %div.row
+      %div.col-lg-1
+      %div.col-lg-10.col-md-12.signup-form
+        %div.row
+          - if @user.errors.any?
+            %div.col-lg-12.input-form-error
+              - @user.errors.full_messages.each do |message|
+                %li
+                  = message
+          %div.col-lg-12.d-block.d-lg-none
+            %span.login-form-title
+              LinkS
+            %span.links-intro.morphext-text-change
+              クラウドブックマーク,簡単に共有！,便利ブクマは"いいね！"
+          = render 'form', user: @user
+      %div.col-lg-1

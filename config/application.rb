@@ -22,6 +22,11 @@ module LinkS
     # Initialize configuration defaults for originally generated Rails version.
     config.load_defaults 5.2
 
+    # 標準言語
+    config.i18n.default_locale = :ja
+    # config/locales配下のyml(言語ファイル)を全て読み込み
+    config.i18n.load_path += Dir[Rails.root.join('config', 'locales', '**', '*.yml').to_s]
+
     # Settings in config/environments/* take precedence over those specified here.
     # Application configuration can go into files in config/initializers
     # -- all .rb files in that directory are automatically loaded after loading
@@ -29,5 +34,8 @@ module LinkS
 
     # Don't generate system test files.
     config.generators.system_tests = nil
+
+    # form_withでバリデーションエラー時にフォームがdiv.field_with_errorsで囲わないように(レイアウト崩れ防止)
+    config.action_view.field_error_proc = Proc.new { |html_tag, instance| html_tag }
   end
 end

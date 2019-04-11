@@ -1,0 +1,87 @@
+!!!
+%html{lang: "ja"}
+  %head
+    %meta{name:"viewport", content:"width=device-width,initial-scale=1.0"}
+    %meta{:content => "text/html; charset=UTF-8", "http-equiv" => "Content-Type"}/
+    %title LinkS
+    = csrf_meta_tags
+    = csp_meta_tag
+
+    -# favicons
+    = render 'favicon'
+
+    -# CSSs
+    = render 'css'
+    -# Morphext CSS
+    = stylesheet_link_tag 'morphext', media: 'all'
+    -# Index CSS
+    = stylesheet_link_tag 'index', media: 'all'
+
+    -# Fonts
+    = render 'font'
+
+  %body{"data-spy" => "scroll", "data-target" => "#navbarNav"}
+    %div.animsition
+      / Header
+      %header
+        .container
+      %div.row.top-view-area
+        -if flash[:info]
+          %div.info-message
+            = flash[:info]
+        -if flash[:error]
+          %div.error-message
+            = flash[:error]
+        %div.col-lg-6.d-none.d-lg-block
+          %div.container.auto-middle
+            %div.row
+              %div.top-view-memo.col-md-12
+                %span.top-view-memo-links
+                  LinkS
+                %p
+                %span.top-view-links-intro.morphext-text-change
+                  クラウドでブックマークを簡単管理,便利なブックマーク集を簡単共有,役に立ったら"いいね！"
+        = yield
+      %footer
+        .container
+          .row
+            .col-lg-12.text-center
+              %span.copyright Copyright © LinkS 2019
+
+    -# JSs
+    = render "js"
+    -# Morphext JS
+    = javascript_include_tag 'morphext.min'
+
+    :javascript
+      $(document).ready(function() {
+        // 画面表示時にアニメーション付きで遷移させる
+        $('.animsition').animsition();
+        // 指定した要素を親要素の中央位置になるように高さを処理する
+        $('.auto-middle').verticalMiddle();
+        // 一定時間毎に文字が切り替える
+        $(".morphext-text-change").Morphext({
+          animation: "fadeIn",
+          separator: ",",
+          speed: 5000,
+          complete: function () {
+          }
+        });
+        // 画面サイズを変更した時に、指定した要素を親要素の中央位置になるように高さを処理する
+        $(window).resize(function() {
+          $('.auto-middle').verticalMiddle();
+        });
+      });
+
+      (function($){
+        $.fn.verticalMiddle = function() {
+            this.each(function(){
+                var $this = $(this);
+                var _height = $this.height();
+                var _parent_height = $this.parent().height();
+                $this.css('marginTop',(_parent_height/2) - (_height/2));
+            });
+            return this;
+        };
+      })(jQuery);
+

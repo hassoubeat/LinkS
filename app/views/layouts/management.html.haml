@@ -1,0 +1,78 @@
+!!!
+%html{lang: "ja"}
+  %head
+    %meta{name:"viewport", content:"width=device-width,initial-scale=1.0"}
+    %meta{:content => "text/html; charset=UTF-8", "http-equiv" => "Content-Type"}/
+    %title LinkS_Management
+    = csrf_meta_tags
+    = csp_meta_tag
+
+    -# favicons
+    = render 'favicon'
+
+    -# CSSs
+    = render 'css'
+    -# Management CSS
+    = stylesheet_link_tag 'management', media: 'all'
+
+    -# Fonts
+    = render 'font'
+
+  %body{"data-spy" => "scroll", "data-target" => "#navbarNav"}
+    %div.animsition
+      - if flash[:info]
+        %div.info-message.hide
+          = flash[:info]
+      - if flash[:error]
+        %div.error-message.hide
+          = flash[:error]
+      %nav.navbar.navbar-expand-md.navbar-default.navbar-fixed-top.navbar-management
+        %a.navbar-brand{:href => "/management"} LinkS Management
+        %button.navbar-toggler{"aria-controls" => "navbarNav", "aria-expanded" => "false", "aria-label" => "ナビゲーションの切替", "data-target" => "#navbarNav", "data-toggle" => "collapse", :type => "button"}
+          %i.nav-tab.fas.fa-list-ul
+        #navbarNav.collapse.navbar-collapse
+          %ul.navbar-nav.mr-auto
+          - if admin_check?(@current_user.authority)
+            %ul.navbar-nav
+              %a.nav-link{:href => "/"}
+                メインページ
+          %ul.navbar-nav
+            - if login_check?
+              %li.nav-item
+                %a.nav-link{:href => "/logout"}
+                  ログアウト
+            - else
+              %li.nav-item
+                %a.nav-link{:href => "/"}
+                  ログイン
+      / メインコンテンツ
+      %div{"class" => "content-wrapper"}
+        = yield
+      %div.hide.hide-params
+    -# JSs
+    = render "js"
+    -# management.js
+    = javascript_include_tag 'management'
+
+    :javascript
+      $(document).ready(function() {
+        // 画面表示時にアニメーション付きで遷移させる
+        $('.animsition').animsition({
+          inDuration: 700,
+          outDuration: 500,
+        }).one('animsition.inEnd',function(){
+          // 画面表示アニメーション実行後処理(コールバック)
+
+          // インフォメーションメッセージの表示
+          var info_message = $(".info-message").text();
+          if (info_message) {
+            viewToaster(info_message, 5000, "info");
+          }
+          // エラーメッセージの表示
+          var error_message = $(".error-message").text();
+          if (error_message) {
+            viewToaster(error_message, 5000, "error");
+          }
+        });
+      });
+

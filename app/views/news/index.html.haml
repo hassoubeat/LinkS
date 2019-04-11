@@ -1,0 +1,36 @@
+.row
+  .col-12
+    .management-page-top
+      %span.news-link-title
+        News ...
+      %span.news-link-content
+        サイトトップページに表示するニュースの登録・変更・削除を実行する
+      .actions{"style" => "text-align:right;"}
+        %a.btn.btn-primary{"href" => "/management/news/new"}
+          ニュース登録
+%table.table.table-bordered.table-hover
+  %thead.thead-dark
+    %tr
+      %th
+        ID
+      %th
+        タイトル
+      %th.d-none.d-lg-table-cell
+        本文
+      %th{"style" => "width:95px;"}
+        操作
+  %tbody
+    - @newses.each do |news|
+      %tr{"class" => "#{"news-close" if !news.is_open}"}
+        %th
+          = news.id
+        %td
+          = news.title
+        %td.d-none.d-lg-table-cell.text-ellipsis
+          = news.content.html_safe
+        %td.actions{"style" => "width:90px;"}
+          %a{:href => "/management/news/edit/#{news.id}"}
+            %i.fas.fa-edit.action
+          = form_tag("/management/news/#{news.id}", method: :delete, id: "news-delete-form", style: "display:inline;") do
+            %a{:href => "#", "onclick" => "this.parentNode.submit()"}
+              %i.fas.fa-trash-alt.action

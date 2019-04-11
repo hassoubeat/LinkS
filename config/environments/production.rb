@@ -27,7 +27,7 @@ Rails.application.configure do
   # config.assets.css_compressor = :sass
 
   # Do not fallback to assets pipeline if a precompiled asset is missed.
-  config.assets.compile = false
+  config.assets.compile = true
 
   # `config.assets.precompile` and `config.assets.version` have moved to config/initializers/assets.rb
 
@@ -91,4 +91,11 @@ Rails.application.configure do
 
   # Do not dump schema after migrations.
   config.active_record.dump_schema_after_migration = false
+
+  # セッション保存にRedisを利用する
+  config.session_store :redis_store, servers: 'redis://localhost:6379/0', expire_in: 7.days
+
+  # アプリケーションのデフォルトルートの設定
+  host = 'links-share.xyz'
+  Rails.application.routes.default_url_options[:host] = host
 end
