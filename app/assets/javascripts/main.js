@@ -43,9 +43,10 @@ $('.sidebar-folder').hover(function(){
 
 // コンテンツヘッダーのインフォメーションアイコンを押下時に詳細エリアに情報を表示する
 $('.content-header-folder-info').click(function(){
-    var folder_name = $('.content-header-folder-name').text();
+    var folder_name = "<i class='fa fa-folder'></i>" + antiXSS($('.content-header-folder-name').text());
     var folder_note = $('.content-header-folder-note').text();
     setDetailArea(folder_name, "", folder_note, "");
+    // 現在表示されている要素を保持する(詳細エリアの表示切り替え処理用)
     $(".detail-area-show-content").text("folder");
     // 非表示の時に表示
     if(!$(".detail-area").hasClass('active')){
@@ -55,11 +56,21 @@ $('.content-header-folder-info').click(function(){
 
 // リンクのインフォメーションアイコンを押下時に詳細エリアに情報を表示する
 $('[id^=link-info]').click(function(){
-    var link_name = $(this).parents(".link-box").find('.link-name').text();
+    var link_name = antiXSS($(this).parents(".link-box").find('.link-name').text());
     var link_url = $(this).parents(".link-box").find('.link-full-url').text();
     var link_note = $(this).parents(".link-box").find('.link-note').text();
     var color = $(this).parents(".link-box").attr("class").split(" ")[0].split("-")[3];
+    if (link_url.match(/http(s)?/)) {
+      // 正常なURLであればfaviconをセットして、タイトルをaタグで囲む
+      domain = $(this).parents(".link-box").find('.link-url').text();
+      link_name = "<img src='http://www.google.com/s2/favicons?domain=" + domain + "'>" + link_name;
+      link_name = "<a href='" +  link_url + "' target='_blank'>" + link_name + "</a>";
+    } else {
+      // 正常なURLでなければ、ブックマークアイコンを付与
+      link_name = "<i class='fa fa-bookmark'></i>" + link_name;
+    }
     setDetailArea(link_name, link_url, link_note, color);
+    // 現在表示されている要素を保持する(詳細エリアの表示切り替え処理用)
     $(".detail-area-show-content").text($(this).attr("id"));
     // 非表示の時に表示
     if(!$(".detail-area").hasClass('active')){
@@ -196,7 +207,7 @@ function setDetailArea(title, title_sub, note, skin_color) {
   $(".detail-area").removeClass(function(index, className) {
     return (className.match(/\bdetail-area-skin-\S+/g) || []).join(' ');
   })
-  $(".detail-area-title").text(title);
+  $(".detail-area-title").append(title);
   $(".detail-area-sub-title").text(title_sub);
   $(".detail-area-note").html(antiXSS(note));
   $(".detail-area").addClass("detail-area-skin-" + skin_color);

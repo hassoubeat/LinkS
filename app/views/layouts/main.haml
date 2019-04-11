@@ -149,6 +149,7 @@
       %div{"class" => "detail-area #{"hidden-sidebar" if !@folder.user_id.nil? and !login_id_check?(@folder.user_id)}"}
         .detail-title-and-sub-title
           .detail-area-title.text-ellipsis
+            %i.fa.fa-folder
             = @folder.name
           .detail-area-sub-title.text-ellipsis
         .detail-area-note
