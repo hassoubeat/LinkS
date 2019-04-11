@@ -44,8 +44,9 @@ $('.sidebar-folder').hover(function(){
 // コンテンツヘッダーのインフォメーションアイコンを押下時に詳細エリアに情報を表示する
 $('.content-header-folder-info').click(function(){
     var folder_name = "<i class='fa fa-folder'></i>" + antiXSS($('.content-header-folder-name').text());
+    var folder_user_name = "フォルダーユーザ : " + $('.content-header-folder-user-name').text();
     var folder_note = $('.content-header-folder-note').text();
-    setDetailArea(folder_name, "", folder_note, "");
+    setDetailArea(folder_name, folder_user_name, folder_note, "");
     // 現在表示されている要素を保持する(詳細エリアの表示切り替え処理用)
     $(".detail-area-show-content").text("folder");
     // 非表示の時に表示

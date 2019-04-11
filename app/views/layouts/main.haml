@@ -154,6 +154,8 @@
             %i.fa.fa-folder
             = @folder.name
           .detail-area-sub-title.text-ellipsis
+            フォルダーユーザ :
+            = @user.name
         .detail-area-note
           = simple_format(h(@folder.comment))
         .detail-show-back-botton
