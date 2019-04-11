@@ -44,9 +44,16 @@
             .row
               .link-title-and-url
                 .link-name
-                  %a{:href => "#{h(link.url)}", :target => "_blank"}
+                  - if h(link.url) =~ /\Ahttps?:\/\//
+                    / 正常なURLの場合は、aタグ & favicon
+                    %a{:href => "#{h(link.url)}", :target => "_blank"}
+                      .text-ellipsis
+                        %img{:src => "http://www.google.com/s2/favicons?domain=#{domain}"}/
+                        = link.name
+                  - else
+                    / 正常なURLでない場合は、汎用ブックマークアイコンでaタグでは囲わない
                     .text-ellipsis
-                      %img{:src => "http://www.google.com/s2/favicons?domain=#{domain}"}/
+                      %i.fa.fa-bookmark
                       = link.name
                 .link-url.text-ellipsis
                   = domain
