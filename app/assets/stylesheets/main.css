@@ -186,7 +186,6 @@
   color:#424242;
   background-color:#FAFAFA;
   padding: 10px;
-  box-shadow: 1px 1px 1px #D8D8D8;
   box-sizing: border-box;
   border-bottom: solid 1px #D8D8D8;
 }
@@ -580,4 +579,8 @@
 
 .news-content-area {
   margin-top:10px;
+}
+
+.user_edit_form_area {
+  padding: 10px;
 }

@@ -86,3 +86,7 @@ footer {
 	text-overflow: ellipsis;
 	white-space: nowrap;
 }
+
+.max-width {
+  width: 100%;
+}

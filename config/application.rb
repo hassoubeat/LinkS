@@ -34,5 +34,8 @@ module LinkS
 
     # Don't generate system test files.
     config.generators.system_tests = nil
+
+    # form_withでバリデーションエラー時にフォームがdiv.field_with_errorsで囲わないように(レイアウト崩れ防止)
+    config.action_view.field_error_proc = Proc.new { |html_tag, instance| html_tag }
   end
 end

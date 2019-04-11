@@ -3,8 +3,12 @@ Rails.application.routes.draw do
   get '/', to: 'application#index'
   # ユーザ登録ページ
   get '/users/new', to: 'users#new', as: :new_user
+  # ユーザ変更ページ
+  get '/users/edit/:user_id', to: 'users#edit'
   # ユーザ登録処理
   post '/users', to: 'users#create'
+  # ユーザ変更処理
+  patch '/users/:user_id', to: 'users#update'
   # ユーザ登録本認証処理
   get '/user_check', to: 'users#user_check'
   # ユーザ詳細ページ

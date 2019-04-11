@@ -1,6 +1,6 @@
 class UsersController < ApplicationController
   skip_before_action :login_check_filter, only: [:new, :create, :user_check, :login]
-  before_action :login_id_check_filter, only: [:show]
+  before_action :login_id_check_filter, only: [:show, :edit]
 
   # GET /users/:user_id
   def show
@@ -15,8 +15,9 @@ class UsersController < ApplicationController
     render layout: "application"
   end
 
-  # GET /users/1/edit
+  # GET /users/edit/:user_id
   def edit
+    render layout: "main"
   end
 
   # POST /users
@@ -52,17 +53,13 @@ class UsersController < ApplicationController
     redirect_to controller: 'application', action: 'index'
   end
 
-  # PATCH/PUT /users/1
-  # PATCH/PUT /users/1.json
+  # PATCH /users/:user_id
   def update
-    respond_to do |format|
-      if @user.update(user_params)
-        format.html { redirect_to @user, notice: 'User was successfully updated.' }
-        format.json { render :show, status: :ok, location: @user }
-      else
-        format.html { render :edit }
-        format.json { render json: @user.errors, status: :unprocessable_entity }
-      end
+    if @user.update(params.require(:user).permit(:password, :password_confirmation, :name))
+      flash[:info] = "ユーザ情報を更新しました"
+      redirect_to "/users/edit/#{@user.id}" and return
+    else
+      render template: "/users/edit", layout: "main" and return
     end
   end
 
