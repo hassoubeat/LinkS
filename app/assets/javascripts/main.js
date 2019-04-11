@@ -31,16 +31,6 @@ $('.folder-like').click(function(){
   });
 });
 
-// サイドバーのフォルダー名マウスホバー時に詳細エリアに情報を表示する
-$('.sidebar-folder').hover(function(){
-    var folder_name = $(this).find('.sidebar-folder-name').text();
-    var folder_note = $(this).find('.sidebar-folder-note').text();
-    setDetailArea(folder_name, "", folder_note, "");
-  },
-  function() {
-  }
-);
-
 // コンテンツヘッダーのインフォメーションアイコンを押下時に詳細エリアに情報を表示する
 $('.content-header-folder-info').click(function(){
     var folder_name = "<i class='fa fa-folder'></i>" + antiXSS($('.content-header-folder-name').text());
