@@ -481,7 +481,7 @@
 
 .detail-show-back-botton {
   position:fixed;
-  bottom:130px;
+  bottom:150px;
   right:0px;
   padding:5px;
   margin-right:11px;
@@ -491,7 +491,7 @@
 
 .detail-show-forward-botton {
   position:fixed;
-  bottom:55px;
+  bottom:75px;
   right:0px;
   padding:5px;
   margin-right:11px;
