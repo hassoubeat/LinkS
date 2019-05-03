@@ -82,6 +82,8 @@
                         = folder.name
                       %span.hide.sidebar-folder-note
                         = folder.comment.gsub(/\r\n|\r|\n/, '\n');
+                    %span.folder-sortable-handle
+                      %i.fas.fa-arrows-alt-v.folder-action
               %input#result{:name => "result", :type => "hidden"}/
               %button#submit{:style => "display:none"} ソート確定
       / サイドバー
@@ -245,6 +247,7 @@
         // フォルダーのソート対応処理
         $(".folder-sortable").sortable({
           items: '.sortable-item',
+          handle: '.folder-sortable-handle',
         });
         // リンクのソート対応処理
         $(".link-sortable").sortable({

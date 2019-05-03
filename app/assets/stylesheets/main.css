@@ -116,6 +116,17 @@
   background-color: pink;
 }
 
+.folder-action {
+  padding-left: 8px;
+  padding-right: 8px;
+}
+
+.folder-sortable-handle {
+  position: absolute;
+  top:12px;
+  right:5px;
+}
+
 .sidebar-toggle {
   float: left;
   background-color: transparent;
