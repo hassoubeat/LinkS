@@ -503,6 +503,7 @@ a:focus {
 .sidebar-menu > li > .sidemenu {
   padding: 12px 5px 12px 15px;
   display: block;
+  margin-right: 30px;
 }
 .sidebar-menu > li > a > .fa,
 .sidebar-menu > li > a > .glyphicon,
