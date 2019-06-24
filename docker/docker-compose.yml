@@ -1,0 +1,12 @@
+version: '3'
+services:
+  app:
+    build:
+      context: ./../ # LinkSフォルダ
+      dockerfile: ./docker/app/Dockerfile
+    container_name: 'app'
+    ports:
+      - '3000:3000'
+    volumes:
+      - ./../:/var/lib/volume/src/LinkS
+    tty: true
