@@ -12,3 +12,12 @@ services:
     volumes:
       - ./../:/var/lib/volume/src/LinkS
     tty: true
+  db:
+    image: mysql:5.7
+    container_name: 'db'
+    environment:
+      MYSQL_ALLOW_EMPTY_PASSWORD: "yes"
+    ports:
+      - '3306:3306'
+    volumes:
+      - ./mysql-data:/var/lib/mysql
