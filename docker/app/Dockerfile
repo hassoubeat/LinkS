@@ -4,9 +4,6 @@ ARG WORK_DIR="/var/lib/volume/"
 
 RUN mkdir ${WORK_DIR}
 
-COPY ./Gemfile ${WORK_DIR}
-COPY ./Gemfile.lock ${WORK_DIR}
-
 WORKDIR ${WORK_DIR}
 
 RUN apk update
@@ -26,9 +23,9 @@ RUN apk add --no-cache sqlite-dev
 # therubyrancerがalpine環境下だと動かないため
 RUN apk add --no-cache nodejs
 
-# RUN bundle install
+COPY ./docker/Gemfile ${WORK_DIR}
+RUN bundle install
+RUN rails new rails_test
 
 # RUN apk del libxml2-dev curl-dev make gcc libc-dev g++
 EXPOSE  3000
-
-CMD ["sh"]
