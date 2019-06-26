@@ -25,7 +25,7 @@ RUN apk add --no-cache nodejs
 
 COPY ./docker/Gemfile ${WORK_DIR}
 RUN bundle install
-RUN rails new rails_test
+RUN rails new rails_test -d mysql
 
 # RUN apk del libxml2-dev curl-dev make gcc libc-dev g++
 EXPOSE  3000
