@@ -18,14 +18,19 @@ RUN apk add --no-cache g++
 RUN apk add --no-cache mariadb-dev
 
 # デフォルトRailsプロジェクトのため
-RUN apk add --no-cache sqlite
-RUN apk add --no-cache sqlite-dev
+# RUN apk add --no-cache sqlite
+# RUN apk add --no-cache sqlite-dev
 # therubyrancerがalpine環境下だと動かないため
 RUN apk add --no-cache nodejs
+RUN apk add --no-cache git
 
-COPY ./docker/Gemfile ${WORK_DIR}
-RUN bundle install
-RUN rails new rails_test -d mysql
+# COPY ./docker/Gemfile ${WORK_DIR}
+# RUN bundle install
+# RUN rails new rails_test -d mysql
+# RUN git clone -b feature_docker_run https://github.com/hassoubeat/LinkS.git
+# RUN cd ${WORK_DIR}/LinkS
+
+ENV BUNDLE_PATH=/bundle
 
 # RUN apk del libxml2-dev curl-dev make gcc libc-dev g++
 EXPOSE  3000

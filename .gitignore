@@ -26,5 +26,7 @@
 # Ignore master key for decrypting credentials and more.
 /config/master.key
 
-# Docker mysql
-/docker/mysql-data/
+# Docker 共有フォルダ
+/docker/app/share/
+/docker/db/share/
+/docker/redis/share/

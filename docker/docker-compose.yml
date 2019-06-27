@@ -5,15 +5,22 @@ services:
       context: ./../ # LinkSフォルダ
       dockerfile: ./docker/app/Dockerfile
     container_name: 'app'
-    working_dir: "/var/lib/volume/rails_test"
-    command: rails s -p 3000 -b '0.0.0.0'
+    working_dir: "/var/lib/volume/LinkS"
+    #command: rails s -p 3000 -b '0.0.0.0'
     ports:
       - '3000:3000'
     volumes:
-      - ./../:/var/lib/volume/src/LinkS
+      - ./../:/var/lib/volume/LinkS # LinkS本体
+      - ./app/share/bundle:/bundle #bundle用のファイル
     tty: true
     links:
       - db
+      - redis
+    environment:
+      DB_USER: root
+      DB_PASSWORD:
+      DB_HOST: db
+      REDIS_HOST: redis
   db:
     image: mysql:5.7
     container_name: 'db'
@@ -22,4 +29,12 @@ services:
     ports:
       - '3306:3306'
     volumes:
-      - ./mysql-data:/var/lib/mysql
+      - ./db/share/mysql-data:/var/lib/mysql
+  redis:
+    image: redis:5.0.5-alpine
+    container_name: 'redis'
+    command: redis-server
+    ports:
+      - "6379:6379"
+    volumes:
+      - ./redis/share/redis-data:/data

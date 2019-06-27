@@ -1,7 +1,7 @@
 source 'https://rubygems.org'
 git_source(:github) { |repo| "https://github.com/#{repo}.git" }
 
-ruby '2.5.3'
+ruby '2.5.5'
 
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
 gem 'rails', '~> 5.2.1'
@@ -59,7 +59,7 @@ gem 'rails-i18n'
 gem 'haml-rails'
 
 # jsをRubyから実行するGem
-gem 'therubyracer', platforms: :ruby
+#gem 'therubyracer', platforms: :ruby
 
 # ERB HAML間のファイル変換を行うコマンドを扱えるようになるGem
 gem 'erb2haml'
