@@ -6,7 +6,7 @@ services:
       dockerfile: ./docker/app/Dockerfile
     container_name: 'app'
     working_dir: "/var/lib/volume/LinkS"
-    #command: rails s -p 3000 -b '0.0.0.0'
+    command: bundle exec rails s -p 3000 -b '0.0.0.0'
     ports:
       - '3000:3000'
     volumes:
@@ -20,7 +20,9 @@ services:
       DB_USER: root
       DB_PASSWORD:
       DB_HOST: db
-      REDIS_HOST: redis
+      # REDIS_HOST: redis
+      # REDIS_PORT: 6379
+      REDIS_URL: redis://redis:6379
   db:
     image: mysql:5.7
     container_name: 'db'
@@ -33,7 +35,7 @@ services:
   redis:
     image: redis:5.0.5-alpine
     container_name: 'redis'
-    command: redis-server
+    command: redis-server --appendonly yes
     ports:
       - "6379:6379"
     volumes:

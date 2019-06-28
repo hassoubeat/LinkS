@@ -62,7 +62,8 @@ Rails.application.configure do
   # セッション保存にRedisを利用する
   # config.session_store :redis_store, servers: 'redis://localhost:6379/0', expire_in: 7.days
   # config.session_store :redis_store, servers: 'redis://'ENV['REDIS_HOST'] || 'localhost' + ':6379/0', expire_in: 7.days
-  config.session_store :redis_store, servers: 'redis://redis:6379/0', expire_in: 7.days
+  # config.session_store :redis_store, servers: 'redis://redis:6379/0', expire_in: 7.days
+  REDIS ||= Redis.new(url: ENV['REDIS_URL'] || 'redis://localhost:6379')
 
   # config.session_store :redis_store, {
   #   servers: {
