@@ -6,7 +6,7 @@ services:
       dockerfile: ./docker/app/Dockerfile
     container_name: 'app'
     working_dir: "/var/lib/volume/LinkS"
-    command: bundle exec rails s -p 3000 -b '0.0.0.0'
+    # command: bundle exec rails s -p 3000 -b '0.0.0.0'
     ports:
       - '3000:3000'
     volumes:
@@ -20,9 +20,9 @@ services:
       DB_USER: root
       DB_PASSWORD:
       DB_HOST: db
-      # REDIS_HOST: redis
-      # REDIS_PORT: 6379
       REDIS_URL: redis://redis:6379
+      APP_MAIL_ADDRESS: # アプリが使うメールアドレス(アカウント登録認証メール送信など)
+      APP_MAIL_PASSWORD: # アプリが使うメールアドレスのパスワード
   db:
     image: mysql:5.7
     container_name: 'db'
