@@ -59,22 +59,13 @@ Rails.application.configure do
   # routes, locales, etc. This feature depends on the listen gem.
   config.file_watcher = ActiveSupport::EventedFileUpdateChecker
 
-  # セッション保存にRedisを利用する
-  # config.session_store :redis_store, servers: 'redis://localhost:6379/0', expire_in: 7.days
-  # config.session_store :redis_store, servers: 'redis://'ENV['REDIS_HOST'] || 'localhost' + ':6379/0', expire_in: 7.days
-  # config.session_store :redis_store, servers: 'redis://redis:6379/0', expire_in: 7.days
+  # セッション保存(Redis)
+  config.session_store :redis_store, servers: ENV['REDIS_URL'] || 'redis://localhost:6379', expire_in: 7.days
+
+  # アプリ内でのRedisの接続先
   REDIS ||= Redis.new(url: ENV['REDIS_URL'] || 'redis://localhost:6379')
 
-  # config.session_store :redis_store, {
-  #   servers: {
-  #       host: 'redis',
-  #       port: 6379,
-  #       db: 0
-  #   },
-  #   expire_in: 7.days
-  # }
-
   # アプリケーションのデフォルトルートの設定
-  host = 'localhost:3000'
+  host = ENV['HOST_URL'] || 'localhost:3000'
   Rails.application.routes.default_url_options[:host] = host
 end

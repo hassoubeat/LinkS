@@ -1,12 +1,11 @@
 version: '3'
 services:
   app:
-    build:
-      context: ./../ # LinkSフォルダ
-      dockerfile: ./docker/app/Dockerfile
+    image: hassoubeat/links:0.1
     container_name: 'app'
     working_dir: "/var/lib/volume/LinkS"
-    # command: bundle exec rails s -p 3000 -b '0.0.0.0'
+    command: bundle exec rails s -p 3000 -b '0.0.0.0'
+    # command: bundle exec rails s -p 3000 -b '0.0.0.0' -e production
     ports:
       - '3000:3000'
     volumes:
@@ -23,6 +22,7 @@ services:
       REDIS_URL: redis://redis:6379
       APP_MAIL_ADDRESS: # アプリが使うメールアドレス(アカウント登録認証メール送信など)
       APP_MAIL_PASSWORD: # アプリが使うメールアドレスのパスワード
+      HOST_URL: #アプリのホスト(入力なしのデフォルトはlocalhost:3000)
   db:
     image: mysql:5.7
     container_name: 'db'
