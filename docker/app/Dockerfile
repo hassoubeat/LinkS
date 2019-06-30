@@ -8,14 +8,6 @@ WORKDIR ${WORK_DIR}
 
 RUN apk update
 RUN apk add --no-cache tzdata libxml2-dev curl-dev make gcc libc-dev g++ mariadb-dev
-# RUN apk add --no-cache tzdata
-# RUN apk add --no-cache libxml2-dev
-# RUN apk add --no-cache curl-dev
-# RUN apk add --no-cache make
-# RUN apk add --no-cache gcc
-# RUN apk add --no-cache libc-dev
-# RUN apk add --no-cache g++
-# RUN apk add --no-cache mariadb-dev
 
 # Gem : therubyrancerがalpine環境下だと動かないため
 RUN apk add --no-cache nodejs
