@@ -59,6 +59,7 @@ gem 'rails-i18n'
 gem 'haml-rails'
 
 # jsをRubyから実行するGem
+# Docker環境では利用できないため、DockerfileでNode.jsをインストールしExecJSとして代用
 #gem 'therubyracer', platforms: :ruby
 
 # ERB HAML間のファイル変換を行うコマンドを扱えるようになるGem

@@ -7,29 +7,20 @@ RUN mkdir ${WORK_DIR}
 WORKDIR ${WORK_DIR}
 
 RUN apk update
-# RUN apk add --no-cache tzdata libxml2-dev curl-dev make gcc libc-dev g++ mariadb-dev
-RUN apk add --no-cache tzdata
-RUN apk add --no-cache libxml2-dev
-RUN apk add --no-cache curl-dev
-RUN apk add --no-cache make
-RUN apk add --no-cache gcc
-RUN apk add --no-cache libc-dev
-RUN apk add --no-cache g++
-RUN apk add --no-cache mariadb-dev
+RUN apk add --no-cache tzdata libxml2-dev curl-dev make gcc libc-dev g++ mariadb-dev
+# RUN apk add --no-cache tzdata
+# RUN apk add --no-cache libxml2-dev
+# RUN apk add --no-cache curl-dev
+# RUN apk add --no-cache make
+# RUN apk add --no-cache gcc
+# RUN apk add --no-cache libc-dev
+# RUN apk add --no-cache g++
+# RUN apk add --no-cache mariadb-dev
 
-# デフォルトRailsプロジェクトのため
-# RUN apk add --no-cache sqlite
-# RUN apk add --no-cache sqlite-dev
-# therubyrancerがalpine環境下だと動かないため
+# Gem : therubyrancerがalpine環境下だと動かないため
 RUN apk add --no-cache nodejs
-RUN apk add --no-cache git
 
-# COPY ./docker/Gemfile ${WORK_DIR}
-# RUN bundle install
-# RUN rails new rails_test -d mysql
-# RUN git clone -b feature_docker_run https://github.com/hassoubeat/LinkS.git
-# RUN cd ${WORK_DIR}/LinkS
-
+# RedisのBundlerのインストール先(このディレクトリをdockerの共有ディレクトリとして指定して永続化する)
 ENV BUNDLE_PATH=/bundle
 
 # RUN apk del libxml2-dev curl-dev make gcc libc-dev g++
