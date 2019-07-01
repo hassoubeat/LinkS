@@ -4,8 +4,7 @@ services:
     image: hassoubeat/links:0.1
     container_name: 'app'
     working_dir: "/var/lib/volume/LinkS"
-    command: bundle exec rails s -p 3000 -b '0.0.0.0'
-    # command: bundle exec rails s -p 3000 -b '0.0.0.0' -e production
+    # command: bundle exec rails s -p 3000 -b '0.0.0.0'
     ports:
       - '3000:3000'
     volumes:

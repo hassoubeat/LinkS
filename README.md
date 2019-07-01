@@ -51,11 +51,19 @@ bundle exec rails db:migrate
 
 # 接続終了
 exit
+```  
+
+### 4. docker-compose.ymlの編集
+`docker`ディレクトリ内の`docker-compose.yml`を編集します。
+
+#### コンテナ起動時にRailsアプリサーバを起動
+
+```bash
+# 以下のコメントアウトを外す
+# command: bundle exec rails s -p 3000 -b '0.0.0.0'
 ```
 
-### 4. 環境変数の設定
-`docker`フォルダ内の`docker-compose.yml`に環境変数を定義します。  
-
+#### 環境変数の編集
 ```bash
 environment:
   DB_USER:
