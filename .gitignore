@@ -25,3 +25,8 @@
 
 # Ignore master key for decrypting credentials and more.
 /config/master.key
+
+# Docker 共有フォルダ
+/docker/app/share/
+/docker/db/share/
+/docker/redis/share/
