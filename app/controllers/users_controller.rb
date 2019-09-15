@@ -111,6 +111,8 @@ class UsersController < ApplicationController
     @user = User.find_by(email: params[:email])
     # ハッシュ化したパスワードで認証
     if @user && @user.authenticate(params[:password]);
+      # ログイン成功後、セッションIDをリセット(セッション固定攻撃、セッションハイジャック対策)
+      reset_session
       session[:user_id] = @user.id
       redirect_to "/users/#{@user.id}"
     else
