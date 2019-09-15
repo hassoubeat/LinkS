@@ -1,8 +1,8 @@
 version: '3'
 services:
-  app:
+  links-app-container:
     image: hassoubeat/links:0.1
-    container_name: 'app'
+    container_name: 'links-app-container'
     working_dir: "/var/lib/volume/LinkS"
     # command: bundle exec rails s -p 3000 -b '0.0.0.0'
     ports:
@@ -12,28 +12,28 @@ services:
       - ./app/share/bundle:/bundle #bundle用のファイル
     tty: true
     links:
-      - db
-      - redis
+      - links-db-container
+      - links-redis-container
     environment:
       DB_USER: root
       DB_PASSWORD:
-      DB_HOST: db
-      REDIS_URL: redis://redis:6379
+      DB_HOST: links-db-container
+      REDIS_URL: redis://links-redis-container:6379
       APP_MAIL_ADDRESS: # アプリが使うメールアドレス(アカウント登録認証メール送信など)
       APP_MAIL_PASSWORD: # アプリが使うメールアドレスのパスワード
       HOST_URL: #アプリのホスト(入力なしのデフォルトはlocalhost:3000)
-  db:
+  links-db-container:
     image: mysql:5.7
-    container_name: 'db'
+    container_name: 'links-db-container'
     environment:
       MYSQL_ALLOW_EMPTY_PASSWORD: "yes"
     ports:
       - '3306:3306'
     volumes:
       - ./db/share/mysql-data:/var/lib/mysql
-  redis:
+  links-redis-container:
     image: redis:5.0.5-alpine
-    container_name: 'redis'
+    container_name: 'links-redis-container'
     command: redis-server --appendonly yes
     ports:
       - "6379:6379"

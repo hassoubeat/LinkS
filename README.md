@@ -28,9 +28,9 @@ docker-compose up -d
 
 アプリを実行するのに必要な3つのコンテナが起動します。  
 
-- **app**   ... アプリ本体を実行するコンテナ
-- **db**    ... MySQLを実行するコンテナ
-- **redis** ... Redisを実行するコンテナ
+- **links-app-container**   ... アプリ本体を実行するコンテナ
+- **links-db-container**    ... MySQLを実行するコンテナ
+- **links-redis-container** ... Redisを実行するコンテナ
 
 ### 3. 初回セットアップ
 まだこの段階では必要なセットアップが行われていないため、アプリは利用できません。  
@@ -38,7 +38,7 @@ docker-compose up -d
 
 ```bash
 # appコンテナに接続
-docker exec -it app sh
+docker exec -it links-app-container sh
 
 # 実行に必要なGemのインストール
 bundle install
