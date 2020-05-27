@@ -27,7 +27,7 @@
               %a{:href => "#", "data-toggle" => "modal", "data-target" => "#folder-delete-modal"}
                 %i.fas.fa-trash-alt.content-header-action
             - if @folder.is_open == true
-              %a{:href => "http://line.me/R/msg/text/?#{h(@folder.name)} : #{h(@user.name)}%0a%0a#{h(@folder.comment.gsub(/\r\n|\r|\n/, '%0a'))}%0a#{root_url(only_path: false)}users/#{@user.id}/folders/#{@folder.id}%0a%0aLinkSからの共有", :target => "_blank"}
+              %a{:href => "https://line.me/R/msg/text/?#{h(@folder.name)} : #{h(@user.name)}%0a%0a#{h(@folder.comment.gsub(/\r\n|\r|\n/, '%0a'))}%0a#{root_url(only_path: false)}users/#{@user.id}/folders/#{@folder.id}%0a%0aLinkSからの共有", :target => "_blank"}
                 %i.fab.fa-line.content-header-action
               %a{:href => "https://twitter.com/intent/tweet?text=#{h(@folder.name)} : #{h(@user.name)}%0a%0a#{h(@folder.comment.gsub(/\r\n|\r|\n/, '%0a'))}%0a#{root_url(only_path: false)}users/#{@user.id}/folders/#{@folder.id}%0a%0aLinkSからの共有", :target => "_blank"}
                 %i.fab.fa-twitter.content-header-action
@@ -50,7 +50,7 @@
                     / 正常なURLの場合は、aタグ & favicon
                     %a{:href => "#{h(link.url)}", :target => "_blank"}
                       .text-ellipsis
-                        %img{:src => "http://www.google.com/s2/favicons?domain=#{domain}"}/
+                        %img{:src => "https://www.google.com/s2/favicons?domain=#{domain}"}/
                         = link.name
                   - else
                     / 正常なURLでない場合は、汎用ブックマークアイコンでaタグでは囲わない
