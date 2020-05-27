@@ -54,7 +54,7 @@ $('[id^=link-info]').click(function(){
     if (link_url.match(/http(s)?/)) {
       // 正常なURLであればfaviconをセットして、タイトルをaタグで囲む
       domain = $(this).parents(".link-box").find('.link-url').text();
-      link_name = "<img src='http://www.google.com/s2/favicons?domain=" + domain + "'>" + link_name;
+      link_name = "<img src='https://www.google.com/s2/favicons?domain=" + domain + "'>" + link_name;
       link_name = "<a href='" +  link_url + "' target='_blank'>" + link_name + "</a>";
     } else {
       // 正常なURLでなければ、ブックマークアイコンを付与
