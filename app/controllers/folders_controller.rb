@@ -16,10 +16,6 @@ class FoldersController < ApplicationController
     # 本人以外がアクセスする時、公開されていない場合はTOPに
     if (login_id_check?(@user.id) or @folder.is_open) and @folder.is_valid and @user.id == @folder.user_id
       @links = Link.where(folder_id: @folder.id).is_valid
-      # 本人以外がアクセスしたときには、詳細メッセージエリアを初期表示する
-      if !login_id_check?(@user.id)
-        @intial_display_detail_area = true
-      end
       render layout: "main"
     else
       flash[:info] = "公開されていないフォルダーもしくはフォルダーが存在しません"
